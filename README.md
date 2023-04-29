@@ -21,7 +21,7 @@
 
 	struct	addrinfo {
 		int	ai_flags;		// AI_PASSIV, AI_CANNONAME, etc.
-		int	ai_family;		// AF_INET (ip_v4), AF_INET (ip_v6, AF_UNSPEC (agnostic)
+		int	ai_family;		// AF_INET (ip_v4), AF_INET6 (ip_v6, AF_UNSPEC (agnostic)
 		int	ai_socktype;		//SOCK_STREAM (tcp), SOCK_DGRAM (udp)
 		int	ai_protocol;		// use 0 for "any"
 		size_t	ai_addrlen;		// size of ai_addr in bytes

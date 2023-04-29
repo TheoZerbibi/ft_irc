@@ -1,5 +1,6 @@
 #include	<sys/types.h>
 #include	<sys/socket.h>
+#include	<netinet/in.h>
 #include	<arpa/inet.h>
 
 #include	<cstring>
@@ -37,11 +38,25 @@
 //	}
 
 
+void	print_ai(struct addrinfo *ai)
+{
+	std::cout << "Address family: ";
+	if (ai->ai_family == AF_INET)
+		std::cout << "Ipv4" << std::endl;
+	else if (ai->ai_family == AF_INET6)
+		std::cout << "Ipv6" << std::endl;
+	else
+		std::cout << "Unspecified" << std::endl;
+	std::cout << "ip : " << inet_ntoa(((struct sockaddr_in *)ai->ai_addr)->sin_addr) << std::endl;
+	std::cout << "Port : " << ntohs(((struct sockaddr_in *)ai->ai_addr)->sin_port) << std::endl;
+}
+
 
 void	setup_addrinfo(struct addrinfo *ai)
 {
 	std::memset(ai, 0, sizeof(*ai));
-	ai->ai_family = AF_INET;
+	ai->ai_family = AF_UNSPEC;
+	ai->ai_socktype = SOCK_STREAM;
 	ai->ai_flags = AI_PASSIVE;
 }
 
@@ -74,11 +89,21 @@ int	main(int ac, char **av)
 {
 	(void)av;
 	(void)ac;
-	struct	addrinfo *net;
-	struct	addrinfo hint;
+	struct	addrinfo	*net;
+	struct	sockaddr_in	sa;
+	struct	addrinfo	hint;
+	int			status;
 
+	hint.ai_addr = (struct  sockaddr *)&sa;
 	setup_addrinfo(&hint);
-	getaddrinfo(NULL, "ircd", &hint, &net);
-	std::cout << "Port : " << ntohs(((struct sockaddr_in *)net->ai_addr)->sin_port) << std::endl;
+	if ((status = getaddrinfo("127.0.0.1", "ircd", &hint, &net)))
+	{
+		std::cout << "getaddinfo error: " << gai_strerror(status) << std::endl;
+		return (1);
+	}
+	print_ai(net);
+
+
+	freeaddrinfo(net);
 	return (0);
 }
