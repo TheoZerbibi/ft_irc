@@ -1,4 +1,7 @@
-#Fonction
+
+
+##Help
+###Function
 
 - socket() :
 
@@ -12,7 +15,7 @@
 
 - 
 
-## Struct
+###Struct
 
 ```c++
 
@@ -39,3 +42,6 @@
 	};
 
 ```
+
+##External Ressource
+
