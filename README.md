@@ -1,11 +1,11 @@
 # Ft_Irc
 
-##Requirement
+## Requirement
 - 
 
-##Help
+## Help
 
-###Function
+### Function
 
 - socket() :
 
@@ -19,7 +19,7 @@
 
 - 
 
-###Struct
+### Struct
 
 ```c++
 
@@ -47,5 +47,5 @@
 
 ```
 
-##External Ressource
+## External Ressource
 
