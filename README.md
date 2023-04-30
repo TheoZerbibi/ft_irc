@@ -1,6 +1,10 @@
+#Ft_Irc
 
+##Requirement
+- 
 
 ##Help
+
 ###Function
 
 - socket() :
