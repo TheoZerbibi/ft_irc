@@ -6,6 +6,8 @@
 #include	<cstring>
 #include	<netdb.h>
 
+#include	<errno.h>
+
 #include	<iostream>
 #include	<algorithm>
 
@@ -37,7 +39,6 @@
 //	//		std::cout << "Addr wrong format: '" << addr << "'" << std::endl;
 //	}
 
-
 void	print_ai(struct addrinfo *ai)
 {
 	std::cout << "Address family: ";
@@ -50,7 +51,6 @@ void	print_ai(struct addrinfo *ai)
 	std::cout << "ip : " << inet_ntoa(((struct sockaddr_in *)ai->ai_addr)->sin_addr) << std::endl;
 	std::cout << "Port : " << ntohs(((struct sockaddr_in *)ai->ai_addr)->sin_port) << std::endl;
 }
-
 
 void	setup_addrinfo(struct addrinfo *ai)
 {
@@ -92,16 +92,69 @@ int	main(int ac, char **av)
 	struct	addrinfo	*net;
 	struct	sockaddr_in	sa;
 	struct	addrinfo	hint;
+	int			sfd;
 	int			status;
 
 	hint.ai_addr = (struct  sockaddr *)&sa;
 	setup_addrinfo(&hint);
-	if ((status = getaddrinfo("127.0.0.1", "ircd", &hint, &net)))
+	if ((status = getaddrinfo("127.0.0.1", "10024", &hint, &net)))
 	{
 		std::cout << "getaddinfo error: " << gai_strerror(status) << std::endl;
 		return (1);
 	}
+	if ((sfd = socket(net->ai_family, net->ai_socktype, net->ai_protocol)) == -1)
+	{
+		std::cout << strerror(errno) << std::endl;
+		freeaddrinfo(net);
+		return (1);
+	}
 	print_ai(net);
+	std::cout << "FD : " << sfd << std::endl;
+	if (bind(sfd, net->ai_addr, net->ai_addrlen) == -1)
+	{
+		std::cout << strerror(errno) << std::endl;
+		freeaddrinfo(net);
+		return (1);
+	}
+	if (listen(sfd, 1) == -1)
+	{
+		std::cout << strerror(errno) << std::endl;
+		freeaddrinfo(net);
+		return (1);
+	}
+	
+	int	newfd = accept(sfd, net->ai_addr, &net->ai_addrlen);
+	if (newfd == -1)
+	{
+		std::cout << strerror(errno) << std::endl;
+		freeaddrinfo(net);
+		return (1);
+	}
+//	recv(newfd, buff, 10, 0);
+//	while (1)
+//	{
+//		char	*line;
+//		while (get_next_line(newfd, & line))
+//		{
+//			std::cout << "line = " << line << std::endl;
+//			if (!strcmp(line, "exit"))
+//			{
+//				free(line);
+//				freeaddrinfo(net);
+//				return (0);
+//			}
+//			free(line);
+//		}
+//	}
+
+
+	//	if (connect(sfd, net->ai_addr, net->ai_addrlen) == -1)
+	//	{
+	//		std::cout << "wut" << std::endl;
+	//		std::cout << strerror(errno) << std::endl;
+	//		freeaddrinfo(net);
+	//		return (1);
+	//	}
 
 
 	freeaddrinfo(net);

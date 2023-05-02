@@ -1,7 +1,32 @@
 # Ft_Irc
+-
 
 ## Requirement
 - 
+
+- [ ] Server / client socket connection
+ - [ ] Accept multiple client and register them under a user id
+
+
+- [ ] Signal handling
+ - [ ] CTRL+C
+ - [ ] CTRL+D
+ - [ ] CTRL+Z
+
+
+- [ ] Define client structure including: socket-fd, Id, command buffer
+- [ ] Parse client input 
+ - [ ] Make a get_next_command to get command
+- [ ] Define rooms with userid
+
+- [ ] Server command
+ - [ ]  PING
+ - [ ]  OPER
+ - [ ]  KILL
+
+- [ ] Implement RPL system
+ - [ ] Implement ERR
+ - [ ]
 
 ## Help
 
@@ -48,4 +73,3 @@
 ```
 
 ## External Ressource
-
