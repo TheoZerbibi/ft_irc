@@ -28,6 +28,11 @@
  - [ ] Implement ERR
  - [ ]
 
+## Structure
+
+### User
+- We should define a structure for user
+
 ## Help
 
 ### Function
@@ -36,7 +41,6 @@
 
 - htons / htonl : convert value given to a valid value for network using. Network value can only be big-endian style.
 - ntohl / ntohs : Convert value Network-style representation to system representation (Big or Little endian)
-
 
 
 - in_addr_t inet_addr(char \*addr) : Convert string representation of ipv4 address to binary representation for further usage.
