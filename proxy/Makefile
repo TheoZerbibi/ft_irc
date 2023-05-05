@@ -1,6 +1,6 @@
 PROG=simple-tcp-proxy
 CFLAGS=-Wall
-CC=c++
+CC=g++
 
 all: ${PROG}
 

@@ -1,3 +1,2 @@
 #!/bin/sh
 kill `cat bircd.pid`
-
