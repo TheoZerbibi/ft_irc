@@ -38,7 +38,6 @@ void	print_ai(struct addrinfo *ai)
 	std::cout << "Port : " << ntohs(((struct sockaddr_in *)ai->ai_addr)->sin_port) << std::endl;
 }
 
-
 void	ft_read_socket(int sfd)
 {
 	struct addrinfo net;
@@ -46,17 +45,17 @@ void	ft_read_socket(int sfd)
 	char	buff[512] = "";
 
 	net.ai_addr = &sa;
-		std::vector<int> fd;
+	std::vector<int> fd;
 
-		int	newfd = accept(sfd, net.ai_addr, &net.ai_addrlen);
-		if (newfd == -1)
-		{
-			std::cout << strerror(errno) << std::endl;
-			freeaddrinfo(&net);
-			return;
-		}
-		fd.push_back(newfd);
-		std::cout << newfd << std::endl;
+	int	newfd = accept(sfd, net.ai_addr, &net.ai_addrlen);
+	if (newfd == -1)
+	{
+		std::cout << strerror(errno) << std::endl;
+		freeaddrinfo(&net);
+		return;
+	}
+	fd.push_back(newfd);
+	std::cout << newfd << std::endl;
 	while (1)
 	{
 		read(newfd, buff, 512);
@@ -109,7 +108,6 @@ int	main(int ac, char **av)
 	//		freeaddrinfo(net);
 	//		return (1);
 	//	}
-
 	freeaddrinfo(net);
 	return (0);
 }

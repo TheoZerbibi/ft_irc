@@ -8,6 +8,12 @@
  - [ ] Accept multiple client and register them under a user id
 
 
+- [ ] Command management
+ - [ ] Get command on user-sockfd (Should use a buffer for eachuser)
+ - [ ] Parse command
+ - [ ]
+
+
 - [ ] Signal handling
  - [ ] CTRL+C
  - [ ] CTRL+D
@@ -30,8 +36,51 @@
 
 ## Structure
 
+### Global
+
+```c++
+
+class ft_irc {
+	private :
+		std::vector<User>	member;
+		std::vector<Channel>	chan;
+};
+
+```
+
+```c++
+class Channel {
+	private:
+		std::string		name;
+		std::vector<int>	operators;
+		std::vector<int>	users;
+};
+```
+
 ### User
 - We should define a structure for user
+
+``` c++
+
+class User {
+	private :
+		int		sockfd;
+		char		cmdbuff[512];
+		std::string	name;
+		std::string	nick;
+		std::string	host;
+	public :
+		// Construct & Destructor
+		// Setter & Getter
+};
+
+```
+
+### Channel
+
+## Command and RPL
+
+- CAP 
 
 ## Help
 
