@@ -128,3 +128,8 @@ class User {
 ```
 
 ## External Ressource
+
+- [Reference Repo](https://github.com/marineks/Ft_irc)
+- [Docs: ModernIrc](https://modern.ircdocs.horse/), 
+- [Network programming guide](https://beej.us/guide/bgnet/pdf/bgnet_a4_c_1.pdf)
+- [Irssi Doc](https://irssi.org/New-users/)
