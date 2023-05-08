@@ -76,7 +76,9 @@ class User {
 
 ```
 
+
 ### Channel
+- Channel names are string (beginning with a '&
 
 ## Command and RPL
 
