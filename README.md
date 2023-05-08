@@ -82,7 +82,20 @@ class User {
 
 ## Command and RPL
 
-- CAP 
+### Registration
+
+> Immediately upon establishing a connection the client must attempt registration, without waiting for any banner message from the server.
+
+> Until registration is complete, only a limited subset of commands SHOULD be accepted by the server. This is because it makes sense to require a registered (fully connected) client connection before allowing commands such as JOIN, PRIVMSG and others.
+
+
+ | Command | Description | Reply | Error |
+ | NICK nickname|  | Reply | Error |
+ | Command | Description | Reply | Error |
+ | Command | Description | Reply | Error |
+ | Command | Description | Reply | Error |
+
+- | NICK nickname |  |
 
 ## Help
 
