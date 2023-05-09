@@ -8,7 +8,10 @@ fi
 SERVER=$1
 PORT=$2
 
-nc $SERVER $PORT << EOF
-NICK
+
+./proxy/simple-tcp-proxy "$PORT" 6667 &
+
+nc "$SERVER" "$PORT" << EOF
+NICK isaac
 USER isaac newton localhost :Isaac Newton
 EOF

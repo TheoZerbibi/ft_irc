@@ -1,5 +1,6 @@
 NAME=ircserv
 SRC_NAME=main.cpp \
+	ft_irc.cpp \
     setsocket.cpp
 
 HDR_NAME=ft_irc.hpp\

@@ -47,7 +47,7 @@ class User {
 
 
 ### Channel
-- Channel names are string (beginning with a '&
+- Channel names are string (beginning with a '&', a '#', ...)
 
 ## Command and RPL
 
@@ -65,7 +65,6 @@ class User {
 | Command | Description | Reply | Error |
 | Command | Description | Reply | Error |
 
-- | NICK nickname |  |
 
 ## Help
 
@@ -147,6 +146,6 @@ class User {
 ## External Ressource
 
 - [Reference Repo](https://github.com/marineks/Ft_irc)
-- [Docs: ModernIrc](https://modern.ircdocs.horse/), 
+- [ModernIrc](https://modern.ircdocs.horse/)
 - [Network programming guide](https://beej.us/guide/bgnet/pdf/bgnet_a4_c_1.pdf)
 - [Irssi Doc](https://irssi.org/New-users/)

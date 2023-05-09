@@ -7,6 +7,7 @@ class User {
 		const std::string& getNick() const;
 		const std::string& getUsername() const;
 		const std::string& getHostname() const;
+		void		   recvData();
 
 		// Other methods and data members as needed
 
@@ -18,4 +19,4 @@ class User {
 		std::string m_hostname;   // User's hostname or IP address
 
 		// Other data members as needed
-}
+};
