@@ -1,37 +1,6 @@
 # Ft_Irc
 -
 
-## Requirement
-
-- [ ] Server / client socket connection
- - [ ] Accept multiple client and register them under a user id
-
-
-- [ ] Command management
- - [ ] Get command on user-sockfd (Should use a buffer for eachuser)
- - [ ] Parse command
-
->
->
-- [ ] Signal handling
- - [ ] CTRL+C
- - [ ] CTRL+D
- - [ ] CTRL+Z
-
-
-- [ ] Define client structure including: socket-fd, Id, command buffer
-- [ ] Parse client input 
- - [ ] Make a get_next_command to get command
-- [ ] Define rooms with userid
-
-- [ ] Server command
- - [ ]  PING
- - [ ]  OPER
- - [ ]  KILL
-
-- [ ] Implement RPL system
- - [ ] Implement ERR
- - [ ]
 
 ## Structure
 
@@ -59,8 +28,6 @@ class Channel {
 ```
 
 ### User
-
-- We should define a structure for user
 
 ``` c++
 
@@ -141,6 +108,40 @@ class User {
 	};
 
 ```
+
+## Requirement
+
+- [ ] Server / client socket connection
+ - [ ] Accept multiple client and register them under a user id
+
+- [ ] Command management
+ - [ ] Get command on user-sockfd (Should use a buffer for eachuser)
+ - [ ] Parse command
+
+>
+>
+- [ ] Signal handling
+ - [ ] CTRL+C
+ - [ ] CTRL+D
+ - [ ] CTRL+Z
+
+
+- [ ] Define client structure including: socket-fd, Id, command buffer
+- [ ] Parse client input 
+ - [ ] Make a get_next_command to get command
+- [ ] Define rooms with userid
+
+- [ ] Server command
+ - [ ]  PING
+ - [ ]  OPER
+ - [ ]  KILL
+
+- [ ] Implement RPL system
+ - [ ] Implement ERR
+
+### Extra
+
+- [ ] Do a script to automate connexion on server with nc
 
 ## External Ressource
 
