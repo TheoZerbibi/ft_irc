@@ -2,6 +2,17 @@
 -
 
 
+### Client management
+
+After creating the main listening socket we will have to start managing client.
+Things to do are :
+
+- Accepting new connexion from client: registering them as client
+- listening to incoming data from client and buffering them in personnal buffer
+- Reading buffer from client to extract command *Optionnal*
+- Queuing command
+- executing command
+
 ## Structure
 
 ### Global
@@ -78,8 +89,6 @@ class User {
 
 - in_addr_t inet_addr(char \*addr) : Convert string representation of ipv4 address to binary representation for further usage.
 - char \*inet_ntoa(struct \*in_addr in) : Convert struct adress to string representation for printing (buffer returned is static stored so further call will overwrite it).
-
-- 
 
 ### Struct
 

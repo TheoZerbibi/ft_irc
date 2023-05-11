@@ -4,7 +4,7 @@ User::User(int fd, const std::string& nick, const std::string& username, const s
 {
 }
 
-~User::User()
+User::~User()
 {
 }
 
@@ -13,17 +13,17 @@ int	User::getFd() const
 	return (this->m_fd);
 }
 
-const std::string& getNick() const
+const std::string& User::getNick() const
 {
 	return (this->m_nick);
 }
 
-const std::string& getUsername() const
+const std::string& User::getUsername() const
 {
 	return (this->m_username);
 }
 
-const std::string& getHostname() const;
+const std::string& User::getHostname() const
 {
 	return (this->m_hostname);
 }

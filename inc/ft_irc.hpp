@@ -1,3 +1,4 @@
+#pragma		once
 #include	<sys/types.h>
 #include	<sys/socket.h>
 #include	<netinet/in.h>
@@ -15,15 +16,28 @@
 #include	<algorithm>
 
 #include	<vector>
+#include	<sys/select.h>
 
 #include	"User.hpp"
+
+
+// SELECT FD ENUM
+enum
+{
+	MASTER,
+	READ,
+	SEND,
+	EXCEPT
+};
 
 class	Irc{
 	private:
 		int			_sockfd;
 		struct	addrinfo	*_net;
+		std::string		_pass;
 //		std::vector<Channel>	chans;
 		std::vector<User>	_users;
+		std::vector<int>	_clients;
 	public:
 		//Const & destr
 		Irc();
@@ -40,9 +54,10 @@ class	Irc{
 		int			&getSocket() const;
 		struct addrinfo		*getAi() const;
 		std::vector<User>	&getUsers() const;
+		int			computeFdMax() const;
 
 		//Operator Overload
-		Irc operator=(Irc &rhs);
+		Irc &operator=(const Irc &rhs);
 };
 
 class	SyscallError: public std::exception
@@ -53,10 +68,6 @@ class	SyscallError: public std::exception
 };
 
 
-void	Irc::addUser(int const &sfd)
-{
-	std::cout << "size of int ref" << sizeof(sfd) << std::endl;
-}
 
 int	ft_setup_socket(struct addrinfo *net);
 struct	addrinfo *setup_addrinfo(char *port);

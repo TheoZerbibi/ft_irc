@@ -1,3 +1,6 @@
+#pragma once
+#include <string>
+
 class User {
 	public:
 		User(int fd, const std::string& nick, const std::string& username, const std::string& hostname);

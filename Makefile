@@ -1,6 +1,7 @@
 NAME=ircserv
 SRC_NAME=main.cpp \
 	ft_irc.cpp \
+	User.cpp \
     setsocket.cpp
 
 HDR_NAME=ft_irc.hpp\
@@ -21,21 +22,31 @@ OBJS=$(addprefix $(OBJ_DIR), $(OBJ_NAME))
 SRCS=$(addprefix $(SRC_DIR), $(SRC_NAME))
 
 CXX=c++
+
+DEBUG=0
+
+ifeq ($(DEBUG), 1)
+CXXFLAGS=-Wall -Wextra -Werror -std=c++98 -g
+else
 CXXFLAGS=-Wall -Wextra -Werror -std=c++98
+endif
 
 all: $(NAME)
 
 $(NAME) : $(OBJS) $(HDR)
-	$(CXX) -o $(NAME) $(OBJS) $(CXXFLAGS)
+	$(CXX) -I$(INC) -o $(NAME) $(OBJS) $(CXXFLAGS)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.cpp $(OBJ_DIR)
-	$(CXX) -o $@ -c $< $(CXXFLAGS) -I$(INC)
+	$(CXX) -I$(INC) -o $@ -c $< $(CXXFLAGS)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
+debug:
+	make DEBUG=1
+
 clean:
-	rm -rf $(OBJ)
+	rm -rf $(OBJS)
 
 fclean: clean
 	rm -rf $(NAME)

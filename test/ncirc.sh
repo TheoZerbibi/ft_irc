@@ -1,15 +1,17 @@
 #!/bin/bash
 
 if [ "$#" -ne 2 ]; then
-	echo "Usage: $0 SERVER PORT"
-	exit 1
+	SERVER=localhost
+	PORT=1024
+else
+	SERVER=$1
+	PORT=$2
 fi
 
-SERVER=$1
-PORT=$2
 
 
 ./proxy/simple-tcp-proxy "$PORT" 6667 &
+PID=$?
 
 nc "$SERVER" "$PORT" << EOF
 NICK isaac

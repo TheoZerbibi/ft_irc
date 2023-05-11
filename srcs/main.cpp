@@ -1,5 +1,49 @@
 #include "ft_irc.hpp"
 
+int	ft_accept_client(Irc &serv, fd_set *fds)
+{
+	int	newfd;
+
+	newfd = accept(serv.getSocket(), NULL, NULL);
+	if (newfd == -1)
+		throw SyscallError();
+	FD_ISSET(newfd, &fds[MASTER]);
+	serv._clients.push_back(newfd);
+}
+
+// Need to change interation to take userlist instead of an index
+
+int	read_fds(Irc &serv, fd_set *fds)
+{
+	std::vector<int>::iterator	beg = serv;
+
+	char	disc[512];
+
+	for (int i = 0; i <= serv.computeFdMax; i++)
+	{
+		if (FD_ISSET(i, &fds[READ]))
+		{
+			if (i == serv.getSocket())
+				ft_accept_client(&serv, fds);
+		//	else 
+		//	{
+			nbytes = recv(i, disc, sizeof(disc), 0);
+				if ((nbytes = recv(i, disc, sizeof(disc), 0)) <= 0) {
+		//			if (nbytes == 0)
+		//			{
+		//				//Connection closed : Need to discard User entry from userlist
+		//			}
+		//			else
+		//			{
+		//				//Error from recv
+		//			}
+		//			close(i);
+		//		}
+			}
+		}
+	}
+}
+
 bool	ft_check_input(int ac, char **av)
 {
 	std::string		port;
@@ -49,41 +93,44 @@ bool	ft_check_input(int ac, char **av)
 //			bzero(buff, 512);
 //		}
 //	}
+//
+
+
+
+int	main_loop(Irc &serv)
+{
+	fd_set				fds[4];
+
+	for (int i = 0; i < 4; i++)
+		FD_ZERO(&fds[i]);
+	fdmax = serv.getSocket();
+	FD_SET(serv.getSocket, &fds[0]);
+	while (1)
+	{
+		fds[READ] = fds[MASTER];
+		if (select(serv.computeFdMax(), &fds[READ], &fds[SEND], &fds[EXCEPT], NULL) == -1)
+		{
+			std::cerr << "Select error : ";
+			throw  SyscallError();
+		}
+		read_fds(&serv, fds);
+	}
+	return (0);
+}
 
 int	main(int ac, char **av)
 {
 	(void)av;
 	(void)ac;
-	Irc	ircserv;
-//	int			sfd = 5;
-//	struct	addrinfo	*net;
-//	
-//	if (!(net = setup_addrinfo(av[1])))
-//		return (1);
-//	if ((sfd = ft_setup_socket(net)) == -1 || set_socket_option(sfd) == -1)
-//	{
-//		std::cout << strerror(errno) << std::endl;
-//		freeaddrinfo(net);
-//		return (1);
-//	}
-	ircserv.printAi();
-//	ft_read_socket(sfd);
 
-	//	recv(newfd, buff, 10, 0);
-	//	while (1)
-	//	{
-	//		char	*line;
-	//		while (get_next_line(newfd, & line))
-	//		{
-	//			std::cout << "line = " << line << std::endl;
-	//			if (!strcmp(line, "exit"))
-	//			{
-	//				free(line);
-	//				freeaddrinfo(net);
-	//				return (0);
-	//			}
-	//			free(line);
-	//		}
-	//	}
+	try
+	{
+		Irc	ircserv;
+		ircserv.printAi();
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
 	return (0);
 }

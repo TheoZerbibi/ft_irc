@@ -1,13 +1,27 @@
 #include "ft_irc.hpp"
 
+void	printAi(struct addrinfo *net)
+{
+	std::cout << "Address family: ";
+	if (net->ai_family == AF_INET)
+		std::cout << "Ipv4" << std::endl;
+	else if (net->ai_family == AF_INET6)
+		std::cout << "Ipv6" << std::endl;
+	else
+		std::cout << "Unspecified" << std::endl;
+	std::cout << "ip : " << inet_ntoa(((struct sockaddr_in *)net->ai_addr)->sin_addr) << std::endl;
+	std::cout << "Port : " << ntohs(((struct sockaddr_in *)net->ai_addr)->sin_port) << std::endl;
+}
+
 int	ft_setup_socket(struct addrinfo *net)
 {
 	int	sockfd;
 
-	if ((sockfd = socket(net->ai_family, net->ai_socktype, net->ai_protocol)) == -1)
-		return (-1);
+	if ((sockfd = socket(net->ai_family, net->ai_socktype, net->ai_protocol)) == -1) return (-1);
 	if (bind(sockfd, net->ai_addr, net->ai_addrlen) == -1)
+	{
 		return (-1);
+	}
 	if (listen(sockfd, 1) == -1)
 		return (-1);
 	return (sockfd);
