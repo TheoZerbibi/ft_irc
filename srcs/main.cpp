@@ -1,48 +1,51 @@
 #include "ft_irc.hpp"
 
-int	ft_accept_client(Irc &serv, fd_set *fds)
+int	ft_accept_client(Irc *serv, fd_set *fds)
 {
 	int	newfd;
 
-	newfd = accept(serv.getSocket(), NULL, NULL);
+	newfd = accept(serv->getSocket(), NULL, NULL);
 	if (newfd == -1)
 		throw SyscallError();
 	FD_ISSET(newfd, &fds[MASTER]);
-	serv._clients.push_back(newfd);
+	serv->_clients.push_back(newfd);
+	return (0);
 }
 
 // Need to change interation to take userlist instead of an index
-
-int	read_fds(Irc &serv, fd_set *fds)
+int	read_fds(Irc *serv, fd_set *fds)
 {
-	std::vector<int>::iterator	beg = serv;
-
+	std::vector<int>::iterator	beg = serv->_clients.begin();
+	std::vector<int>::iterator	end = serv->_clients.end();
 	char	disc[512];
+	int	fdmax = serv->computeFdMax();
+	int	nbytes;
 
-	for (int i = 0; i <= serv.computeFdMax; i++)
+	(void)beg;
+	(void)end;
+	for (int i = 0; i <= fdmax; i++)
 	{
 		if (FD_ISSET(i, &fds[READ]))
 		{
-			if (i == serv.getSocket())
-				ft_accept_client(&serv, fds);
-		//	else 
-		//	{
-			nbytes = recv(i, disc, sizeof(disc), 0);
-				if ((nbytes = recv(i, disc, sizeof(disc), 0)) <= 0) {
-		//			if (nbytes == 0)
-		//			{
-		//				//Connection closed : Need to discard User entry from userlist
-		//			}
-		//			else
-		//			{
-		//				//Error from recv
-		//			}
-		//			close(i);
-		//		}
-			}
+			if (i == serv->getSocket())
+				ft_accept_client(serv, fds);
+			else if ((nbytes = recv(i, disc, sizeof(disc), 0)) <= 0)
+				//			if (nbytes == 0)
+				//			{
+				//			//Connection closed : Need to discard User entry from userlist
+				//			}
+				//			else
+				//			{
+				//				//Error from recv
+				//			}
+				//			close(i);
+				//		}
+				;
 		}
 	}
+return (0);
 }
+
 
 bool	ft_check_input(int ac, char **av)
 {
@@ -95,16 +98,13 @@ bool	ft_check_input(int ac, char **av)
 //	}
 //
 
-
-
 int	main_loop(Irc &serv)
 {
 	fd_set				fds[4];
 
 	for (int i = 0; i < 4; i++)
 		FD_ZERO(&fds[i]);
-	fdmax = serv.getSocket();
-	FD_SET(serv.getSocket, &fds[0]);
+	FD_SET(serv.getSocket(), &fds[0]);
 	while (1)
 	{
 		fds[READ] = fds[MASTER];
@@ -125,8 +125,9 @@ int	main(int ac, char **av)
 
 	try
 	{
-		Irc	ircserv;
+		Irc	ircserv("ircd", "");
 		ircserv.printAi();
+		main_loop(ircserv);
 	}
 	catch (std::exception &e)
 	{

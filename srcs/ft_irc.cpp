@@ -10,9 +10,6 @@ Irc::Irc()
 	*this = Irc(std::string("ircd"), std::string(""));
 }
 
-
-
-
 Irc::Irc(std::string port, std::string passwd): _pass(passwd)
 {
 	struct	addrinfo	hint;
@@ -64,7 +61,6 @@ int	Irc::computeFdMax(void) const
 {
 	return (this->_users.size() + 1);
 }
-
 
 void	Irc::printAi() const
 {

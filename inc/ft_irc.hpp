@@ -37,7 +37,6 @@ class	Irc{
 		std::string		_pass;
 //		std::vector<Channel>	chans;
 		std::vector<User>	_users;
-		std::vector<int>	_clients;
 	public:
 		//Const & destr
 		Irc();
@@ -46,6 +45,8 @@ class	Irc{
 
 		//Utils
 		void			printAi() const;
+
+		std::vector<int>	_clients;
 
 		//Setter
 		void			addUser(int const &sfd);
@@ -66,8 +67,6 @@ class	SyscallError: public std::exception
 		return (strerror(errno));
 	}
 };
-
-
 
 int	ft_setup_socket(struct addrinfo *net);
 struct	addrinfo *setup_addrinfo(char *port);
