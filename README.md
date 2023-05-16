@@ -1,5 +1,4 @@
 # Ft_Irc
--
 
 
 ### Client management
