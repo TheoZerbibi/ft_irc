@@ -17,7 +17,7 @@ int	ft_setup_socket(struct addrinfo *net)
 {
 	int	sockfd;
 
-	if ((sockfd = socket(net->ai_family, net->ai_socktype, net->ai_protocol)) == -1) return (-1);
+	if ((sockfd = socket(net->ai_family, net->ai_socktype | SOCK_NONBLOCK, net->ai_protocol)) == -1) return (-1);
 	if (bind(sockfd, net->ai_addr, net->ai_addrlen) == -1)
 	{
 		return (-1);

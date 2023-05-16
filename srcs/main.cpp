@@ -27,9 +27,11 @@ int	read_fds(Irc *serv, fd_set *fds)
 	{
 		if (FD_ISSET(i, &fds[READ]))
 		{
+			std::cout << "Im here" << std::endl;
 			if (i == serv->getSocket())
 				ft_accept_client(serv, fds);
 			else if ((nbytes = recv(i, disc, sizeof(disc), 0)) <= 0)
+			{
 				//			if (nbytes == 0)
 				//			{
 				//			//Connection closed : Need to discard User entry from userlist
@@ -40,7 +42,10 @@ int	read_fds(Irc *serv, fd_set *fds)
 				//			}
 				//			close(i);
 				//		}
-				;
+				std::cout << i << ": " << disc << std::endl;
+				bzero(disc, sizeof(disc));
+		}
+				
 		}
 	}
 return (0);
@@ -113,6 +118,7 @@ int	main_loop(Irc &serv)
 			std::cerr << "Select error : ";
 			throw  SyscallError();
 		}
+		std::cout << "Im here" << std::endl;
 		read_fds(&serv, fds);
 	}
 	return (0);
