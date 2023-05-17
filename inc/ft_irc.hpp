@@ -16,6 +16,7 @@
 #include	<algorithm>
 
 #include	<vector>
+#include	<map>
 #include	<sys/select.h>
 
 #include	"User.hpp"
@@ -36,7 +37,7 @@ class	Irc{
 		struct	addrinfo	*_net;
 		std::string		_pass;
 //		std::vector<Channel>	chans;
-		std::vector<User>	_users;
+		std::map<int, User>	_users;
 	public:
 		//Const & destr
 		Irc();
@@ -52,13 +53,13 @@ class	Irc{
 		void			addUser(int const &sfd);
 
 		//Getter
-		int			&getSocket() const;
-		struct addrinfo		*getAi() const;
-		std::vector<User>	&getUsers() const;
+		const	int			&getSocket() const;
+		const	struct addrinfo		*getAi() const;
+		const	std::map<int, User>	&getUsers() const;
 		int			computeFdMax() const;
 
 		//Operator Overload
-		Irc &operator=(const Irc &rhs);
+//		Irc &operator=(Irc &rhs);
 };
 
 class	SyscallError: public std::exception

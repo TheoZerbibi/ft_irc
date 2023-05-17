@@ -37,29 +37,43 @@ Irc::Irc(std::string port, std::string passwd): _pass(passwd)
 }
 
 // Getter
-int	&Irc::getSocket() const {
-	return (const_cast<int&>(this->_sockfd));
+const int	&Irc::getSocket() const {
+	return ((this->_sockfd));
 }
 
-struct addrinfo	*Irc::getAi() const
+const struct addrinfo	*Irc::getAi() const
 {
 	return (this->_net);
 }
 
-std::vector<User>	&Irc::getUsers() const
+const std::map<int, User>	&Irc::getUsers() const
 {
-	return (const_cast<std::vector<User> &>(this->_users));
+	return ((this->_users));
 }
 
 //Setter
 void	Irc::addUser(int const &sfd)
 {
-	std::cout << "size of int ref" << sizeof(sfd) << std::endl;
+	User	user;
+
+	_users.insert(std::make_pair(sfd, user));
 }
 
 int	Irc::computeFdMax(void) const
 {
-	return (this->_users.size() + 1);
+	int	fdmax = this->getSocket();
+	int	curr_fd;
+	std::map<int, User>::const_iterator it = this->_users.begin();
+	std::map<int, User>::const_iterator ite = this->_users.end();
+
+	while (it != ite)
+	{
+		curr_fd = (*it).first;
+		if (fdmax < curr_fd)
+			fdmax = curr_fd;
+		it++;
+	}
+	return (fdmax + 1);
 }
 
 void	Irc::printAi() const
@@ -75,13 +89,13 @@ void	Irc::printAi() const
 	std::cout << "Port : " << ntohs(((struct sockaddr_in *)_net->ai_addr)->sin_port) << std::endl;
 }
 
-Irc	&Irc::operator=(const Irc &rhs)
-{
-	int	status;
-
-	status = getaddrinfo(NULL, NULL, rhs.getAi(), &this->_net);
-	freeaddrinfo(this->_net);
-	this->_sockfd = rhs.getSocket();
-	this->_users = rhs.getUsers();
-	return (*this);
-}
+//	Irc	&Irc::operator=(const Irc &rhs)
+//	{
+//		int	status;
+//	
+//		status = getaddrinfo(NULL, NULL, rhs.getAi(), &this->_net);
+//		freeaddrinfo(this->_net);
+//		this->_sockfd = rhs.getSocket();
+//		this->_users = rhs.getUsers();
+//		return (*this);
+//	}

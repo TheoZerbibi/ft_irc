@@ -1,6 +1,14 @@
 #include "User.hpp"
 
-User::User(int fd, const std::string& nick, const std::string& username, const std::string& hostname): m_fd(fd), m_nick(nick), m_username(username), m_hostname(hostname)
+//	User::User(int fd, const std::string& nick, const std::string& username, const std::string& hostname): _fd(fd), _nick(nick), _username(username), _hostname(hostname)
+//	{
+//	}
+//	
+//	User::User(int &fd): _fd(fd)
+//	{
+//	}
+
+User::User()
 {
 }
 
@@ -8,22 +16,22 @@ User::~User()
 {
 }
 
-int	User::getFd() const
-{
-	return (this->m_fd);
-}
-
-const std::string& User::getNick() const
-{
-	return (this->m_nick);
-}
-
-const std::string& User::getUsername() const
-{
-	return (this->m_username);
-}
-
-const std::string& User::getHostname() const
-{
-	return (this->m_hostname);
-}
+//	const int	&User::getFd() const
+//	{
+//		return (this->_fd);
+//	}
+//	
+//	const std::string& User::getNick() const
+//	{
+//		return (this->_nick);
+//	}
+//	
+//	const std::string& User::getUsername() const
+//	{
+//		return (this->_username);
+//	}
+//	
+//	const std::string& User::getHostname() const
+//	{
+//		return (this->_hostname);
+//	}

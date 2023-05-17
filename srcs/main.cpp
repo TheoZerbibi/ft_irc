@@ -8,7 +8,7 @@ int	ft_accept_client(Irc *serv, fd_set *fds)
 	if (newfd == -1)
 		throw SyscallError();
 	FD_ISSET(newfd, &fds[MASTER]);
-	serv->_clients.push_back(newfd);
+	serv->addUser(newfd);
 	return (0);
 }
 
@@ -23,31 +23,37 @@ int	read_fds(Irc *serv, fd_set *fds)
 
 	(void)beg;
 	(void)end;
+	std::cout << "Got some fd ready for reading" << std::endl;
 	for (int i = 0; i <= fdmax; i++)
 	{
 		if (FD_ISSET(i, &fds[READ]))
 		{
-			std::cout << "Im here" << std::endl;
 			if (i == serv->getSocket())
+			{
+				std::cout << "Accepting new connection" << std::endl;
 				ft_accept_client(serv, fds);
+			}
 			else if ((nbytes = recv(i, disc, sizeof(disc), 0)) <= 0)
 			{
-				//			if (nbytes == 0)
-				//			{
-				//			//Connection closed : Need to discard User entry from userlist
-				//			}
-				//			else
-				//			{
-				//				//Error from recv
-				//			}
-				//			close(i);
-				//		}
+				std::cout << "Error with recv" << std::endl;
+//			if (nbytes == 0)
+//			{
+//			//Connection closed : Need to discard User entry from userlist
+//			}
+//			else
+//			{
+//				//Error from recv
+//			}
+//			close(i);
+//			
+			}
+			else
+			{
 				std::cout << i << ": " << disc << std::endl;
 				bzero(disc, sizeof(disc));
-		}
-				
-		}
+			}
 	}
+}
 return (0);
 }
 
@@ -106,20 +112,23 @@ bool	ft_check_input(int ac, char **av)
 int	main_loop(Irc &serv)
 {
 	fd_set				fds[4];
+	//	timeval				ttd = (timeval){2, 0};
 
 	for (int i = 0; i < 4; i++)
 		FD_ZERO(&fds[i]);
-	FD_SET(serv.getSocket(), &fds[0]);
+	FD_SET(serv.getSocket(), &fds[MASTER]);
 	while (1)
 	{
-		fds[READ] = fds[MASTER];
-		if (select(serv.computeFdMax(), &fds[READ], &fds[SEND], &fds[EXCEPT], NULL) == -1)
+		for (int i = 1; i < 4; i++)
+			fds[i] = fds[MASTER];
+		std::cout << "Connecting" << std::endl;
+		if (select(serv.computeFdMax(), &fds[READ], NULL, NULL, NULL) == -1)
 		{
 			std::cerr << "Select error : ";
 			throw  SyscallError();
 		}
-		std::cout << "Im here" << std::endl;
 		read_fds(&serv, fds);
+		std::cout << "Hey you !" << std::endl;
 	}
 	return (0);
 }
