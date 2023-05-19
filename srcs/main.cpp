@@ -7,56 +7,59 @@ int	ft_accept_client(Irc *serv, fd_set *fds)
 	newfd = accept(serv->getSocket(), NULL, NULL);
 	if (newfd == -1)
 		throw SyscallError();
-	FD_ISSET(newfd, &fds[MASTER]);
+	FD_SET(newfd, &fds[MASTER]);
 	serv->addUser(newfd);
 	return (0);
 }
 
-// Need to change interation to take userlist instead of an index
+// Need to change iteration to take userlist instead of an index
 int	read_fds(Irc *serv, fd_set *fds)
 {
-	std::vector<int>::iterator	beg = serv->_clients.begin();
-	std::vector<int>::iterator	end = serv->_clients.end();
-	char	disc[512];
-	int	fdmax = serv->computeFdMax();
-	int	nbytes;
-
-	(void)beg;
-	(void)end;
 	std::cout << "Got some fd ready for reading" << std::endl;
-	for (int i = 0; i <= fdmax; i++)
+	if (FD_ISSET(serv->getSocket(), &fds[READ]))
 	{
-		if (FD_ISSET(i, &fds[READ]))
+			std::cout << "Accepting new connection" << std::endl;
+			ft_accept_client(serv, fds);
+	}
+	std::map<int, User>::const_iterator	beg = serv->getUsers().begin();
+	std::map<int, User>::const_iterator	end = serv->getUsers().end();
+
+	char	disc[512];
+	int	nbytes;
+	int	fd;
+
+	while (beg != end)
+	{
+		fd = beg->first;
+		std::cout << "Got some new message" << std::endl;
+		if (FD_ISSET(fd, &fds[READ]))
 		{
-			if (i == serv->getSocket())
-			{
-				std::cout << "Accepting new connection" << std::endl;
-				ft_accept_client(serv, fds);
-			}
-			else if ((nbytes = recv(i, disc, sizeof(disc), 0)) <= 0)
+			if ((nbytes = recv(fd, disc, sizeof(disc), 0)) <= 0)
 			{
 				std::cout << "Error with recv" << std::endl;
-//			if (nbytes == 0)
-//			{
-//			//Connection closed : Need to discard User entry from userlist
-//			}
-//			else
-//			{
-//				//Error from recv
-//			}
-//			close(i);
-//			
+				//			if (nbytes == 0)
+				//			{
+				//			//Connection closed : Need to discard User entry from userlist
+				//			}
+				//			else
+				//			{
+				//				//Error from recv
+				//			}
+				close(fd);
+				FD_CLR(fd, &fds[MASTER]);
+				//			
 			}
 			else
 			{
-				std::cout << i << ": " << disc << std::endl;
+				std::cout << "Got a new message" << std::endl;
+				std::cout << fd << ": " << disc << std::endl;
 				bzero(disc, sizeof(disc));
 			}
+		}
+		beg++;
 	}
+	return (0);
 }
-return (0);
-}
-
 
 bool	ft_check_input(int ac, char **av)
 {
@@ -82,7 +85,6 @@ bool	ft_check_input(int ac, char **av)
 	}
 	return (0);
 }
-
 
 //	void	ft_read_socket(int sfd)
 //	{
@@ -112,6 +114,7 @@ bool	ft_check_input(int ac, char **av)
 int	main_loop(Irc &serv)
 {
 	fd_set				fds[4];
+	int				fdmax;
 	//	timeval				ttd = (timeval){2, 0};
 
 	for (int i = 0; i < 4; i++)
@@ -121,8 +124,9 @@ int	main_loop(Irc &serv)
 	{
 		for (int i = 1; i < 4; i++)
 			fds[i] = fds[MASTER];
+		fdmax = serv.computeFdMax();
 		std::cout << "Connecting" << std::endl;
-		if (select(serv.computeFdMax(), &fds[READ], NULL, NULL, NULL) == -1)
+		if (select(fdmax, &fds[READ], NULL, NULL, NULL) == -1)
 		{
 			std::cerr << "Select error : ";
 			throw  SyscallError();
@@ -133,14 +137,23 @@ int	main_loop(Irc &serv)
 	return (0);
 }
 
+void	handleSigINT(int signal)
+{
+	if (signal == SIGINT)
+	{
+		exit(1);
+	}
+}
+
 int	main(int ac, char **av)
 {
 	(void)av;
 	(void)ac;
 
+	std::signal(SIGINT, handleSigINT);
 	try
 	{
-		Irc	ircserv("ircd", "");
+		Irc	&ircserv = Irc::getInstance();
 		ircserv.printAi();
 		main_loop(ircserv);
 	}

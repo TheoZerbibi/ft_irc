@@ -2,12 +2,13 @@
 
 Irc::~Irc()
 {
+	std::cout << "Freeing things" << std::endl;
 	close(this->_sockfd);
+	freeaddrinfo(this->_net);
 }
 
 Irc::Irc()
 {
-	*this = Irc(std::string("ircd"), std::string(""));
 }
 
 Irc::Irc(std::string port, std::string passwd): _pass(passwd)
@@ -26,14 +27,12 @@ Irc::Irc(std::string port, std::string passwd): _pass(passwd)
 		std::cerr << "getaddrinfo error: " << gai_strerror(status);
 		throw SyscallError();
 	}
- 	
 	if ((this->_sockfd = ft_setup_socket(this->_net)) == -1 || set_socket_option(this->_sockfd) == -1)
 	{
 		freeaddrinfo(this->_net);
 		std::cerr << "Socket creation failed: ";
 		throw SyscallError();
 	}
-	freeaddrinfo(this->_net);
 }
 
 // Getter

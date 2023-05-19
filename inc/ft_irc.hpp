@@ -7,6 +7,8 @@
 
 #include	<unistd.h> //need to be deleted and replaced by recv and send
 
+#include	<csignal>
+
 #include	<cstring>
 #include	<netdb.h>
 
@@ -38,10 +40,20 @@ class	Irc{
 		std::string		_pass;
 //		std::vector<Channel>	chans;
 		std::map<int, User>	_users;
-	public:
-		//Const & destr
+		// Const & destr
 		Irc();
 		Irc(std::string port, std::string passwd);
+
+		// Private Copy and assignement to enforce singularity
+		Irc(const Irc &);
+		Irc &operator=(const Irc &);
+	public:
+		//Const & destr
+		static Irc &getInstance()
+		{
+			static Irc	instance("ircd", "");
+			return instance;
+		}
 		~Irc();
 
 		//Utils
@@ -57,9 +69,6 @@ class	Irc{
 		const	struct addrinfo		*getAi() const;
 		const	std::map<int, User>	&getUsers() const;
 		int			computeFdMax() const;
-
-		//Operator Overload
-//		Irc &operator=(Irc &rhs);
 };
 
 class	SyscallError: public std::exception
