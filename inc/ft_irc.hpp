@@ -39,7 +39,17 @@ class	Irc{
 		struct	addrinfo	*_net;
 		std::string		_pass;
 //		std::vector<Channel>	chans;
+
+		//Setup socket interface
+		int	setup_socket();
+		int	set_socket_option();
+
+
+
+		// Client, User 
 		std::map<int, User>	_users;
+		std::map<int, Client>	_clients;
+
 		// Const & destr
 		Irc();
 		Irc(std::string port, std::string passwd);
@@ -59,10 +69,10 @@ class	Irc{
 		//Utils
 		void			printAi() const;
 
-		std::vector<int>	_clients;
 
 		//Setter
 		void			addUser(int const &sfd);
+		void			addClient(int const &sfd);
 
 		//Getter
 		const	int			&getSocket() const;

@@ -1,3 +1,9 @@
+#binary
 ircserv
-*.o
+
+#object files
 obj/
+*.o
+
+#temp file
+.*.sw*

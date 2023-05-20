@@ -24,10 +24,10 @@ Irc::Irc(std::string port, std::string passwd): _pass(passwd)
 	status = getaddrinfo(NULL, port.c_str(), &hint, &this->_net);
 	if (status)
 	{
-		std::cerr << "getaddrinfo error: " << gai_strerror(status);
+		std::cerr << "getaddrinfo error: " << gai_strerror(status) << std::endl;
 		throw SyscallError();
 	}
-	if ((this->_sockfd = ft_setup_socket(this->_net)) == -1 || set_socket_option(this->_sockfd) == -1)
+	if ((setup_socket()) == -1 || set_socket_option() == -1)
 	{
 		freeaddrinfo(this->_net);
 		std::cerr << "Socket creation failed: ";

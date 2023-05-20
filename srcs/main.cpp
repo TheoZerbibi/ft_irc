@@ -4,26 +4,22 @@ int	ft_accept_client(Irc *serv, fd_set *fds)
 {
 	int	newfd;
 
-	newfd = accept(serv->getSocket(), NULL, NULL);
-	if (newfd == -1)
-		throw SyscallError();
-	FD_SET(newfd, &fds[MASTER]);
-	serv->addUser(newfd);
+	if (FD_ISSET(serv->getSocket(), &fds[READ]))
+	{
+		std::cout << "Accepting new connection" << std::endl;
+		newfd = accept(serv->getSocket(), NULL, NULL);
+		if (newfd == -1)
+			throw SyscallError();
+		FD_SET(newfd, &fds[MASTER]);
+		serv->addUser(newfd);
+	}
 	return (0);
 }
 
-// Need to change iteration to take userlist instead of an index
-int	read_fds(Irc *serv, fd_set *fds)
+int	ft_receive_data(Irc *serv, fd_set *fds)
 {
-	std::cout << "Got some fd ready for reading" << std::endl;
-	if (FD_ISSET(serv->getSocket(), &fds[READ]))
-	{
-			std::cout << "Accepting new connection" << std::endl;
-			ft_accept_client(serv, fds);
-	}
 	std::map<int, User>::const_iterator	beg = serv->getUsers().begin();
 	std::map<int, User>::const_iterator	end = serv->getUsers().end();
-
 	char	disc[512];
 	int	nbytes;
 	int	fd;
@@ -37,27 +33,35 @@ int	read_fds(Irc *serv, fd_set *fds)
 			if ((nbytes = recv(fd, disc, sizeof(disc), 0)) <= 0)
 			{
 				std::cout << "Error with recv" << std::endl;
-				//			if (nbytes == 0)
-				//			{
-				//			//Connection closed : Need to discard User entry from userlist
-				//			}
-				//			else
-				//			{
-				//				//Error from recv
-				//			}
+				if (nbytes == 0)
+				{
+					//Connection closed : Need to discard User entry from userlist
+				}
+				else
+				{
+					//Error from recv, 
+				}
 				close(fd);
 				FD_CLR(fd, &fds[MASTER]);
-				//			
 			}
 			else
 			{
-				std::cout << "Got a new message" << std::endl;
+				//New data received, got to stock it and queue next command
 				std::cout << fd << ": " << disc << std::endl;
 				bzero(disc, sizeof(disc));
 			}
 		}
 		beg++;
 	}
+	return (0);
+}
+
+// Need to change iteration to take userlist instead of an index
+int	read_fds(Irc *serv, fd_set *fds)
+{
+	std::cout << "Got some fd ready for reading" << std::endl;
+	ft_accept_client(serv, fds);
+	ft_receive_data(serv, fds);
 	return (0);
 }
 
@@ -159,7 +163,8 @@ int	main(int ac, char **av)
 	}
 	catch (std::exception &e)
 	{
-		std::cerr << e.what() << std::endl;
+		if (strcmp(e.what(),"Success"))
+			std::cerr << e.what() << std::endl;
 	}
 	return (0);
 }

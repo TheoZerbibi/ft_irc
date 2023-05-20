@@ -8,6 +8,14 @@
 //	{
 //	}
 
+Client::Client()
+{
+}
+
+Client::Client(int &sfd): _sockFd(sfd)
+{
+}
+
 User::User()
 {
 }
