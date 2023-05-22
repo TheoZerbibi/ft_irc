@@ -16,7 +16,7 @@ int	ft_accept_client(Irc *serv, fd_set *fds)
 	return (0);
 }
 
-int	ft_receive_data(Irc *serv, fd_set *fds)
+int	ft_receive_userdata(Irc *serv, fd_set *fds)
 {
 	std::map<int, User>::const_iterator	beg = serv->getUsers().begin();
 	std::map<int, User>::const_iterator	end = serv->getUsers().end();
@@ -46,7 +46,7 @@ int	read_fds(Irc *serv, fd_set *fds)
 {
 	std::cout << "Got some fd ready for reading" << std::endl;
 	ft_accept_client(serv, fds);
-	ft_receive_data(serv, fds);
+	ft_receive_userdata(serv, fds);
 	return (0);
 }
 
