@@ -44,8 +44,6 @@ class	Irc{
 		int	setup_socket();
 		int	set_socket_option();
 
-
-
 		// Client, User 
 		std::map<int, User>	_users;
 		std::map<int, Client>	_clients;
@@ -69,7 +67,6 @@ class	Irc{
 		//Utils
 		void			printAi() const;
 
-
 		//Setter
 		void			addUser(int const &sfd);
 		void			addClient(int const &sfd);
@@ -88,6 +85,4 @@ class	SyscallError: public std::exception
 	}
 };
 
-int	ft_setup_socket(struct addrinfo *net);
 struct	addrinfo *setup_addrinfo(char *port);
-int	set_socket_option(int	sockfd);

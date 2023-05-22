@@ -30,25 +30,10 @@ int	ft_receive_data(Irc *serv, fd_set *fds)
 		std::cout << "Got some new message" << std::endl;
 		if (FD_ISSET(fd, &fds[READ]))
 		{
-			if ((nbytes = recv(fd, disc, sizeof(disc), 0)) <= 0)
+			if (beg->second.recvData() <= 0)
 			{
-				std::cout << "Error with recv" << std::endl;
-				if (nbytes == 0)
-				{
-					//Connection closed : Need to discard User entry from userlist
-				}
-				else
-				{
-					//Error from recv, 
-				}
 				close(fd);
 				FD_CLR(fd, &fds[MASTER]);
-			}
-			else
-			{
-				//New data received, got to stock it and queue next command
-				std::cout << fd << ": " << disc << std::endl;
-				bzero(disc, sizeof(disc));
 			}
 		}
 		beg++;
@@ -90,30 +75,6 @@ bool	ft_check_input(int ac, char **av)
 	return (0);
 }
 
-//	void	ft_read_socket(int sfd)
-//	{
-//		struct addrinfo net;
-//		struct sockaddr	sa;
-//	
-//		net.ai_addr = &sa;
-//		std::vector<int> fd;
-//		int	newfd = accept(sfd, net.ai_addr, &net.ai_addrlen);
-//		if (newfd == -1)
-//		{
-//			std::cout << strerror(errno) << std::endl;
-//			freeaddrinfo(&net);
-//			return;
-//		}
-//		fd.push_back(newfd);
-//		std::cout << newfd << std::endl;
-//		while (1)
-//		{
-//			read(newfd, buff, 512);
-//			std::cout << buff;
-//			bzero(buff, 512);
-//		}
-//	}
-//
 
 int	main_loop(Irc &serv)
 {
@@ -141,14 +102,6 @@ int	main_loop(Irc &serv)
 	return (0);
 }
 
-void	handleSigINT(int signal)
-{
-	if (signal == SIGINT)
-	{
-		exit(1);
-	}
-}
-
 int	main(int ac, char **av)
 {
 	(void)av;
@@ -163,7 +116,7 @@ int	main(int ac, char **av)
 	}
 	catch (std::exception &e)
 	{
-		if (strcmp(e.what(),"Success"))
+		if (strcmp(e.what(), "Success"))
 			std::cerr << e.what() << std::endl;
 	}
 	return (0);

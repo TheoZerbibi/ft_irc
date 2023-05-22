@@ -15,9 +15,12 @@ class Client {
 		void	setNick(std::string nick);
 		void	setHost(std::string host);
 		void	setUser(std::string user);
-	private:
 
+		int		   recvData();
+
+	protected:
 		int		_sockFd;
+		std::string	_cmdbuffer;
 		std::string	_nickname;
 		std::string	_hostname;
 		std::string	_username;
@@ -38,16 +41,10 @@ class User : public Client{
 		const std::string& getNick() const;
 		const std::string& getUsername() const;
 		const std::string& getHostname() const;
-		void		   recvData();
 
 		// Other methods and data members as needed
 
 	private:
-	//	int _fd;                 // User's file descriptor
-		std::string _cmdbuffer;
-		std::string _nick;       // User's nickname
-		std::string _username;   // User's username
-		std::string _hostname;   // User's hostname or IP address
 
 		// Other data members as needed
 };

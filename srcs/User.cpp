@@ -12,6 +12,30 @@ Client::Client()
 {
 }
 
+const bool &Client:recvData()
+{
+	int	nbyte;
+	char	buff[512];
+
+	// Get data utile there is no more data to retrieve
+	
+	if ((nbytes = recv(this->_sockfd, disc, sizeof(disc), 0)) <= 0)
+	{
+		std::cout << "Error with recv" << std::endl;
+		if (nbytes == 0)
+		{
+			//Connection closed : Need to discard User entry from userlist
+		}
+		else
+		{
+			//Error from recv, 
+		}
+		close(fd);
+		FD_CLR(fd, &fds[MASTER]);
+	}
+	return (SUCCESS);
+}
+
 Client::Client(int &sfd): _sockFd(sfd)
 {
 }
