@@ -265,15 +265,15 @@ int main(int argc, char *argv[]){
     int server = -1;
     int master_sock = -1;
 
-    if (3 != argc) {
-        fprintf(stderr, "usage: %s <client_port> <server_port>\n", argv[0]);
+    if (2 != argc) {
+        fprintf(stderr, "usage: %s <client_port>\n", argv[0]);
         exit(1);
     }
 
     localaddr = strdup("127.0.0.1");
     localport = atoi(argv[1]);
     remoteaddr = strdup("chat.freenode.net");
-    remoteport = atoi(argv[2]);
+    remoteport = 6667;
 
     assert(localaddr);
     assert(localport > 0);

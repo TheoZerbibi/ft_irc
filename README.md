@@ -46,33 +46,13 @@ Things to do are :
 - in_addr_t inet_addr(char \*addr) : Convert string representation of ipv4 address to binary representation for further usage.
 - char \*inet_ntoa(struct \*in_addr in) : Convert struct adress to string representation for printing (buffer returned is static stored so further call will overwrite it).
 
-### Struct
 
-```c++
+## Command syntax
 
-	struct	addrinfo {
-		int	ai_flags;		// AI_PASSIV, AI_CANNONAME, etc.
-		int	ai_family;		// AF_INET (ip_v4), AF_INET6 (ip_v6, AF_UNSPEC (agnostic)
-		int	ai_socktype;		//SOCK_STREAM (tcp), SOCK_DGRAM (udp)
-		int	ai_protocol;		// use 0 for "any"
-		size_t	ai_addrlen;		// size of ai_addr in bytes
-		struct sockaddr *ai_addr;	// struct sockaddr_in or _in6 : hold port and ip address
-		char	*ai_cannoname;		// full canonical hostname
-		struct	addrinfo *ai_next;	// next node
-	};
+- Command always start with COMMAND in uppercase followed by one or more argument. Last argument can begin with a ':' marking the beginning of the last argument. Last argument starting with ':' can include whitespace
 
-```
+- Server will answer with numerical Replies (named RPL). Replies with number >= to 400 are Error (named ERR). Syntax of Replies are always the same depending of RPL (or ERR) but some content can varies depending of command argument (like channel or comment) and user using them.
 
-```c++
-
-	struct	sockaddr_in {				// Wrap de sockaddr pour specifier le port et l'adresse de destination plus simplement;
-		short int		sin_family;	// Famille de protocol ip comme pour addrinfo
-		unsigned short int	sin_port;	// Port de destination
-		struct	in_addr		sin_addr;	// addresse de destination
-		unsigned char		sin_zero[8];	// Du padding plein de 0
-	};
-
-```
 
 ## Requirement
 
@@ -83,13 +63,10 @@ Things to do are :
  - [ ] Get command on user-sockfd (Should use a buffer for eachuser)
  - [ ] Parse command
 
->
->
 - [ ] Signal handling
- - [ ] CTRL+C
+ - [x] CTRL+C
  - [ ] CTRL+D
  - [ ] CTRL+Z
-
 
 - [ ] Define client structure including: socket-fd, Id, command buffer
 - [ ] Parse client input 
@@ -101,6 +78,15 @@ Things to do are :
  - [ ]  OPER
  - [ ]  KILL
 
+
+- [ ] Operator command
+> These are channel command that can only be used by operator of channel (you first need to be on the channel to do these operation)
+ - [ ] [KICK](https://modern.ircdocs.horse/#kick-message)
+ - [ ] [INVITE](https://modern.ircdocs.horse/#invite-message)
+ - [ ] [TOPIC](https://modern.ircdocs.horse/#topic-message)
+ - [ ] [MODE](https://modern.ircdocs.horse/#mode-message) : only implement 'i', 't', 'k', 'o' 'l'
+ 
+
 - [ ] Implement RPL system
  - [ ] Implement ERR
 
@@ -111,6 +97,11 @@ Things to do are :
 ## External Ressource
 
 - [Reference Repo](https://github.com/marineks/Ft_irc)
-- [ModernIrc](https://modern.ircdocs.horse/)
+
 - [Network programming guide](https://beej.us/guide/bgnet/pdf/bgnet_a4_c_1.pdf)
+
+- [Irc : Protocol explanation](http://chi.cs.uchicago.edu/chirc/irc.html)
+
+- [ModernIrc : Complete command reference](https://modern.ircdocs.horse/)
+
 - [Irssi Doc](https://irssi.org/New-users/)

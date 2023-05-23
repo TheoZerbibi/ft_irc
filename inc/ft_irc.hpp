@@ -45,8 +45,10 @@ class	Irc{
 		int	set_socket_option();
 
 		// Client, User 
-		std::map<int, User>	_users;
-		std::map<int, Client>	_clients;
+		std::map<int, Client>	_clients; // Unregistered User, got promoted to User after
+		std::map<int, User>	_users; // Maybe put nickname as first pair to facilitate user interaction
+						
+		std::vector<Channel>	_channels;
 
 		// Const & destr
 		Irc();
@@ -57,7 +59,10 @@ class	Irc{
 		Irc &operator=(const Irc &);
 	public:
 		//Const & destr
-		static Irc &getInstance()
+		
+
+
+		static Irc &getInstance() // Init and retrieve server instance
 		{
 			static Irc	instance("ircd", "");
 			return instance;
@@ -75,7 +80,22 @@ class	Irc{
 		const	int			&getSocket() const;
 		const	struct addrinfo		*getAi() const;
 		const	std::map<int, User>	&getUsers() const;
-		int			computeFdMax() const;
+		int				computeFdMax() const;
+};
+
+class	Channel
+{
+	public:
+		Channel(std::string	&name);
+		~Channel();
+
+		void	addUser(User &_user);
+		getUser(std::string _nick);
+	private:
+		Channel();
+		std::string			_name;
+		std::vector<int, std::string>	_operator;
+		std::vector<int, std::string>	_users;
 };
 
 class	SyscallError: public std::exception

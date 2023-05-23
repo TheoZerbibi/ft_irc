@@ -20,7 +20,6 @@ int	ft_receive_userdata(Irc *serv, fd_set *fds)
 {
 	std::map<int, User>::const_iterator	beg = serv->getUsers().begin();
 	std::map<int, User>::const_iterator	end = serv->getUsers().end();
-	char	disc[512];
 	int	nbytes;
 	int	fd;
 
