@@ -24,6 +24,10 @@ Things to do are :
 
 > Until registration is complete, only a limited subset of commands SHOULD be accepted by the server. This is because it makes sense to require a registered (fully connected) client connection before allowing commands such as JOIN, PRIVMSG and others.
 
+> Unregistered client should be timeout after 2 second of not getting registered
+
+
+
 
 | Command | Description | Reply | Error |
 |---------|-------------|-------|-------|

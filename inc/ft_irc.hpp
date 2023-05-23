@@ -24,44 +24,22 @@
 #include	"User.hpp"
 
 
-// SELECT FD ENUM
-enum
+// select() argument type : see fd_set
+enum	e_fd_triggers
 {
 	MASTER,
 	READ,
 	SEND,
-	EXCEPT
+	EXCEPT,
+	FD_SET_TYPES
 };
 
+
+
 class	Irc{
-	private:
-		int			_sockfd;
-		struct	addrinfo	*_net;
-		std::string		_pass;
-//		std::vector<Channel>	chans;
-
-		//Setup socket interface
-		int	setup_socket();
-		int	set_socket_option();
-
-		// Client, User 
-		std::map<int, Client>	_clients; // Unregistered User, got promoted to User after
-		std::map<int, User>	_users; // Maybe put nickname as first pair to facilitate user interaction
-						
-		std::vector<Channel>	_channels;
-
-		// Const & destr
-		Irc();
-		Irc(std::string port, std::string passwd);
-
-		// Private Copy and assignement to enforce singularity
-		Irc(const Irc &);
-		Irc &operator=(const Irc &);
 	public:
 		//Const & destr
 		
-
-
 		static Irc &getInstance() // Init and retrieve server instance
 		{
 			static Irc	instance("ircd", "");
@@ -76,11 +54,44 @@ class	Irc{
 		void			addUser(int const &sfd);
 		void			addClient(int const &sfd);
 
+
 		//Getter
 		const	int			&getSocket() const;
 		const	struct addrinfo		*getAi() const;
 		const	std::map<int, User>	&getUsers() const;
 		int				computeFdMax() const;
+
+		int				ft_receive_data(Client &user)
+
+	private:
+		// Client, User 
+						
+		std::vector<Channel>	_chans;
+
+		
+		std::map<int, Client>	_clients; // Unregistered User, got promoted to User after
+		std::map<int, User>	_users; // Maybe put nickname as first pair to facilitate user interaction
+
+
+		// Server info
+		struct	addrinfo	*_net;
+		std::string		_pass;
+		int			_sockfd;
+
+		// Const & destr
+		Irc();
+		Irc(std::string port, std::string passwd);
+
+		// Private Copy and assignement to enforce singularity
+		Irc(const Irc &);
+		Irc &operator=(const Irc &);
+		//Setup socket interface
+		int	setup_socket();
+		int	set_socket_option();
+
+		// Operation on fds
+		fd_set				*getFd_set;
+		fd_set				fds[EXCEPT];
 };
 
 class	Channel

@@ -16,16 +16,10 @@ int	ft_accept_client(Irc *serv, fd_set *fds)
 	return (0);
 }
 
-int	ft_receive_userdata(Irc *serv, fd_set *fds)
+template <typename T>
+int	ft_receive_data(Client &user)
 {
-	std::map<int, User>::const_iterator	beg = serv->getUsers().begin();
-	std::map<int, User>::const_iterator	end = serv->getUsers().end();
-	int	nbytes;
-	int	fd;
-
-	while (beg != end)
-	{
-		fd = beg->first;
+		fd = user.getFd();
 		std::cout << "Got some new message" << std::endl;
 		if (FD_ISSET(fd, &fds[READ]))
 		{
@@ -35,6 +29,23 @@ int	ft_receive_userdata(Irc *serv, fd_set *fds)
 				FD_CLR(fd, &fds[MASTER]);
 			}
 		}
+		}
+}
+
+int	ft_receive_data(std::map<int, Client *>	client)
+{
+	return ();
+}
+
+int	ft_receive_userdata(Irc *serv, fd_set *fds)
+{
+	std::map<int, User>::const_iterator	beg = serv->getUsers().begin();
+	std::map<int, User>::const_iterator	end = serv->getUsers().end();
+	int	nbytes;
+	int	fd;
+
+	while (beg != end)
+	{
 		beg++;
 	}
 	return (0);
