@@ -51,11 +51,11 @@ const std::map<int, User>	&Irc::getUsers() const
 }
 
 //Setter
-void	Irc::addUser(int const &sfd)
+void	Irc::addClient(int const &sfd)
 {
-	User	user;
+	Client	client(sfd);
 
-	_users.insert(std::make_pair(sfd, user));
+	_clients.insert(std::make_pair(sfd, client));
 }
 
 int	Irc::computeFdMax(void) const

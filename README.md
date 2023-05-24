@@ -27,14 +27,11 @@ Things to do are :
 > Unregistered client should be timeout after 2 second of not getting registered
 
 
-
-
-| Command | Description | Reply | Error |
-|---------|-------------|-------|-------|
-| NICK nickname|        | Reply | Error |
-| Command | Description | Reply | Error |
-| Command | Description | Reply | Error |
-| Command | Description | Reply | Error |
+|Done?| Command | Description | Reply | Error |
+|-----|---------|-------------|-------|-------|
+|- [ ]| NICK    |             |       | Error |
+|- [ ]| USER    | Description | Reply | Error |
+|- [ ]| PASS    | Description | Reply | Error |
 
 
 ## Help

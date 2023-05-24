@@ -1,11 +1,14 @@
 NAME=ircserv
+
 SRC_NAME=main.cpp \
-	ft_irc.cpp \
+	Irc.cpp \
 	User.cpp \
 	signal.cpp \
-    setsocket.cpp
+	client_input.cpp \
+	setsocket.cpp
 
-HDR_NAME=ft_irc.hpp\
+HDR_NAME=ft_irc.hpp \
+	Irc.hpp \
 	User.hpp
 
 HDRS=$(addprefix $(INC), $(HDR_NAME))

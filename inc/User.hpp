@@ -1,24 +1,26 @@
 #pragma once
-#include <string>
+#include "ft_irc.hpp"
 
 class Client {
 	public:
-		Client(int &sfd);
-		~Client();
-		Client();
+		Client(int const &sfd);
+		virtual ~Client();
 		
-		const std::string	&getNick(std::string nick) const;
-		const std::string	&getHost(std::string Host) const;
-		const std::string	&getUser(std::string User) const;
+		const std::string	&getNick() const;
+		const std::string	&getHost() const;
+		const std::string	&getUser() const;
+		const int		&getSockfd() const;
 
 		void	setNick(std::string nick);
 		void	setHost(std::string host);
 		void	setUser(std::string user);
 
-		int		   recvData();
+		bool		   recvData();
 	protected:
+		Client();
+
 		// User personnal socket
-		int		_sockFd;
+		const int	_sockFd;
 		std::string	_cmdbuffer;
 
 		// Needed to register users
@@ -26,25 +28,29 @@ class Client {
 		std::string	_hostname;
 		std::string	_username;
 	private:
-		int		connection_time; //if current_time - connection_time > 2s timeout client
+	//	int		connection_time; //if current_time - connection_time > 2s timeout client
 };
-
-bool	ft_check_client_registration(Client &client);
-
 
 class User : public Client{
 	public:
 
 //		User(int fd, const std::string& nick, const std::string& username, const std::string& hostname);
 //		User(int &fd);
-		User();
-		~User();
+		User(Client &client);
+		virtual ~User();
 
-		//	const int &getFd() const;
-		// Other methods and data members as needed
+		//	const int &getFd() const; // Other methods and data members as needed
 
 	private:
-		std::vector<std::string &>	channel;
-		int		
+		User();
+		std::vector<std::string *>	channel;
 		// Other data members as needed
+		
+		//	int		mode;
 };
+
+
+
+
+// User 
+bool	ft_check_client_registration(Client &client);
