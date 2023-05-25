@@ -20,13 +20,18 @@ class Client {
 
 		bool		   recvData();
 
+		//		Registration process : need to implement registrement checking
+		bool const	&isRegistered() const;
+
+
 	protected:
 		Client();
 
 		// User personnal socket
-		std::string	_cmdbuffer;
+		std::string	_buff;
 
 		int		_sockFd;
+		bool		_registered;
 
 		// Needed to register users
 		std::string	_nickname;   

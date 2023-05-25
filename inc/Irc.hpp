@@ -19,13 +19,14 @@ class	Irc{
 		void			printAi() const;
 
 		//Setter
-		void				addUser(int const &sfd);
-		void				addClient(int const &sfd);
+		void			addUser(int const &sfd);
+		void			addClient(int const &sfd);
 
 		//Getter
 		const	int			&getSocket() const;
 		const	struct addrinfo		*getAi() const;
 		std::map<int, User>		&getUsers();
+		std::map<int, Client>		&getClients();
 		int				computeFdMax() const;
 
 		int				main_loop();

@@ -50,6 +50,11 @@ std::map<int, User>	&Irc::getUsers()
 	return ((this->_users));
 }
 
+std::map<int, Client>	&Irc::getClients()
+{
+	return ((this->_clients));
+}
+
 //Setter
 void	Irc::addClient(int const &sfd)
 {
@@ -71,6 +76,17 @@ int	Irc::computeFdMax(void) const
 		if (fdmax < curr_fd)
 			fdmax = curr_fd;
 		it++;
+	}
+
+	std::map<int, Client>::const_iterator itc = this->_clients.begin();
+	std::map<int, Client>::const_iterator itce = this->_clients.end();
+
+	while (itc != itce)
+	{
+		curr_fd = (*itc).first;
+		if (fdmax < curr_fd)
+			fdmax = curr_fd;
+		itc++;
 	}
 	return (fdmax + 1);
 }

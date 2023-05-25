@@ -65,10 +65,11 @@ const int	&Client::getSockfd() const
 bool Client::recvData()
 {
 	int	nbyte;
-	char	buff[512];
+	char	buff[2];
 
 	// Get data utile there is no more data to retrieve
 	
+	bzero(buff, sizeof(buff));
 	if ((nbyte = recv(this->_sockFd, buff, sizeof(buff), 0)) <= 0)
 	{
 		std::cout << "Error with recv" << std::endl;
@@ -79,6 +80,10 @@ bool Client::recvData()
 		close(this->_sockFd);
 		return (0);
 	}
+	this->_buff += buff;
+	std::cout << "fd =" << this->_sockFd << ": " << this->_buff << std::endl;
+	write(this->_sockFd, this->_buff.c_str(), this->_buffer.size());
+//	write(1, this->_cmdbuffer, nbyte);
 	return (SUCCESS);
 }
 
