@@ -5,7 +5,8 @@ SRC_NAME=main.cpp \
 	User.cpp \
 	signal.cpp \
 	client_input.cpp \
-	setsocket.cpp
+	setsocket.cpp \
+	Channel.cpp
 
 HDR_NAME=ft_irc.hpp \
 	Irc.hpp \

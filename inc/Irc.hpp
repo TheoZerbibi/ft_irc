@@ -8,7 +8,6 @@ class Channel;
 class	Irc{
 	public:
 		//Const & destr
-		
 		static Irc &getInstance() // Init and retrieve server instance
 		{
 			static Irc	instance("ircd", "");
@@ -20,13 +19,13 @@ class	Irc{
 		void			printAi() const;
 
 		//Setter
-		void			addUser(int const &sfd);
-		void			addClient(int const &sfd);
+		void				addUser(int const &sfd);
+		void				addClient(int const &sfd);
 
 		//Getter
 		const	int			&getSocket() const;
 		const	struct addrinfo		*getAi() const;
-		const	std::map<int, User>	&getUsers() const;
+		std::map<int, User>		&getUsers();
 		int				computeFdMax() const;
 
 		int				main_loop();
@@ -42,14 +41,10 @@ class	Irc{
 		Irc(const Irc &);
 		Irc &operator=(const Irc &);
 
-
 		// Client, User 
 		std::vector<Channel>	_chans;
-
 		std::map<int, Client>	_clients; // Unregistered User, got promoted to User after
 		std::map<int, User>	_users; // Maybe put nickname as first pair to facilitate user interaction
-
-
 
 		// Server info
 		struct	addrinfo	*_net;
@@ -57,14 +52,12 @@ class	Irc{
 		int			_sockfd;
 
 		// Receiving data
-		
 		int			accept_client();
 		int			receive_client_data(Client &user);
 		int			data_reception_handler();
 		int			manage_incoming_connection();
 		int			retrieve_clients_packet();
 		int			read_client_socket(Client &user);
-
 
 		//Setup socket interface
 		int	setup_socket();

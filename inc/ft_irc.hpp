@@ -23,7 +23,7 @@
 
 #include	"User.hpp"
 #include	"Irc.hpp"
-
+#include	"Channel.hpp"
 
 #define 	SUCCESS 1
 #define		FAILURE 0
@@ -44,21 +44,6 @@ enum	e_fd_triggers
 	SEND,
 	EXCEPT,
 	FD_SET_TYPES
-};
-
-class	Channel
-{
-	public:
-		Channel(std::string	name);
-		~Channel();
-
-		void	addUser(User &_user);
-		User	&getUser(std::string _nick);
-	private:
-		Channel();
-		std::string			_name;
-		std::map<int, std::string>	_operator;
-		std::map<int, std::string>	_users;
 };
 
 

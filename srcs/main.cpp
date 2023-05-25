@@ -35,7 +35,6 @@ int	main(int ac, char **av)
 	{
 		Irc	&ircserv = Irc::getInstance();
 
-
 		ircserv.printAi();
 		ircserv.main_loop();
 	}

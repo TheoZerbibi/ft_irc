@@ -1,11 +1,14 @@
 #pragma once
 #include "ft_irc.hpp"
 
+class Irc;
+class Channel;
+
 class Client {
 	public:
 		Client(int const &sfd);
 		virtual ~Client();
-		
+
 		const std::string	&getNick() const;
 		const std::string	&getHost() const;
 		const std::string	&getUser() const;
@@ -16,12 +19,14 @@ class Client {
 		void	setUser(std::string user);
 
 		bool		   recvData();
+
 	protected:
 		Client();
 
 		// User personnal socket
-		const int	_sockFd;
 		std::string	_cmdbuffer;
+
+		int		_sockFd;
 
 		// Needed to register users
 		std::string	_nickname;   
@@ -48,8 +53,6 @@ class User : public Client{
 		
 		//	int		mode;
 };
-
-
 
 
 // User 

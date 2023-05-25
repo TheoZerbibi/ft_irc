@@ -1,14 +1,14 @@
 #include "ft_irc.hpp"
 
+Irc::Irc()
+{
+}
+
 Irc::~Irc()
 {
 	std::cout << "Freeing things" << std::endl;
 	close(this->_sockfd);
 	freeaddrinfo(this->_net);
-}
-
-Irc::Irc()
-{
 }
 
 Irc::Irc(std::string port, std::string passwd): _pass(passwd)
@@ -45,7 +45,7 @@ const struct addrinfo	*Irc::getAi() const
 	return (this->_net);
 }
 
-const std::map<int, User>	&Irc::getUsers() const
+std::map<int, User>	&Irc::getUsers()
 {
 	return ((this->_users));
 }

@@ -54,25 +54,28 @@ Things to do are :
 
 - Server will answer with numerical Replies (named RPL). Replies with number >= to 400 are Error (named ERR). Syntax of Replies are always the same depending of RPL (or ERR) but some content can varies depending of command argument (like channel or comment) and user using them.
 
-
 ## Requirement
 
 - [ ] Server / client socket connection
  - [ ] Accept multiple client and register them under a user id
 
+
 - [ ] Command management
  - [ ] Get command on user-sockfd (Should use a buffer for eachuser)
  - [ ] Parse command
+  
 
 - [ ] Signal handling
  - [x] CTRL+C
  - [ ] CTRL+D
  - [ ] CTRL+Z
 
+
 - [ ] Define client structure including: socket-fd, Id, command buffer
 - [ ] Parse client input 
  - [ ] Make a get_next_command to get command
 - [ ] Define rooms with userid
+
 
 - [ ] Server command
  - [ ]  PING

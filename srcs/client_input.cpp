@@ -4,13 +4,13 @@ int	Irc::accept_client()
 {
 	int	newfd;
 
-	if (FD_ISSET(serv->getSocket(), &(this->_fds[READ])))
+	if (FD_ISSET(this->getSocket(), &(this->fds[READ])))
 	{
 		std::cout << "Accepting new connection" << std::endl;
 		newfd = accept(this->getSocket(), NULL, NULL);
 		if (newfd == -1)
 			throw SyscallError();
-		this->addUser(newfd);
+		this->addClient(newfd);
 		FD_SET(newfd, &(this->fds[MASTER]));
 		return (1);
 	}
@@ -21,7 +21,7 @@ int	Irc::receive_client_data(Client &user)
 {
 		int	fd;
 
-		fd = user.getFd();
+		fd = user.getSockfd();
 		std::cout << "Got some new message" << std::endl;
 		if (FD_ISSET(fd, &fds[READ]))
 		{
@@ -37,13 +37,12 @@ int	Irc::receive_client_data(Client &user)
 
 int	Irc::data_reception_handler()
 {
-	std::map<int, User>::const_iterator	beg = this->getUsers().begin();
-	std::map<int, User>::const_iterator	end = this->getUsers().end();
-	int	fd;
+	std::map<int, User>::iterator	beg = this->getUsers().begin();
+	std::map<int, User>::iterator	end = this->getUsers().end();
 
 	while (beg != end)
 	{
-		this->read_client_socket(*beg);
+		this->receive_client_data(beg->second);
 		beg++;
 	}
 	return (0);

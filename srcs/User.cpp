@@ -8,19 +8,18 @@
 //	{
 //	}
 
-Client::Client(int const &sfd):_sockFd(sfd)
+Client::Client(int const &sfd)
 {
+	_sockFd = sfd;
 }
 
 Client::Client():_sockFd(0)
 {
 }
 
-
 Client::~Client()
 {
 }
-
 
 // Setter
 
@@ -40,7 +39,6 @@ void	Client::setHost(std::string host)
 }
 
 // Getter
-
 const std::string	&Client::getNick() const
 {
 	return (this->_nickname);
@@ -84,26 +82,21 @@ bool Client::recvData()
 	return (SUCCESS);
 }
 
-
-
-User::User(Client &client):_sockFd(client.getSockfd())
+User::User(Client &client)
 {
+	this->_sockFd = client.getSockfd();
 	this->_nickname = client.getNick();
 	this->_username = client.getUser();
 	this->_hostname = client.getHost();
 }
 
-
 User::User()
 {
 }
 
-
-
 User::~User()
 {
 }
-
 
 //	const int	&User::getFd() const
 //	{
