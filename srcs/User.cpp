@@ -82,8 +82,7 @@ bool Client::recvData()
 	}
 	this->_buff += buff;
 	std::cout << "fd =" << this->_sockFd << ": " << this->_buff << std::endl;
-	write(this->_sockFd, this->_buff.c_str(), this->_buffer.size());
-//	write(1, this->_cmdbuffer, nbyte);
+	write(this->_sockFd, this->_buff.c_str(), this->_buff.size());
 	return (SUCCESS);
 }
 
