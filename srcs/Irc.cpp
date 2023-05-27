@@ -1,14 +1,14 @@
 #include "ft_irc.hpp"
 
+Irc::Irc()
+{
+}
+
 Irc::~Irc()
 {
 	std::cout << "Freeing things" << std::endl;
 	close(this->_sockfd);
 	freeaddrinfo(this->_net);
-}
-
-Irc::Irc()
-{
 }
 
 Irc::Irc(std::string port, std::string passwd): _pass(passwd)
@@ -45,17 +45,22 @@ const struct addrinfo	*Irc::getAi() const
 	return (this->_net);
 }
 
-const std::map<int, User>	&Irc::getUsers() const
+std::map<int, User>	&Irc::getUsers()
 {
 	return ((this->_users));
 }
 
-//Setter
-void	Irc::addUser(int const &sfd)
+std::map<int, Client>	&Irc::getClients()
 {
-	User	user;
+	return ((this->_clients));
+}
 
-	_users.insert(std::make_pair(sfd, user));
+//Setter
+void	Irc::addClient(int const &sfd)
+{
+	Client	client(sfd);
+
+	_clients.insert(std::make_pair(sfd, client));
 }
 
 int	Irc::computeFdMax(void) const
@@ -71,6 +76,17 @@ int	Irc::computeFdMax(void) const
 		if (fdmax < curr_fd)
 			fdmax = curr_fd;
 		it++;
+	}
+
+	std::map<int, Client>::const_iterator itc = this->_clients.begin();
+	std::map<int, Client>::const_iterator itce = this->_clients.end();
+
+	while (itc != itce)
+	{
+		curr_fd = (*itc).first;
+		if (fdmax < curr_fd)
+			fdmax = curr_fd;
+		itc++;
 	}
 	return (fdmax + 1);
 }

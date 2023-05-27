@@ -2,5 +2,6 @@
 
 void	handleSigINT(int signal)
 {
-		exit(1);
+	(void)signal;
+	exit(1);
 }

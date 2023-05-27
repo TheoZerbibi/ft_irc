@@ -9,11 +9,20 @@ else
 fi
 
 
+test()
+{
+	if [$# -ne 1}
+	nc "$SERVER" "$PORT" < $1
+}
 
-./proxy/simple-tcp-proxy "$PORT" 6667 &
+
+
+./proxy/simple-tcp-proxy "$PORT" 6667 > output &
 PID=$?
 
 nc "$SERVER" "$PORT" << EOF
 NICK isaac
 USER isaac newton localhost :Isaac Newton
 EOF
+
+kill -9 pid

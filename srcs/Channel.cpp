@@ -1,7 +1,17 @@
-#define PREFIX "&#+!"
+#include	"ft_irc.hpp"
+#define		PREFIX "&#+!"
 
 
-bool	ft_check_channel_name(std::string &channel)
+Channel::Channel()
 {
-	
 }
+
+Channel::~Channel()
+{
+}
+
+
+//	bool	ft_check_channel_name(std::string &channel)
+//	{
+//		
+//	}

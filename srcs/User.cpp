@@ -8,36 +8,90 @@
 //	{
 //	}
 
-Client::Client()
+Client::Client(int const &sfd)
+{
+	_sockFd = sfd;
+}
+
+Client::Client():_sockFd(0)
 {
 }
 
-const bool &Client:recvData()
+Client::~Client()
+{
+}
+
+// Setter
+
+void	Client::setNick(std::string nick)
+{
+	this->_nickname = nick;
+}
+
+void	Client::setUser(std::string user)
+{
+	this->_username = user;
+}
+
+void	Client::setHost(std::string host)
+{
+	this->_hostname = host;
+}
+
+// Getter
+const std::string	&Client::getNick() const
+{
+	return (this->_nickname);
+}
+
+const std::string	&Client::getUser() const
+{
+	return (this->_username);
+}
+
+const std::string	&Client::getHost() const
+{
+	return (this->_hostname);
+}
+
+const int	&Client::getSockfd() const
+{
+	return (this->_sockFd);
+}
+
+
+// 
+
+bool Client::recvData()
 {
 	int	nbyte;
-	char	buff[512];
+	char	buff[2];
 
 	// Get data utile there is no more data to retrieve
 	
-	if ((nbytes = recv(this->_sockfd, disc, sizeof(disc), 0)) <= 0)
+	bzero(buff, sizeof(buff));
+	if ((nbyte = recv(this->_sockFd, buff, sizeof(buff), 0)) <= 0)
 	{
 		std::cout << "Error with recv" << std::endl;
-		if (nbytes == 0)
+		if (nbyte < 0)
 		{
-			//Connection closed : Need to discard User entry from userlist
+			//Error from recv, maybe print something
 		}
-		else
-		{
-			//Error from recv, 
-		}
-		close(fd);
-		FD_CLR(fd, &fds[MASTER]);
+		close(this->_sockFd);
+		return (0);
 	}
+	this->_buff += buff;
+	std::cout << "fd =" << this->_sockFd << ": " << this->_buff << std::endl;
+	write(this->_sockFd, this->_buff.c_str(), this->_buff.size());
 	return (SUCCESS);
 }
 
-Client::Client(int &sfd): _sockFd(sfd)
+User::User(Client &client)
 {
+	this->_sockFd = client.getSockfd();
+	this->_nickname = client.getNick();
+	this->_username = client.getUser();
+	this->_hostname = client.getHost();
 }
 
 User::User()
