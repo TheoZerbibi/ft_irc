@@ -2,7 +2,7 @@
 ircserv
 
 #object files
-obj/
+objs/
 *.o
 
 #temp file
