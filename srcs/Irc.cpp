@@ -55,15 +55,15 @@ void	Irc::addClient(int const &sfd)
 {
 	Client	client(sfd);
 
-	_clients.insert(std::make_pair(sfd, client));
+	_clients.insert(std::make_pair(sfd, &client));
 }
 
 int	Irc::computeFdMax(void) const
 {
 	int	fdmax = this->getSocket();
 	int	curr_fd;
-	std::map<int, User>::const_iterator it = this->_users.begin();
-	std::map<int, User>::const_iterator ite = this->_users.end();
+	std::map<int, Client*>::const_iterator it = this->_clients.begin();
+	std::map<int, Client*>::const_iterator ite = this->_clients.end();
 
 	while (it != ite)
 	{
@@ -71,17 +71,6 @@ int	Irc::computeFdMax(void) const
 		if (fdmax < curr_fd)
 			fdmax = curr_fd;
 		it++;
-	}
-
-	std::map<int, Client>::const_iterator itc = this->_clients.begin();
-	std::map<int, Client>::const_iterator itce = this->_clients.end();
-
-	while (itc != itce)
-	{
-		curr_fd = (*itc).first;
-		if (fdmax < curr_fd)
-			fdmax = curr_fd;
-		itc++;
 	}
 	return (fdmax + 1);
 }

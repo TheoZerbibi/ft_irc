@@ -88,7 +88,6 @@ bool Client::recvData()
 
 void	Client::exctractCmds()
 {
-	
 }
 
 User::User(Client &client)

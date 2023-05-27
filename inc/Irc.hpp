@@ -25,13 +25,11 @@ class	Irc{
 		//Getter
 		const	int			&getSocket() const;
 		const	struct addrinfo		*getAi() const;
-		std::map<int, User>		&getUsers();
-		std::map<int, Client>		&getClients();
+		std::map<int, Client *>		&getClients();
 		int				computeFdMax() const;
 
 		int				main_loop();
 
-		int				ft_receive_data(Client &user);
 
 	private:
 		// Const & destr
@@ -55,7 +53,7 @@ class	Irc{
 
 		// Receiving data
 		int			accept_client();
-		int			receive_client_data(Client &user);
+		int			receive_client_data(Client *user);
 		int			data_reception_handler();
 		int			manage_incoming_connection();
 		int			retrieve_clients_packet();
