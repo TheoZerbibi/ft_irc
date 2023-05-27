@@ -23,12 +23,12 @@ class Client {
 		//		Registration process : need to implement registrement checking
 		bool const	&isRegistered() const;
 
-
 	protected:
 		Client();
 
 		// User personnal socket
-		std::string	_buff;
+		std::string			_buff;
+		std::deque<std::string>	_cmds;
 
 		int		_sockFd;
 		bool		_registered;
@@ -43,7 +43,6 @@ class Client {
 
 class User : public Client{
 	public:
-
 //		User(int fd, const std::string& nick, const std::string& username, const std::string& hostname);
 //		User(int &fd);
 		User(Client &client);
@@ -55,10 +54,9 @@ class User : public Client{
 		User();
 		std::vector<std::string *>	channel;
 		// Other data members as needed
-		
+
 		//	int		mode;
 };
-
 
 // User 
 bool	ft_check_client_registration(Client &client);

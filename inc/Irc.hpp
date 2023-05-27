@@ -44,13 +44,14 @@ class	Irc{
 
 		// Client, User 
 		std::vector<Channel>	_chans;
-		std::map<int, Client>	_clients; // Unregistered User, got promoted to User after
-		std::map<int, User>	_users; // Maybe put nickname as first pair to facilitate user interaction
-
+		std::map<int, Client *>	_clients; // Unregistered User, got promoted to User after
+	
 		// Server info
 		struct	addrinfo	*_net;
 		std::string		_pass;
 		int			_sockfd;
+
+		//Commands
 
 		// Receiving data
 		int			accept_client();
