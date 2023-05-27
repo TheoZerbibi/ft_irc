@@ -17,16 +17,16 @@ int	Irc::accept_client()
 	return (0);
 }
 
-int	Irc::receive_client_data(Client &user)
+int	Irc::receive_client_data(Client *user)
 {
 		int	fd;
 
-		fd = user.getSockfd();
+		fd = user->getSockfd();
 		std::cout << "testing new message ..." << std::endl;
 		if (FD_ISSET(fd, &fds[READ]))
 		{
 			std::cout << "Got some new message" << std::endl;
-			if (user.recvData() <= 0)
+			if (user->recvData() <= 0)
 			{
 				FD_CLR(fd, &fds[MASTER]);
 				// Need to remove client from client list
@@ -38,8 +38,8 @@ int	Irc::receive_client_data(Client &user)
 
 int	Irc::data_reception_handler()
 {
-	std::map<int, Client>::iterator	beg = this->getClients().begin();
-	std::map<int, Client>::iterator	end = this->getClients().end();
+	std::map<int, Client*>::iterator	beg = this->getClients()->begin();
+	std::map<int, Client*>::iterator	end = this->getClients()->end();
 
 //	std::map<int, User>::iterator	beg = this->getUsers().begin();
 //	std::map<int, User>::iterator	end = this->getUsers().end();

@@ -45,12 +45,7 @@ const struct addrinfo	*Irc::getAi() const
 	return (this->_net);
 }
 
-std::map<int, User>	&Irc::getUsers()
-{
-	return ((this->_users));
-}
-
-std::map<int, Client>	&Irc::getClients()
+std::map<int, Client*>	&Irc::getClients()
 {
 	return ((this->_clients));
 }

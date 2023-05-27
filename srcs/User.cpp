@@ -68,7 +68,7 @@ bool Client::recvData()
 	char	buff[2];
 
 	// Get data utile there is no more data to retrieve
-	
+
 	bzero(buff, sizeof(buff));
 	if ((nbyte = recv(this->_sockFd, buff, sizeof(buff), 0)) <= 0)
 	{
@@ -84,6 +84,11 @@ bool Client::recvData()
 	std::cout << "fd =" << this->_sockFd << ": " << this->_buff << std::endl;
 	write(this->_sockFd, this->_buff.c_str(), this->_buff.size());
 	return (SUCCESS);
+}
+
+void	Client::exctractCmds()
+{
+	
 }
 
 User::User(Client &client)

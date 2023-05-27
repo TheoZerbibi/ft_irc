@@ -17,8 +17,10 @@
 #include	<iostream>
 #include	<algorithm>
 
+
 #include	<vector>
 #include	<map>
+#include	<deque>
 #include	<sys/select.h>
 
 #include	"User.hpp"
