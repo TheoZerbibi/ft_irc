@@ -1,8 +1,7 @@
 #include "ft_irc.hpp"
 
 Irc::Irc()
-{
-}
+{}
 
 Irc::~Irc()
 {
@@ -42,6 +41,22 @@ Irc::Irc(std::string port, std::string passwd): _pass(passwd)
 		std::cerr << "Socket creation failed: ";
 		throw SyscallError();
 	}
+	this->initCommand();
+}
+
+
+void Irc::initCommand() {
+	std::cout << "┏ Command Register" << std::endl;
+	new CapCommand();
+	new InviteCommand();
+	new JoinCommand();
+	new KickCommand();
+	new ModeCommand();
+	new NickCommand();
+	new PartCommand();
+	new PrivMsgCommand();
+	new TopicCommand();
+	new UserCommand();
 }
 
 // Getter

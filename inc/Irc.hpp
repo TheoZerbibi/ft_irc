@@ -30,6 +30,8 @@ class	Irc{
 
 		int				main_loop();
 
+		void			initCommand();
+
 
 	private:
 		// Const & destr

@@ -27,6 +27,18 @@
 #include	"Irc.hpp"
 #include	"Channel.hpp"
 
+#include	"Command.hpp"
+#include 	"CapCommand.hpp"
+#include	"InviteCommand.hpp"
+#include	"JoinCommand.hpp"
+#include	"KickCommand.hpp"
+#include	"ModeCommand.hpp"
+#include	"NickCommand.hpp"
+#include	"PartCommand.hpp"
+#include	"PrivMsgCommand.hpp"
+#include	"TopicCommand.hpp"
+#include	"UserCommand.hpp"
+
 #define 	SUCCESS 1
 #define		FAILURE 0
 

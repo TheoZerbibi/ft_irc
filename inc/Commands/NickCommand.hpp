@@ -1,0 +1,16 @@
+#ifndef NICKCOMMAND_HPP
+# define NICKCOMMAND_HPP
+
+# include "Command.hpp"
+
+class NickCommand : public Command
+{
+private:
+	std::string _name;
+public:
+	NickCommand();
+	virtual ~NickCommand();
+	void execute();
+};
+
+#endif

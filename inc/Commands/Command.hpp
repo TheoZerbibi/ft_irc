@@ -17,10 +17,7 @@ public:
 	Command();
 	virtual ~Command();
 	virtual void execute() = 0;
-
-	static std::map<std::string, Command*> getCommandList();
 };
 
-static std::map<std::string, Command*> commandList;
-std::map<std::string, Command*> getCommandList();
+std::map<std::string, Command*> *getCommandList();
 #endif

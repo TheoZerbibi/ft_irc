@@ -1,0 +1,16 @@
+#ifndef TOPICCOMMAND_HPP
+# define TOPICCOMMAND_HPP
+
+# include "Command.hpp"
+
+class TopicCommand : public Command
+{
+private:
+	std::string _name;
+public:
+	TopicCommand();
+	virtual ~TopicCommand();
+	void execute();
+};
+
+#endif

@@ -12,7 +12,8 @@ void Command::execute(void)
 	std::cout << this->_name << std::endl;
 }
 
-std::map<std::string, Command*> getCommandList()
+std::map<std::string, Command*> *getCommandList()
 {
-	return commandList;
+	static std::map<std::string, Command*> commandList;
+	return (&commandList);
 }
