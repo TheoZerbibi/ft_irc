@@ -25,3 +25,4 @@ objs/
 *.vsix
 
 *.DBG.*
+.nfs*
