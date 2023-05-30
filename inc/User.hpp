@@ -38,7 +38,6 @@ class Client {
 		std::string	_hostname;
 		std::string	_username;
 
-
 		void		exctractCmds();
 	private:
 	//	int		connection_time; //if current_time - connection_time > 2s timeout client
@@ -55,9 +54,8 @@ class User : public Client{
 
 	private:
 		User();
-		std::vector<std::string *>	channel;
+		std::vector<std::string>	channel;
 		// Other data members as needed
-
 		//	int		mode;
 };
 

@@ -22,7 +22,6 @@ Client::~Client()
 }
 
 // Setter
-
 void	Client::setNick(std::string nick)
 {
 	this->_nickname = nick;
@@ -76,6 +75,7 @@ bool Client::recvData()
 		if (nbyte < 0)
 		{
 			//Error from recv, maybe print something
+
 		}
 		close(this->_sockFd);
 		return (0);

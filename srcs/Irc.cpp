@@ -6,9 +6,18 @@ Irc::Irc()
 
 Irc::~Irc()
 {
-	std::cout << "Freeing things" << std::endl;
 	close(this->_sockfd);
 	freeaddrinfo(this->_net);
+	
+	std::map<int, Client *>::iterator beg = _clients.begin();
+	std::map<int, Client *>::iterator end = _clients.end();
+
+	while (beg != end)
+	{
+		delete beg->second;
+		beg++;
+	}
+	std::cout << "Exiting" << std::endl;
 }
 
 Irc::Irc(std::string port, std::string passwd): _pass(passwd)
@@ -53,7 +62,7 @@ std::map<int, Client*>	&Irc::getClients()
 //Setter
 void	Irc::addClient(int const &sfd)
 {
-	Client	*client = new Client(sfd);
+	Client	* client = new Client(sfd);
 
 	_clients.insert(std::make_pair(sfd, client));
 }
