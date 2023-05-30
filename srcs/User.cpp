@@ -71,9 +71,9 @@ bool Client::recvData()
 	bzero(buff, sizeof(buff));
 	if ((nbyte = recv(this->_sockFd, buff, sizeof(buff), 0)) <= 0)
 	{
-		std::cout << "Error with recv" << std::endl;
 		if (nbyte < 0)
 		{
+			std::cout << "Error with recv" << std::endl;
 			//Error from recv, maybe print something
 
 		}
@@ -81,13 +81,35 @@ bool Client::recvData()
 		return (0);
 	}
 	this->_buff += buff;
-	std::cout << "fd =" << this->_sockFd << ": " << this->_buff << std::endl;
-	write(this->_sockFd, this->_buff.c_str(), this->_buff.size());
+	this->extractCmds();
+	std::cout << "=== Cmd list ==" << std::endl;
+	this->printCmds();
+	std::cout << "Buffer = \'" << this->_buff << "\'" << std::endl;
 	return (SUCCESS);
 }
 
-void	Client::exctractCmds()
+void	Client::printCmds()
 {
+	std::deque<std::string>::iterator beg = _cmds.begin();
+	std::deque<std::string>::iterator end = _cmds.end();
+
+	while (beg != end)
+	{
+		std::cout << *beg << std::endl;
+		beg++;
+	}
+}
+
+void	Client::extractCmds()
+{
+	size_t	pos = 0;
+
+	while ((pos = this->_buff.find(DELIM)) != std::string::npos)
+	{
+		std::cout << "found delimiter at pos : " << pos << std::endl;
+		_cmds.push_back(this->_buff.substr(0, pos));
+		_buff.erase(0, pos + sizeof(DELIM) - 1);
+	}
 }
 
 User::User(Client &client)

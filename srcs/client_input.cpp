@@ -11,7 +11,7 @@ int	Irc::accept_client()
 			throw SyscallError();
 		this->addClient(newfd);
 		FD_SET(newfd, &(this->fds[MASTER]));
-		std::cout << "Accepting new connection" << std::endl;
+		std::cout << ">> New connection done" << std::endl;
 		return (1);
 	}
 	return (0);
@@ -22,14 +22,14 @@ int	Irc::receive_client_data(Client *user)
 		int	fd;
 
 		fd = user->getSockfd();
-		std::cout << "testing new message ..." << std::endl;
 		if (FD_ISSET(fd, &fds[READ]))
 		{
-			std::cout << "Got some new message" << std::endl;
+			std::cout << "--- > New message from fd : " << fd <<  std::endl;
 			if (user->recvData() <= 0)
 			{
 				FD_CLR(fd, &fds[MASTER]);
 				// Need to remove client from client list
+
 				return (0);
 			}
 		}
@@ -55,7 +55,7 @@ int	Irc::data_reception_handler()
 // Need to change iteration to take userlist instead of an index
 int	Irc::manage_incoming_connection()
 {
-	std::cout << "Got some fd ready for reading" << std::endl;
+	std::cout << "---- Reading fds ---" << std::endl;
 	this->accept_client();
 	this->data_reception_handler();
 	return (0);

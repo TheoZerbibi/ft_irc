@@ -56,40 +56,47 @@ Things to do are :
 
 ## Requirement
 
-- [ ] Server / client socket connection
- - [ ] Accept multiple client and register them under a user id
+- Server / client socket connection
 
+ - [x] Accept multiple client and register them under a user id
+ - [ ] promotion of registered client as user
 
-- [ ] Command management
- - [ ] Get command on user-sockfd (Should use a buffer for eachuser)
- - [ ] Parse command
+---
+- Command management
+
+ - [x] Get command on user-sockfd (Should use a buffer for eachuser)
+ - [x] Parse command
+ - [ ] Implementation of cmd
   
 
-- [ ] Signal handling
- - [x] CTRL+C
- - [ ] CTRL+D
+---
+- Signal handling
+
+ - [ ] CTRL+C : still have to check for cmd > to buffer size and management of lost fd
+ - [x] CTRL+D : Management of partial cmd
  - [ ] CTRL+Z
 
 
 - [ ] Define client structure including: socket-fd, Id, command buffer
-- [ ] Parse client input 
- - [ ] Make a get_next_command to get command
 - [ ] Define rooms with userid
 
+---
+- Server command
 
-- [ ] Server command
- - [ ]  PING
- - [ ]  OPER
- - [ ]  KILL
+ - [ ]  [PING](https://modern.ircdocs.horse/#ping-message)
+ - [ ]  [OPER](https://modern.ircdocs.horse/#oper-message)
+ - [ ]  [KILL](https://modern.ircdocs.horse/#kill-message) 
 
+---
+- Operator command
 
-- [ ] Operator command
 > These are channel command that can only be used by operator of channel (you first need to be on the channel to do these operation)
- - [ ] [KICK](https://modern.ircdocs.horse/#kick-message)
- - [ ] [INVITE](https://modern.ircdocs.horse/#invite-message)
- - [ ] [TOPIC](https://modern.ircdocs.horse/#topic-message)
- - [ ] [MODE](https://modern.ircdocs.horse/#mode-message) : only implement 'i', 't', 'k', 'o' 'l'
+ - [ ]  [MODE](https://modern.ircdocs.horse/#mode-message) : user('o', ), channel( )   'i', 't', 'k', 'o' 'l'
+ - [ ]  [KICK](https://modern.ircdocs.horse/#kick-message)
+ - [ ]  [INVITE](https://modern.ircdocs.horse/#invite-message)
+ - [ ]  [TOPIC](https://modern.ircdocs.horse/#topic-message)
  
+---
 
 - [ ] Implement RPL system
  - [ ] Implement ERR
