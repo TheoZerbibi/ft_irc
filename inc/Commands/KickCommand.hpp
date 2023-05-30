@@ -10,7 +10,7 @@ private:
 public:
 	KickCommand();
 	virtual ~KickCommand();
-	void execute();
+	void execute(int fds, Client *client);
 };
 
 

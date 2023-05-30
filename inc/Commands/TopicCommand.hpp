@@ -10,7 +10,7 @@ private:
 public:
 	TopicCommand();
 	virtual ~TopicCommand();
-	void execute();
+	void execute(int fds, Client *client);
 };
 
 #endif

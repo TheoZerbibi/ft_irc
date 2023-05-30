@@ -4,13 +4,14 @@ ModeCommand::ModeCommand(void) :
 _name("MODE")
 {
 	std::cout << "┣⮕ ModeCommand." << std::endl;
-	getCommandList()->insert(std::pair<std::string, Command*>(this->_name, this));
 }
 
 ModeCommand::~ModeCommand(void)
 {}
 
-void ModeCommand::execute(void)
+void ModeCommand::execute(int fds, Client *client)
 {
+	(void) fds;
+	(void) client;
 	std::cout << "[" << this->_name << "] : ModeCommand executed !" << std::endl;
 }

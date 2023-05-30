@@ -4,13 +4,14 @@ JoinCommand::JoinCommand(void) :
 _name("JOIN")
 {
 	std::cout << "┣⮕ JoinCommand." << std::endl;
-	getCommandList()->insert(std::pair<std::string, Command*>(this->_name, this));
 }
 
 JoinCommand::~JoinCommand(void)
 {}
 
-void JoinCommand::execute(void)
+void JoinCommand::execute(int fds, Client *client)
 {
+	(void) fds;
+	(void) client;
 	std::cout << "[" << this->_name << "] : JoinCommand executed !" << std::endl;
 }

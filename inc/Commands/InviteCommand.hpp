@@ -10,7 +10,7 @@ private:
 public:
 	InviteCommand();
 	virtual ~InviteCommand();
-	void execute();
+	void execute(int fds, Client *client);
 };
 
 #endif

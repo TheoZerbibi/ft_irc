@@ -4,13 +4,14 @@ KickCommand::KickCommand(void) :
 _name("KICK")
 {
 	std::cout << "┣⮕ KickCommand." << std::endl;
-	getCommandList()->insert(std::pair<std::string, Command*>(this->_name, this));
 }
 
 KickCommand::~KickCommand(void)
 {}
 
-void KickCommand::execute(void)
+void KickCommand::execute(int fds, Client *client)
 {
+	(void) fds;
+	(void) client;
 	std::cout << "[" << this->_name << "] : KickCommand executed !" << std::endl;
 }

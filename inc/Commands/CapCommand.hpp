@@ -2,6 +2,8 @@
 # define CAPCOMMAND_HPP
 # include "Command.hpp"
 
+class Client;
+
 class CapCommand : public Command
 {
 private:
@@ -9,7 +11,7 @@ private:
 public:
 	CapCommand();
 	virtual ~CapCommand();
-	void execute();
+	void execute(int fds, Client *client);
 };
 
 #endif

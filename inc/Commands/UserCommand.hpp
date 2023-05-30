@@ -10,7 +10,7 @@ private:
 public:
 	UserCommand();
 	virtual ~UserCommand();
-	void execute();
+	void execute(int fds, Client *client);
 };
 
 #endif

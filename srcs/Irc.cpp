@@ -24,6 +24,7 @@ Irc::Irc(std::string port, std::string passwd): _pass(passwd)
 	struct	addrinfo	hint;
 	int			status;
 
+	this->initCommand();
 	(void)port;
 	std::memset(&hint, 0, sizeof(hint));
 	hint.ai_family = AF_UNSPEC;
@@ -41,22 +42,25 @@ Irc::Irc(std::string port, std::string passwd): _pass(passwd)
 		std::cerr << "Socket creation failed: ";
 		throw SyscallError();
 	}
-	this->initCommand();
 }
 
 
 void Irc::initCommand() {
 	std::cout << "┏ Command Register" << std::endl;
-	new CapCommand();
-	new InviteCommand();
-	new JoinCommand();
-	new KickCommand();
-	new ModeCommand();
-	new NickCommand();
-	new PartCommand();
-	new PrivMsgCommand();
-	new TopicCommand();
-	new UserCommand();
+	this->commandList.insert(std::pair<std::string, Command*>("CAP", new CapCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("INVITE", new InviteCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("JOIN", new JoinCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("KICK", new KickCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("MODE", new ModeCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("NICK", new NickCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("PART", new PartCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("PRIVMSG", new PrivMsgCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("TOPIC", new TopicCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("USER", new UserCommand()));
+}
+
+std::map<std::string, Command*> Irc::getCommandList() {
+	return this->commandList;
 }
 
 // Getter

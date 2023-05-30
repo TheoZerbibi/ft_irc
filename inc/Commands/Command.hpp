@@ -6,6 +6,7 @@
 # include <string>
 # include <map>
 # include <utility>
+# include "User.hpp"
 
 class Command
 {
@@ -16,8 +17,6 @@ public:
 
 	Command();
 	virtual ~Command();
-	virtual void execute() = 0;
+	virtual void execute(int fds, Client *client) = 0;
 };
-
-std::map<std::string, Command*> *getCommandList();
 #endif

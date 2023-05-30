@@ -10,7 +10,7 @@ private:
 public:
 	ModeCommand();
 	virtual ~ModeCommand();
-	void execute();
+	void execute(int fds, Client *client);
 };
 
 #endif

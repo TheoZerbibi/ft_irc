@@ -60,3 +60,28 @@ int	Irc::manage_incoming_connection()
 	this->data_reception_handler();
 	return (0);
 }
+
+int Irc::manageCommand()
+{
+	std::map<int, Client*>::iterator	beg = this->getClients().begin();
+	std::map<int, Client*>::iterator	end = this->getClients().end();
+	std::map<std::string, Command*>		commandList = this->getCommandList();
+
+	while (beg != end)
+	{
+		if (beg->second->getCmds().size() > 0)
+		{
+			std::string cmd = beg->second->getCmds().front();
+			std::string::size_type pos = cmd.find(' ');
+			if (pos != std::string::npos)
+				cmd = cmd.substr(0, pos);
+			std::cout << "Command : " << cmd << std::endl;
+			if (commandList.find(cmd) != commandList.end())
+				commandList[cmd]->execute(beg->first, beg->second);
+			else
+				std::cout << "Command " << cmd << " found" << std::endl;
+		}
+		beg++;
+	}
+	return (0);
+}

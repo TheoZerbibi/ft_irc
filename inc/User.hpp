@@ -20,7 +20,9 @@ class Client {
 		void	setHost(std::string host);
 		void	setUser(std::string user);
 
-		bool		   recvData();
+		bool	recvData();
+
+		std::deque<std::string>	&getCmds();
 
 		//		Registration process : need to implement registrement checking
 		bool const	&isRegistered() const;
@@ -40,8 +42,8 @@ class Client {
 		std::string	_hostname;
 		std::string	_username;
 
-		void		extractCmds();
-		void		printCmds();
+		void					extractCmds();
+		void					printCmds();
 	private:
 	//	int		connection_time; //if current_time - connection_time > 2s timeout client
 };

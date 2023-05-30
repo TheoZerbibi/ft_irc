@@ -10,7 +10,7 @@ private:
 public:
 	PrivMsgCommand();
 	virtual ~PrivMsgCommand();
-	void execute();
+	void execute(int fds, Client *client);
 };
 
 #endif

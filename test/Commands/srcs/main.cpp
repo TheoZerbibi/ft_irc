@@ -13,6 +13,7 @@ int main(int argc, char **argv)
 	std::map<std::string, Command*> commandList = getCommandList();
 	commandList.insert(std::pair<std::string, Command*>("TEST", new TestCommand()));
 	commandList.insert(std::pair<std::string, Command*>("PING", new PingCommand()));
+	commandList["PING"]->execute();
 	if (commandList.find(argv[1]) == commandList.end())
 		std::cerr << "Command " << argv[1] << " not found" << std::endl;
 	else

@@ -4,13 +4,14 @@ NickCommand::NickCommand(void) :
 _name("NICK")
 {
 	std::cout << "┣⮕ NickCommand." << std::endl;
-	getCommandList()->insert(std::pair<std::string, Command*>(this->_name, this));
 }
 
 NickCommand::~NickCommand(void)
 {}
 
-void NickCommand::execute(void)
+void NickCommand::execute(int fds, Client *client)
 {
+	(void) fds;
+	(void) client;
 	std::cout << "[" << this->_name << "] : NickCommand executed !" << std::endl;
 }

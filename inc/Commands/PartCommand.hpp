@@ -10,7 +10,7 @@ private:
 public:
 	PartCommand();
 	virtual ~PartCommand();
-	void execute();
+	void execute(int fds, Client *client);
 };
 
 #endif

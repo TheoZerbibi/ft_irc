@@ -10,7 +10,7 @@ private:
 public:
 	NickCommand();
 	virtual ~NickCommand();
-	void execute();
+	void execute(int fds, Client *client);
 };
 
 #endif

@@ -21,6 +21,7 @@ int	Irc::main_loop()
 			throw  SyscallError();
 		}
 		this->manage_incoming_connection();
+		this->manageCommand();
 	}
 	return (0);
 }

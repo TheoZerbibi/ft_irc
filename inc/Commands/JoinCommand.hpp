@@ -10,7 +10,7 @@ private:
 public:
 	JoinCommand();
 	virtual ~JoinCommand();
-	void execute();
+	void execute(int fds, Client *client);
 };
 
 #endif
