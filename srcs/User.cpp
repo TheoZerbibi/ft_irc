@@ -65,7 +65,7 @@ const int	&Client::getSockfd() const
 bool Client::recvData()
 {
 	int	nbyte;
-	char	buff[2];
+	char	buff[512];
 
 	// Get data utile there is no more data to retrieve
 

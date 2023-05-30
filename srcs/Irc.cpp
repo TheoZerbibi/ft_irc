@@ -27,7 +27,7 @@ Irc::Irc(std::string port, std::string passwd): _pass(passwd)
 		std::cerr << "getaddrinfo error: " << gai_strerror(status) << std::endl;
 		throw SyscallError();
 	}
-	if ((setup_socket()) == -1 || set_socket_option() == -1)
+	if ((setup_socket()) == -1)
 	{
 		freeaddrinfo(this->_net);
 		std::cerr << "Socket creation failed: ";
@@ -53,9 +53,9 @@ std::map<int, Client*>	&Irc::getClients()
 //Setter
 void	Irc::addClient(int const &sfd)
 {
-	Client	client(sfd);
+	Client	*client = new Client(sfd);
 
-	_clients.insert(std::make_pair(sfd, &client));
+	_clients.insert(std::make_pair(sfd, client));
 }
 
 int	Irc::computeFdMax(void) const

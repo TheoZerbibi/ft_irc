@@ -17,6 +17,8 @@ int	Irc::setup_socket()
 {
 	if ((this->_sockfd = socket(_net->ai_family, _net->ai_socktype, _net->ai_protocol)) == -1)
 		return (-1);
+	if (this->set_socket_option() == -1)
+		return (-1);
 	if (bind(this->_sockfd, this->_net->ai_addr, this->_net->ai_addrlen) == -1)
 	{
 		return (-1);
