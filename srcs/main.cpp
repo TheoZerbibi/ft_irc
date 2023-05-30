@@ -20,7 +20,6 @@ int	Irc::main_loop()
 			throw  SyscallError();
 		}
 		this->manage_incoming_connection();
-		std::cout << "Hey you !" << std::endl;
 	}
 	return (0);
 }

@@ -1,6 +1,8 @@
 #pragma once
 #include "ft_irc.hpp"
 
+#define	DELIM "\r\n"
+
 class Irc;
 class Channel;
 
@@ -28,7 +30,7 @@ class Client {
 
 		// User personnal socket
 		std::string			_buff;
-		std::deque<std::string>	_cmds;
+		std::deque<std::string>		_cmds;
 
 		int		_sockFd;
 		bool		_registered;
@@ -38,7 +40,8 @@ class Client {
 		std::string	_hostname;
 		std::string	_username;
 
-		void		exctractCmds();
+		void		extractCmds();
+		void		printCmds();
 	private:
 	//	int		connection_time; //if current_time - connection_time > 2s timeout client
 };
