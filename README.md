@@ -72,7 +72,7 @@ Things to do are :
 ---
 - Signal handling
 
- - [|] CTRL+C : still have to check for cmd > to buffer size and management of lost fd
+ - [ ] CTRL+C : still have to check for cmd > to buffer size and management of lost fd
  - [x] CTRL+D : Management of partial cmd
  - [ ] CTRL+Z
 
@@ -91,10 +91,10 @@ Things to do are :
 - Operator command
 
 > These are channel command that can only be used by operator of channel (you first need to be on the channel to do these operation)
+ - [ ]  [MODE](https://modern.ircdocs.horse/#mode-message) : user('o', ), channel( )   'i', 't', 'k', 'o' 'l'
  - [ ]  [KICK](https://modern.ircdocs.horse/#kick-message)
  - [ ]  [INVITE](https://modern.ircdocs.horse/#invite-message)
  - [ ]  [TOPIC](https://modern.ircdocs.horse/#topic-message)
- - [ ]  [MODE](https://modern.ircdocs.horse/#mode-message) : only implement 'i', 't', 'k', 'o' 'l'
  
 ---
 
