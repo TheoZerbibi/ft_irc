@@ -108,4 +108,6 @@ Things to do are :
 
 - [ModernIrc : Complete command reference](https://modern.ircdocs.horse/)
 
+- [IRC2812](https://www.tech-invite.com/y25/tinv-ietf-rfc-2812.html) 
+
 - [Irssi Doc](https://irssi.org/New-users/)
