@@ -57,19 +57,21 @@ Things to do are :
 ## Requirement
 
 - Server / client socket connection
----
+
  - [x] Accept multiple client and register them under a user id
  - [ ] promotion of registered client as user
 
-- Command management
 ---
+- Command management
+
  - [x] Get command on user-sockfd (Should use a buffer for eachuser)
  - [x] Parse command
  - [ ] Implementation of cmd
   
 
-- Signal handling
 ---
+- Signal handling
+
  - [|] CTRL+C : still have to check for cmd > to buffer size and management of lost fd
  - [x] CTRL+D : Management of partial cmd
  - [ ] CTRL+Z
@@ -78,14 +80,16 @@ Things to do are :
 - [ ] Define client structure including: socket-fd, Id, command buffer
 - [ ] Define rooms with userid
 
-- Server command
 ---
+- Server command
+
  - [ ]  [PING](https://modern.ircdocs.horse/#ping-message)
  - [ ]  [OPER](https://modern.ircdocs.horse/#oper-message)
  - [ ]  [KILL](https://modern.ircdocs.horse/#kill-message) 
 
-- Operator command
 ---
+- Operator command
+
 > These are channel command that can only be used by operator of channel (you first need to be on the channel to do these operation)
  - [ ]  [KICK](https://modern.ircdocs.horse/#kick-message)
  - [ ]  [INVITE](https://modern.ircdocs.horse/#invite-message)
