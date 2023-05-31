@@ -13,6 +13,15 @@ Client::Client(int const &sfd)
 	_sockFd = sfd;
 }
 
+Client::Client(Client *cpy)
+{
+	this->_sockFd = cpy->getSockfd();
+	this->_nickname = cpy->getNick();
+	this->_username = cpy->getUser();
+	this->_hostname = cpy->getHost();
+	this->_registered = cpy->isRegistered();
+}
+
 Client::Client():_sockFd(0)
 {
 }
@@ -53,9 +62,20 @@ const std::string	&Client::getHost() const
 	return (this->_hostname);
 }
 
+const std::string	&Client::getBuff() const
+{
+	return (this->_buff);
+}
+
 const int	&Client::getSockfd() const
 {
 	return (this->_sockFd);
+}
+
+
+bool const	&Client::isRegistered() const
+{
+	return(this->_registered);
 }
 
 
@@ -112,12 +132,12 @@ void	Client::extractCmds()
 	}
 }
 
-User::User(Client &client)
+User::User(Client *client): Client(*client)
 {
-	this->_sockFd = client.getSockfd();
-	this->_nickname = client.getNick();
-	this->_username = client.getUser();
-	this->_hostname = client.getHost();
+//	this->_sockFd = client.getSockfd();
+//	this->_nickname = client.getNick();
+//	this->_username = client.getUser();
+//	this->_hostname = client.getHost();
 }
 
 User::User()

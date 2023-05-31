@@ -43,15 +43,17 @@ class	Irc{
 		// Client, User 
 		std::vector<Channel>	_chans;
 		std::map<int, Client *>	_clients; // Unregistered User, got promoted to User after
-	
+
 		// Server info
 		struct	addrinfo	*_net;
 		std::string		_pass;
 		int			_sockfd;
 
 		//Commands
+		// Client Management
+		void			promote_client(std::map<int, Client *>::iterator &_client);
 
-		// Receiving data
+		//// Receiving data
 		int			accept_client();
 		int			receive_client_data(Client *user);
 		int			data_reception_handler();
@@ -60,8 +62,8 @@ class	Irc{
 		int			read_client_socket(Client &user);
 
 		//Setup socket interface
-		int	setup_socket();
-		int	set_socket_option();
+		int			setup_socket();
+		int			set_socket_option();
 
 		// Operation on fds
 		fd_set				*getFd_set();

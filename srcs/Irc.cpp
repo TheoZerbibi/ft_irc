@@ -97,6 +97,22 @@ void	Irc::printAi() const
 	std::cout << "Port : " << ntohs(((struct sockaddr_in *)_net->ai_addr)->sin_port) << std::endl;
 }
 
+// Client Management
+
+void	promote_client(std::map<int, Client *>::iterator &client_it)
+{
+	Client *client = client_it->second;
+
+	if (client->isRegistered())
+	{
+		std::cout << "Client " << client->getUser() << "is already registered" << std::endl;
+		return ;
+	}
+	User	*user = new User(client_it->second);
+	delete client_it->second;
+	client_it->second = user;
+}
+
 //	Irc	&Irc::operator=(const Irc &rhs)
 //	{
 //		int	status;
