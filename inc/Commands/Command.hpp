@@ -6,7 +6,8 @@
 # include <string>
 # include <map>
 # include <utility>
-# include "User.hpp"
+
+class Client;
 
 class Command
 {

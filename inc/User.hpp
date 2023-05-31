@@ -14,7 +14,7 @@ class Client {
 		const std::string	&getNick() const;
 		const std::string	&getHost() const;
 		const std::string	&getUser() const;
-		const int		&getSockfd() const;
+		const int			&getSockfd() const;
 
 		void	setNick(std::string nick);
 		void	setHost(std::string host);

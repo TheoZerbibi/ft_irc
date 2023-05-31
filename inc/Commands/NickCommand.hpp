@@ -2,6 +2,7 @@
 # define NICKCOMMAND_HPP
 
 # include "Command.hpp"
+# include "User.hpp"
 
 class NickCommand : public Command
 {

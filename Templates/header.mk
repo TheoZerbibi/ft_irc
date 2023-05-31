@@ -6,7 +6,7 @@
 #    By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/26 01:52:22 by thzeribi          #+#    #+#              #
-#    Updated: 2023/05/30 08:00:49 by thzeribi         ###   ########.fr        #
+#    Updated: 2023/05/31 04:40:44 by thzeribi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ RULE := $(filter all re clean fclean norm header asan anclarma debug,$(MAKECMDGO
 
 AUTHOR	:= thzeribi | iguidado
 DATE	:= $(shell date +%F)
-SPACE	:= -55
+SPACE	:= -51
 
 define print_header
 	printf "%b" "$(INFO_COLOR)";

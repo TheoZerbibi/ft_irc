@@ -2,6 +2,7 @@
 # define KICKCOMMAND_HPP
 
 # include "Command.hpp"
+# include "User.hpp"
 
 class KickCommand : public Command
 {

@@ -2,6 +2,7 @@
 # define MODECOMMAND_HPP
 
 # include "Command.hpp"
+# include "User.hpp"
 
 class ModeCommand : public Command
 {

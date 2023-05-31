@@ -2,7 +2,7 @@
 # define CAPCOMMAND_HPP
 # include "Command.hpp"
 
-class Client;
+# include "User.hpp"
 
 class CapCommand : public Command
 {

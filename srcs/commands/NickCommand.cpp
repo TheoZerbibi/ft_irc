@@ -11,7 +11,15 @@ NickCommand::~NickCommand(void)
 
 void NickCommand::execute(int fds, Client *client)
 {
-	(void) fds;
-	(void) client;
-	std::cout << "[" << this->_name << "] : NickCommand executed !" << std::endl;
+	(void)fds;
+	std::string	cmd = client->getCmds().front();
+	std::string	nick = cmd.substr(cmd.find(" ") + 1);
+
+	if (nick.empty())
+	{
+		std::cout << "NickCommand::execute(" << fds << ", " <<  "Invalid nick )" << std::endl;
+		return ;
+	}
+	client->setNick(nick);
+	std::cout << "NickCommand::execute(" << fds << ", " << client->getNick() << ")" << std::endl;
 }

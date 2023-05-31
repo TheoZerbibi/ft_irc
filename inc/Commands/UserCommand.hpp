@@ -2,6 +2,7 @@
 # define USERCOMMAND_HPP
 
 # include "Command.hpp"
+# include "User.hpp"
 
 class UserCommand : public Command
 {

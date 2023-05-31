@@ -63,6 +63,7 @@ int	Irc::manage_incoming_connection()
 
 int Irc::manageCommand()
 {
+	std::cout << "---- Manage Command ---" << std::endl;
 	std::map<int, Client*>::iterator	beg = this->getClients().begin();
 	std::map<int, Client*>::iterator	end = this->getClients().end();
 	std::map<std::string, Command*>		commandList = this->getCommandList();
@@ -80,6 +81,7 @@ int Irc::manageCommand()
 				commandList[cmd]->execute(beg->first, beg->second);
 			else
 				std::cout << "Command " << cmd << " found" << std::endl;
+			beg->second->getCmds().pop_front();
 		}
 		beg++;
 	}

@@ -2,6 +2,7 @@
 # define TOPICCOMMAND_HPP
 
 # include "Command.hpp"
+# include "User.hpp"
 
 class TopicCommand : public Command
 {

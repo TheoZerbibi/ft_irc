@@ -2,6 +2,7 @@
 # define PARTCOMMAND_HPP
 
 # include "Command.hpp"
+# include "User.hpp"
 
 class PartCommand : public Command
 {

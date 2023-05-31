@@ -15,5 +15,4 @@ void CapCommand::execute(int fds, Client *client)
 	(void) fds;
 	(void) client;
 	std::cout << "[" << this->_name << "] : CapCommand executed !" << std::endl;
-	client->getCmds().pop_front();
 }
