@@ -9,6 +9,7 @@
 #include	"ModeCommand.hpp"
 #include	"NickCommand.hpp"
 #include	"PartCommand.hpp"
+#include	"PassCommand.hpp"
 #include	"PrivMsgCommand.hpp"
 #include	"TopicCommand.hpp"
 #include	"UserCommand.hpp"
@@ -38,10 +39,11 @@ class	Irc{
 		void			addClient(int const &sfd);
 
 		//Getter
-		const	int			&getSocket() const;
+		const	int					&getSocket() const;
 		const	struct addrinfo		*getAi() const;
+		const	std::string			&getPass() const;
 		std::map<int, Client *>		&getClients();
-		int				computeFdMax() const;
+		int							computeFdMax() const;
 
 		int				main_loop();
 

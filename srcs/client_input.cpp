@@ -61,6 +61,18 @@ int	Irc::manage_incoming_connection()
 	return (0);
 }
 
+static std::string getCommand(std::string cmd)
+{
+	std::string	res = "";
+
+	if (cmd.empty())
+		return "";
+	std::string::size_type pos = cmd.find(' ');
+	if (pos != std::string::npos)
+		res = cmd.substr(0, pos);
+	return (res);
+}
+
 int Irc::manageCommand()
 {
 	std::cout << "---- Manage Command ---" << std::endl;
@@ -73,10 +85,18 @@ int Irc::manageCommand()
 		if (beg->second->getCmds().size() > 0)
 		{
 			std::string cmd = beg->second->getCmds().front();
-			std::string::size_type pos = cmd.find(' ');
-			if (pos != std::string::npos)
-				cmd = cmd.substr(0, pos);
+			cmd = getCommand(cmd);
 			std::cout << "Command : " << cmd << std::endl;
+			if (cmd == "CAP") {
+				beg->second->getCmds().pop_front();
+				if (beg->second->getCmds().size() > 0)
+					cmd = beg->second->getCmds().front();
+			}
+			cmd = getCommand(cmd);
+			if (cmd.empty()) {
+				beg->second->getCmds().pop_front();
+				continue ;
+			}
 			if (commandList.find(cmd) != commandList.end())
 				commandList[cmd]->execute(beg->first, beg->second);
 			else

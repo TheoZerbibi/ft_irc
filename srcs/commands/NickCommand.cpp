@@ -11,7 +11,6 @@ NickCommand::~NickCommand(void)
 
 void NickCommand::execute(int fds, Client *client)
 {
-	(void)fds;
 	std::string	cmd = client->getCmds().front();
 	std::string	nick = cmd.substr(cmd.find(" ") + 1);
 

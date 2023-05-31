@@ -42,8 +42,10 @@ Irc::Irc(std::string port, std::string passwd): _pass(passwd)
 		std::cerr << "Socket creation failed: ";
 		throw SyscallError();
 	}
+	if (this->_pass.empty())
+		this->_pass = "123";
+	std::cout << "PASS : " << this->_pass << std::endl;
 }
-
 
 void Irc::initCommand() {
 	std::cout << "┏ Command Register" << std::endl;
@@ -54,18 +56,24 @@ void Irc::initCommand() {
 	this->commandList.insert(std::pair<std::string, Command*>("MODE", new ModeCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("NICK", new NickCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("PART", new PartCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("PASS", new PassCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("PRIVMSG", new PrivMsgCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("TOPIC", new TopicCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("USER", new UserCommand()));
 }
 
+
+// Getter
 std::map<std::string, Command*> Irc::getCommandList() {
 	return this->commandList;
 }
 
-// Getter
 const int	&Irc::getSocket() const {
 	return ((this->_sockfd));
+}
+
+const std::string &Irc::getPass() const {
+	return (this->_pass);
 }
 
 const struct addrinfo	*Irc::getAi() const
