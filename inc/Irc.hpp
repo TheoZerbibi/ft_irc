@@ -44,6 +44,7 @@ class	Irc{
 		std::vector<Channel>	_chans;
 		std::map<int, Client *>	_clients; // Unregistered User, got promoted to User after
 
+
 		// Server info
 		struct	addrinfo	*_net;
 		std::string		_pass;
@@ -51,6 +52,7 @@ class	Irc{
 
 		//Commands
 		// Client Management
+		int			setup_fds();
 		void			promote_client(std::map<int, Client *>::iterator &_client);
 
 		//// Receiving data

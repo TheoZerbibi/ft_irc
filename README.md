@@ -102,6 +102,11 @@ Things to do are :
 - [ ] Implement RPL system
  - [ ] Implement ERR
 
+---
+
+- todo next
+ - [ ] fix 
+
 ### Extra
 
 - [ ] Do a script to automate connexion on server with nc

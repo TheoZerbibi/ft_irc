@@ -62,7 +62,7 @@ std::map<int, Client*>	&Irc::getClients()
 //Setter
 void	Irc::addClient(int const &sfd)
 {
-	Client	* client = new Client(sfd);
+	Client	*client = new Client(sfd);
 
 	_clients.insert(std::make_pair(sfd, client));
 }
@@ -99,7 +99,7 @@ void	Irc::printAi() const
 
 // Client Management
 
-void	promote_client(std::map<int, Client *>::iterator &client_it)
+void	Irc::promote_client(std::map<int, Client *>::iterator &client_it)
 {
 	Client *client = client_it->second;
 

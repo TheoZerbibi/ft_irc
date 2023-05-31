@@ -19,17 +19,20 @@ int	Irc::accept_client()
 
 int	Irc::receive_client_data(Client *user)
 {
-		int	fd;
+		int		fd;
+		std::string	Ctype = "Client";
 
 		fd = user->getSockfd();
 		if (FD_ISSET(fd, &fds[READ]))
 		{
+			if (user->isRegistered())
+				Ctype = "User";
+			std::cout << Ctype;
 			std::cout << "--- > New message from fd : " << fd <<  std::endl;
 			if (user->recvData() <= 0)
 			{
 				FD_CLR(fd, &fds[MASTER]);
 				// Need to remove client from client list
-
 				return (0);
 			}
 		}
@@ -46,8 +49,16 @@ int	Irc::data_reception_handler()
 
 	while (beg != end)
 	{
-		this->receive_client_data(beg->second);
-		beg++;
+		if (!this->receive_client_data(beg->second))
+		{
+			delete beg->second;
+			_clients.erase(beg++);
+		}
+		else
+		{
+			this->promote_client(beg);
+			beg++;
+		}
 	}
 	return (0);
 }

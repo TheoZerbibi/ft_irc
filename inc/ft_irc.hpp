@@ -48,8 +48,6 @@ enum	e_fd_triggers
 	FD_SET_TYPES
 };
 
-
-
 // Signal management
 void	handleSigINT(int signal);
 

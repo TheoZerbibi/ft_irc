@@ -1,8 +1,15 @@
 #include "ft_irc.hpp"
 
+int	Irc::setup_fds()
+{
+	for (int i = 1; i < 4; i++)
+		(this->fds[i] = this->fds[MASTER]);
+	return (this->computeFdMax());
+}
+
 int	Irc::main_loop()
 {
-	int				fdmax;
+	//	int				ret;
 	//	timeval				ttd = (timeval){2, 0};
 
 	for (int i = 0; i < 4; i++)
@@ -10,11 +17,7 @@ int	Irc::main_loop()
 	FD_SET(this->getSocket(), &(this->fds[MASTER]));
 	while (1)
 	{
-		for (int i = 1; i < 4; i++)
-			(this->fds[i] = this->fds[MASTER]);
-		fdmax = this->computeFdMax();
-		std::cout << "Connecting" << std::endl;
-		if (select(fdmax, &(this->fds[READ]), NULL, NULL, NULL) == -1)
+		if (select(this->setup_fds(), &(this->fds[READ]), NULL, NULL, NULL) == -1)
 		{
 			std::cerr << "Select error : ";
 			throw  SyscallError();

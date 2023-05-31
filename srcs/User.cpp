@@ -78,7 +78,6 @@ bool const	&Client::isRegistered() const
 	return(this->_registered);
 }
 
-
 // 
 
 bool Client::recvData()
@@ -94,6 +93,7 @@ bool Client::recvData()
 		if (nbyte < 0)
 		{
 			std::cout << "Error with recv" << std::endl;
+
 			//Error from recv, maybe print something
 
 		}
@@ -134,10 +134,7 @@ void	Client::extractCmds()
 
 User::User(Client *client): Client(*client)
 {
-//	this->_sockFd = client.getSockfd();
-//	this->_nickname = client.getNick();
-//	this->_username = client.getUser();
-//	this->_hostname = client.getHost();
+	this->_registered = 1;
 }
 
 User::User()
