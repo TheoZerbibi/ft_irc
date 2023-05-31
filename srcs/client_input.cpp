@@ -66,10 +66,11 @@ static std::string getCommand(std::string cmd)
 	std::string	res = "";
 
 	if (cmd.empty())
-		return "";
-	std::string::size_type pos = cmd.find(' ');
-	if (pos != std::string::npos)
-		res = cmd.substr(0, pos);
+		return res;
+	if (cmd.find(' ') != std::string::npos)
+		res = cmd.substr(0, cmd.find(' '));
+	else if (cmd.find('\n') != std::string::npos)
+		res = cmd.substr(0, cmd.find('\n'));
 	return (res);
 }
 
@@ -87,6 +88,8 @@ int Irc::manageCommand()
 			std::string cmd = beg->second->getCmds().front();
 			cmd = getCommand(cmd);
 			std::cout << "Command : " << cmd << std::endl;
+			if (cmd.empty()) continue ;
+
 			if (cmd == "CAP") {
 				beg->second->getCmds().pop_front();
 				if (beg->second->getCmds().size() > 0)

@@ -2,6 +2,7 @@
 #include "ft_irc.hpp"
 
 #include	"Command.hpp"
+#include 	"AwayCommand.hpp"
 #include 	"CapCommand.hpp"
 #include	"InviteCommand.hpp"
 #include	"JoinCommand.hpp"

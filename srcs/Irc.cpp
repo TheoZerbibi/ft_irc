@@ -49,6 +49,7 @@ Irc::Irc(std::string port, std::string passwd): _pass(passwd)
 
 void Irc::initCommand() {
 	std::cout << "┏ Command Register" << std::endl;
+	this->commandList.insert(std::pair<std::string, Command*>("AWAY", new AwayCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("CAP", new CapCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("INVITE", new InviteCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("JOIN", new JoinCommand()));
