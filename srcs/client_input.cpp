@@ -55,10 +55,7 @@ int	Irc::data_reception_handler()
 			_clients.erase(beg++);
 		}
 		else
-		{
-			this->romote_client(beg);
 			beg++;
-		}
 	}
 	return (0);
 }

@@ -32,7 +32,6 @@ int	Irc::main_loop()
 			this->manage_incoming_connection();
 		this->manageCommand();
 
-
 		this->fds[SEND] = this->fds[MASTER];
 		ret = select(fdMax, NULL, &(this->fds[SEND]), NULL, &ttd);
 		if (ret == -1)

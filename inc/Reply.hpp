@@ -9,12 +9,12 @@ class Reply
 		Reply(int clientFd, std::string message);
 		~Reply(void);
 
-		int			getClientFd(void) const;
-		std::string	getMessage(void) const;
-	private:
-	std::string	_message;
-	int			_clientFd;
+		int			const getClientFd(void) const;
+		std::string		getMessage(void) const;
 
+	private:
+		std::string		_message;
+		int			_clientFd;
 };
 
 #endif

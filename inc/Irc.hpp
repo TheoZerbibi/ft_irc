@@ -23,7 +23,6 @@ class Channel;
 class	Irc{
 	Command *command;
 	public:
-		std::map<std::string, Command*> commandList;
 		//Const & destr
 		static Irc &getInstance() // Init and retrieve server instance
 		{
@@ -40,16 +39,17 @@ class	Irc{
 		void			addClient(int const &sfd);
 
 		//Getter
-		const	int					&getSocket() const;
-		const	struct addrinfo		*getAi() const;
+		const	int				&getSocket() const;
+		const	struct addrinfo			*getAi() const;
 		const	std::string			&getPass() const;
-		std::map<int, Client *>		&getClients();
-		int							computeFdMax() const;
+		std::map<int, Client *>			&getClients();
+		int					computeFdMax() const;
 
 		int				main_loop();
 
-		void			initCommand();
 
+		// Command manager
+		void			initCommand();
 		std::map<std::string, Command*> getCommandList();
 
 
@@ -66,16 +66,17 @@ class	Irc{
 		std::vector<Channel>	_chans;
 		std::map<int, Client *>	_clients; // Unregistered User, got promoted to User after
 
+		// Client Management
+		int			setup_fds();
+		void			promote_client(std::map<int, Client *>::iterator &_client);
+
+		//Commands
+		std::map<std::string, Command*> commandList;
 
 		// Server info
 		struct	addrinfo		*_net;
 		std::string			_pass;
 		int				_sockfd;
-
-		//Commands
-		// Client Management
-		int			setup_fds();
-		void			promote_client(std::map<int, Client *>::iterator &_client);
 
 		//// Receiving data
 		int			accept_client();
@@ -87,9 +88,10 @@ class	Irc{
 		int			manageCommand();
 
 		//// Send data
+		std::vector<Reply>	_replies;
 		int			sendReplies();
 
-		//Setup socket interface
+		// Setup socket interface
 		int			setup_socket();
 		int			set_socket_option();
 

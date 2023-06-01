@@ -123,7 +123,6 @@ void	Irc::promote_client(std::map<int, Client *>::iterator &client_it)
 
 	if (client->isRegistered())
 	{
-		std::cout << "Client " << client->getUser() << "is already registered" << std::endl;
 		return ;
 	}
 	User	*user = new User(client_it->second);
@@ -150,6 +149,16 @@ int	Irc::computeFdMax(void) const
 
 int	Irc::sendReplies(void)
 {
+	std::vector<Reply>::iterator	beg = _replies.begin();
+	std::vector<Reply>::iterator	end = _replies.end();
+
 	std::cout << "<<-- Sending Replies" << std::endl;
+	while (beg != end)
+	{
+		if (FD_SET(beg->getClientFd, this->fds[SEND]))
+		{
+			// Send Replies
+		}
+	}
 	return (0);
 }
