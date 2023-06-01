@@ -4,7 +4,6 @@ AwayCommand::AwayCommand(void) :
 _name("AWAY")
 {
 	std::cout << "┣⮕ AwayCommand." << std::endl;
-	// getCommandList()->insert(std::pair<std::string, Command*>(this->_name, this));
 }
 
 AwayCommand::~AwayCommand(void)
