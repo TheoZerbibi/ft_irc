@@ -121,6 +121,11 @@ void	Client::printCmds()
 	}
 }
 
+std::deque<std::string> &Client::getCmds()
+{
+	return (this->_cmds);
+}
+
 void	Client::extractCmds()
 {
 	size_t		pos = 0;

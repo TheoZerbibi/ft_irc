@@ -7,6 +7,8 @@
 # include <map>
 # include <utility>
 
+class Client;
+
 class Command
 {
 protected:
@@ -16,11 +18,6 @@ public:
 
 	Command();
 	virtual ~Command();
-	virtual void execute() = 0;
-
-	static std::map<std::string, Command*> getCommandList();
+	virtual void execute(int fds, Client *client) = 0;
 };
-
-static std::map<std::string, Command*> commandList;
-std::map<std::string, Command*> getCommandList();
 #endif

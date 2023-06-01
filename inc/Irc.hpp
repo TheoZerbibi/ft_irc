@@ -1,12 +1,29 @@
 #pragma once
 #include "ft_irc.hpp"
 
+#include	"Command.hpp"
+#include 	"AwayCommand.hpp"
+#include 	"CapCommand.hpp"
+#include	"InviteCommand.hpp"
+#include	"JoinCommand.hpp"
+#include	"KickCommand.hpp"
+#include	"ModeCommand.hpp"
+#include	"NickCommand.hpp"
+#include	"PartCommand.hpp"
+#include	"PassCommand.hpp"
+#include	"PrivMsgCommand.hpp"
+#include	"TopicCommand.hpp"
+#include	"UserCommand.hpp"
+
+class Command;
 class Client;
 class User;
 class Channel;
 
 class	Irc{
+	Command *command;
 	public:
+		std::map<std::string, Command*> commandList;
 		//Const & destr
 		static Irc &getInstance() // Init and retrieve server instance
 		{
@@ -23,12 +40,17 @@ class	Irc{
 		void			addClient(int const &sfd);
 
 		//Getter
-		const	int			&getSocket() const;
+		const	int					&getSocket() const;
 		const	struct addrinfo		*getAi() const;
+		const	std::string			&getPass() const;
 		std::map<int, Client *>		&getClients();
-		int				computeFdMax() const;
+		int							computeFdMax() const;
 
 		int				main_loop();
+
+		void			initCommand();
+
+		std::map<std::string, Command*> getCommandList();
 
 
 	private:
@@ -48,7 +70,7 @@ class	Irc{
 		// Server info
 		struct	addrinfo	*_net;
 		std::string		_pass;
-		int			_sockfd;
+		int				_sockfd;
 
 		//Commands
 		// Client Management
@@ -62,6 +84,7 @@ class	Irc{
 		int			manage_incoming_connection();
 		int			retrieve_clients_packet();
 		int			read_client_socket(Client &user);
+		int			manageCommand();
 
 		//Setup socket interface
 		int			setup_socket();
