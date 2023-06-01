@@ -30,6 +30,8 @@
 #define 	SUCCESS 1
 #define		FAILURE 0
 
+#define		SEND_BUFF_LEN 1024
+
 
 class	SyscallError: public std::exception
 {

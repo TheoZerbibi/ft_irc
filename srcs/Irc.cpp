@@ -147,6 +147,19 @@ int	Irc::computeFdMax(void) const
 	return (fdmax + 1);
 }
 
+int	Reply::send()
+{
+	char	buff[SEND_BUFF_LEN];
+	size_t	len = reply.;
+	ssize_t	nbyte;
+
+
+	nbyte = send(reply->getClientFd(), reply.getMessage.c_str(), re, NULL);
+	if (nbyte == -1)
+		//Error
+	else if (nbyte < )
+}
+
 int	Irc::sendReplies(void)
 {
 	std::vector<Reply>::iterator	beg = _replies.begin();
@@ -155,10 +168,13 @@ int	Irc::sendReplies(void)
 	std::cout << "<<-- Sending Replies" << std::endl;
 	while (beg != end)
 	{
-		if (FD_SET(beg->getClientFd, this->fds[SEND]))
+		if (FD_SET(beg->getClientFd(), this->fds[SEND]))
 		{
-			// Send Replies
+			
+			_replace.erase(beg++);
 		}
+		else
+			beg++;
 	}
 	return (0);
 }

@@ -15,6 +15,7 @@
 #include	"TopicCommand.hpp"
 #include	"UserCommand.hpp"
 
+
 class Command;
 class Client;
 class User;

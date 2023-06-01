@@ -13,6 +13,7 @@ class Reply
 		std::string		getMessage(void) const;
 
 	private:
+		int			send();
 		std::string		_message;
 		int			_clientFd;
 };
