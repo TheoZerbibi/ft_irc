@@ -80,7 +80,6 @@ bool const	&Client::isRegistered() const
 }
 
 // 
-
 bool Client::recvData()
 {
 	int	nbyte;

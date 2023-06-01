@@ -26,6 +26,7 @@
 #include	"User.hpp"
 #include	"Irc.hpp"
 #include	"Channel.hpp"
+#include	"Reply.hpp"
 
 #define 	SUCCESS 1
 #define		FAILURE 0

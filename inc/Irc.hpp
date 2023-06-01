@@ -20,6 +20,7 @@ class Command;
 class Client;
 class User;
 class Channel;
+class Reply;
 
 class	Irc{
 	Command *command;
