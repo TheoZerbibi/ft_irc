@@ -16,7 +16,15 @@ Irc::~Irc()
 		delete beg->second;
 		beg++;
 	}
+	std::map<std::string, Command*>::iterator begC = commandList.begin();
+	std::map<std::string, Command*>::iterator endC = commandList.end();
+	while (begC != endC)
+	{
+		delete begC->second;
+		begC++;
+	}
 	std::cout << "Exiting" << std::endl;
+
 }
 
 Irc::Irc(std::string port, std::string passwd): _pass(passwd)
