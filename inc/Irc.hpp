@@ -68,8 +68,8 @@ class	Irc{
 
 
 		// Server info
-		struct	addrinfo	*_net;
-		std::string		_pass;
+		struct	addrinfo		*_net;
+		std::string			_pass;
 		int				_sockfd;
 
 		//Commands
@@ -85,6 +85,9 @@ class	Irc{
 		int			retrieve_clients_packet();
 		int			read_client_socket(Client &user);
 		int			manageCommand();
+
+		//// Send data
+		int			sendReplies();
 
 		//Setup socket interface
 		int			setup_socket();

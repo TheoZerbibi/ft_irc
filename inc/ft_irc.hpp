@@ -38,6 +38,8 @@ class	SyscallError: public std::exception
 	}
 };
 
+
+
 // select() argument type : see fd_set
 enum	e_fd_triggers
 {

@@ -56,7 +56,7 @@ int	Irc::data_reception_handler()
 		}
 		else
 		{
-			this->promote_client(beg);
+			this->romote_client(beg);
 			beg++;
 		}
 	}

@@ -63,7 +63,6 @@ void Irc::initCommand() {
 	this->commandList.insert(std::pair<std::string, Command*>("USER", new UserCommand()));
 }
 
-
 // Getter
 std::map<std::string, Command*> Irc::getCommandList() {
 	return this->commandList;
@@ -95,23 +94,6 @@ void	Irc::addClient(int const &sfd)
 	_clients.insert(std::make_pair(sfd, client));
 }
 
-int	Irc::computeFdMax(void) const
-{
-	int	fdmax = this->getSocket();
-	int	curr_fd;
-	std::map<int, Client*>::const_iterator it = this->_clients.begin();
-	std::map<int, Client*>::const_iterator ite = this->_clients.end();
-
-	while (it != ite)
-	{
-		curr_fd = (*it).first;
-		if (fdmax < curr_fd)
-			fdmax = curr_fd;
-		it++;
-	}
-	return (fdmax + 1);
-}
-
 void	Irc::printAi() const
 {
 	std::cout << "Address family: ";
@@ -141,13 +123,25 @@ void	Irc::promote_client(std::map<int, Client *>::iterator &client_it)
 	client_it->second = user;
 }
 
-//	Irc	&Irc::operator=(const Irc &rhs)
-//	{
-//		int	status;
-//	
-//		status = getaddrinfo(NULL, NULL, rhs.getAi(), &this->_net);
-//		freeaddrinfo(this->_net);
-//		this->_sockfd = rhs.getSocket();
-//		this->_users = rhs.getUsers();
-//		return (*this);
-//	}
+int	Irc::computeFdMax(void) const
+{
+	int	fdmax = this->getSocket();
+	int	curr_fd;
+	std::map<int, Client*>::const_iterator it = this->_clients.begin();
+	std::map<int, Client*>::const_iterator ite = this->_clients.end();
+
+	while (it != ite)
+	{
+		curr_fd = (*it).first;
+		if (fdmax < curr_fd)
+			fdmax = curr_fd;
+		it++;
+	}
+	return (fdmax + 1);
+}
+
+int	Irc::sendReplies(void)
+{
+	std::cout << "<<-- Sending Replies" << std::endl;
+	return (0);
+}
