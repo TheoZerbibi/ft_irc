@@ -11,6 +11,7 @@
 Client::Client(int const &sfd)
 {
 	_sockFd = sfd;
+	this->_registered = false;
 }
 
 Client::Client(Client *cpy)
@@ -122,12 +123,15 @@ void	Client::printCmds()
 
 void	Client::extractCmds()
 {
-	size_t	pos = 0;
+	size_t		pos = 0;
+	std::string	cmd;
 
 	while ((pos = this->_buff.find(DELIM)) != std::string::npos)
 	{
 		std::cout << "found delimiter at pos : " << pos << std::endl;
-		_cmds.push_back(this->_buff.substr(0, pos));
+		cmd = this->_buff.substr(0, pos);
+		if (!cmd.empty())
+			_cmds.push_back(cmd);
 		_buff.erase(0, pos + sizeof(DELIM) - 1);
 	}
 }
