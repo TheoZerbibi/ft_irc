@@ -1,8 +1,7 @@
 #include "ft_irc.hpp"
 
 Irc::Irc()
-{
-}
+{}
 
 Irc::~Irc()
 {
@@ -17,7 +16,15 @@ Irc::~Irc()
 		delete beg->second;
 		beg++;
 	}
+	std::map<std::string, Command*>::iterator begC = commandList.begin();
+	std::map<std::string, Command*>::iterator endC = commandList.end();
+	while (begC != endC)
+	{
+		delete begC->second;
+		begC++;
+	}
 	std::cout << "Exiting" << std::endl;
+
 }
 
 Irc::Irc(std::string port, std::string passwd): _pass(passwd)
@@ -25,6 +32,7 @@ Irc::Irc(std::string port, std::string passwd): _pass(passwd)
 	struct	addrinfo	hint;
 	int			status;
 
+	this->initCommand();
 	(void)port;
 	std::memset(&hint, 0, sizeof(hint));
 	hint.ai_family = AF_UNSPEC;
@@ -42,11 +50,38 @@ Irc::Irc(std::string port, std::string passwd): _pass(passwd)
 		std::cerr << "Socket creation failed: ";
 		throw SyscallError();
 	}
+	if (this->_pass.empty())
+		this->_pass = "123";
+	std::cout << "PASS : " << this->_pass << std::endl;
+}
+
+void Irc::initCommand() {
+	std::cout << "┏ Command Register" << std::endl;
+	this->commandList.insert(std::pair<std::string, Command*>("AWAY", new AwayCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("CAP", new CapCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("INVITE", new InviteCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("JOIN", new JoinCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("KICK", new KickCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("MODE", new ModeCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("NICK", new NickCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("PART", new PartCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("PASS", new PassCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("PRIVMSG", new PrivMsgCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("TOPIC", new TopicCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("USER", new UserCommand()));
 }
 
 // Getter
+std::map<std::string, Command*> Irc::getCommandList() {
+	return this->commandList;
+}
+
 const int	&Irc::getSocket() const {
 	return ((this->_sockfd));
+}
+
+const std::string &Irc::getPass() const {
+	return (this->_pass);
 }
 
 const struct addrinfo	*Irc::getAi() const
@@ -62,9 +97,37 @@ std::map<int, Client*>	&Irc::getClients()
 //Setter
 void	Irc::addClient(int const &sfd)
 {
-	Client	* client = new Client(sfd);
+	Client	*client = new Client(sfd);
 
 	_clients.insert(std::make_pair(sfd, client));
+}
+
+void	Irc::printAi() const
+{
+	std::cout << "Address family: ";
+	if (_net->ai_family == AF_INET)
+		std::cout << "Ipv4" << std::endl;
+	else if (_net->ai_family == AF_INET6)
+		std::cout << "Ipv6" << std::endl;
+	else
+		std::cout << "Unspecified" << std::endl;
+	std::cout << "ip : " << inet_ntoa(((struct sockaddr_in *)_net->ai_addr)->sin_addr) << std::endl;
+	std::cout << "Port : " << ntohs(((struct sockaddr_in *)_net->ai_addr)->sin_port) << std::endl;
+}
+
+// Client Management
+
+void	Irc::promote_client(std::map<int, Client *>::iterator &client_it)
+{
+	Client *client = client_it->second;
+
+	if (client->isRegistered())
+	{
+		return ;
+	}
+	User	*user = new User(client_it->second);
+	delete client_it->second;
+	client_it->second = user;
 }
 
 int	Irc::computeFdMax(void) const
@@ -84,26 +147,23 @@ int	Irc::computeFdMax(void) const
 	return (fdmax + 1);
 }
 
-void	Irc::printAi() const
+int	Irc::sendReplies(void)
 {
-	std::cout << "Address family: ";
-	if (_net->ai_family == AF_INET)
-		std::cout << "Ipv4" << std::endl;
-	else if (_net->ai_family == AF_INET6)
-		std::cout << "Ipv6" << std::endl;
-	else
-		std::cout << "Unspecified" << std::endl;
-	std::cout << "ip : " << inet_ntoa(((struct sockaddr_in *)_net->ai_addr)->sin_addr) << std::endl;
-	std::cout << "Port : " << ntohs(((struct sockaddr_in *)_net->ai_addr)->sin_port) << std::endl;
-}
+	std::vector<Reply>::iterator	beg = _replies.begin();
+	std::vector<Reply>::iterator	end = _replies.end();
 
-//	Irc	&Irc::operator=(const Irc &rhs)
-//	{
-//		int	status;
-//	
-//		status = getaddrinfo(NULL, NULL, rhs.getAi(), &this->_net);
-//		freeaddrinfo(this->_net);
-//		this->_sockfd = rhs.getSocket();
-//		this->_users = rhs.getUsers();
-//		return (*this);
-//	}
+	std::cout << "<<-- Sending Replies" << std::endl;
+	while (beg != end)
+	{
+		if (FD_ISSET(beg->getClientFd(), &(this->fds[SEND])))
+		{
+			if (!beg->send())
+			{
+				_replies.erase(beg++);
+			}
+		}
+		else
+			beg++;
+	}
+	return (0);
+}

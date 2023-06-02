@@ -11,6 +11,16 @@
 Client::Client(int const &sfd)
 {
 	_sockFd = sfd;
+	this->_registered = false;
+}
+
+Client::Client(Client *cpy)
+{
+	this->_sockFd = cpy->getSockfd();
+	this->_nickname = cpy->getNick();
+	this->_username = cpy->getUser();
+	this->_hostname = cpy->getHost();
+	this->_registered = cpy->isRegistered();
 }
 
 Client::Client():_sockFd(0)
@@ -53,14 +63,23 @@ const std::string	&Client::getHost() const
 	return (this->_hostname);
 }
 
+const std::string	&Client::getBuff() const
+{
+	return (this->_buff);
+}
+
 const int	&Client::getSockfd() const
 {
 	return (this->_sockFd);
 }
 
 
-// 
+bool const	&Client::isRegistered() const
+{
+	return(this->_registered);
+}
 
+// 
 bool Client::recvData()
 {
 	int	nbyte;
@@ -74,6 +93,7 @@ bool Client::recvData()
 		if (nbyte < 0)
 		{
 			std::cout << "Error with recv" << std::endl;
+
 			//Error from recv, maybe print something
 
 		}
@@ -100,24 +120,29 @@ void	Client::printCmds()
 	}
 }
 
+std::deque<std::string> &Client::getCmds()
+{
+	return (this->_cmds);
+}
+
 void	Client::extractCmds()
 {
-	size_t	pos = 0;
+	size_t		pos = 0;
+	std::string	cmd;
 
 	while ((pos = this->_buff.find(DELIM)) != std::string::npos)
 	{
 		std::cout << "found delimiter at pos : " << pos << std::endl;
-		_cmds.push_back(this->_buff.substr(0, pos));
+		cmd = this->_buff.substr(0, pos);
+		if (!cmd.empty())
+			_cmds.push_back(cmd);
 		_buff.erase(0, pos + sizeof(DELIM) - 1);
 	}
 }
 
-User::User(Client &client)
+User::User(Client *client): Client(*client)
 {
-	this->_sockFd = client.getSockfd();
-	this->_nickname = client.getNick();
-	this->_username = client.getUser();
-	this->_hostname = client.getHost();
+	this->_registered = 1;
 }
 
 User::User()

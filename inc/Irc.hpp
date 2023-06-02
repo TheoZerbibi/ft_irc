@@ -1,11 +1,29 @@
 #pragma once
 #include "ft_irc.hpp"
 
+#include	"Command.hpp"
+#include 	"AwayCommand.hpp"
+#include 	"CapCommand.hpp"
+#include	"InviteCommand.hpp"
+#include	"JoinCommand.hpp"
+#include	"KickCommand.hpp"
+#include	"ModeCommand.hpp"
+#include	"NickCommand.hpp"
+#include	"PartCommand.hpp"
+#include	"PassCommand.hpp"
+#include	"PrivMsgCommand.hpp"
+#include	"TopicCommand.hpp"
+#include	"UserCommand.hpp"
+
+
+class Command;
 class Client;
 class User;
 class Channel;
+class Reply;
 
 class	Irc{
+	Command *command;
 	public:
 		//Const & destr
 		static Irc &getInstance() // Init and retrieve server instance
@@ -23,12 +41,18 @@ class	Irc{
 		void			addClient(int const &sfd);
 
 		//Getter
-		const	int			&getSocket() const;
-		const	struct addrinfo		*getAi() const;
-		std::map<int, Client *>		&getClients();
-		int				computeFdMax() const;
+		const	int				&getSocket() const;
+		const	struct addrinfo			*getAi() const;
+		const	std::string			&getPass() const;
+		std::map<int, Client *>			&getClients();
+		int					computeFdMax() const;
 
 		int				main_loop();
+
+
+		// Command manager
+		void			initCommand();
+		std::map<std::string, Command*> getCommandList();
 
 
 	private:
@@ -43,25 +67,35 @@ class	Irc{
 		// Client, User 
 		std::vector<Channel>	_chans;
 		std::map<int, Client *>	_clients; // Unregistered User, got promoted to User after
-	
-		// Server info
-		struct	addrinfo	*_net;
-		std::string		_pass;
-		int			_sockfd;
+
+		// Client Management
+		int			setup_fds();
+		void			promote_client(std::map<int, Client *>::iterator &_client);
 
 		//Commands
+		std::map<std::string, Command*> commandList;
 
-		// Receiving data
+		// Server info
+		struct	addrinfo		*_net;
+		std::string			_pass;
+		int				_sockfd;
+
+		//// Receiving data
 		int			accept_client();
 		int			receive_client_data(Client *user);
 		int			data_reception_handler();
 		int			manage_incoming_connection();
 		int			retrieve_clients_packet();
 		int			read_client_socket(Client &user);
+		int			manageCommand();
 
-		//Setup socket interface
-		int	setup_socket();
-		int	set_socket_option();
+		//// Send data
+		std::vector<Reply>	_replies;
+		int			sendReplies();
+
+		// Setup socket interface
+		int			setup_socket();
+		int			set_socket_option();
 
 		// Operation on fds
 		fd_set				*getFd_set();

@@ -25,5 +25,8 @@ objs/
 # Built Visual Studio Code Extensions
 *.vsix
 
+#local test file
+test.*
+
 *.DBG.*
 .nfs*

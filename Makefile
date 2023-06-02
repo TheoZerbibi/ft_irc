@@ -6,7 +6,7 @@
 #    By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/19 12:13:48 by thzeribi          #+#    #+#              #
-#    Updated: 2023/05/27 02:31:24 by thzeribi         ###   ########.fr        #
+#    Updated: 2023/06/01 23:14:34 by iguidado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ ifndef VERBOSE
 	MAKEFLAGS += --no-print-directory --silent
 endif
 
-NAME				:=	ircserv
+NAME			:=	ircserv
 PROJECT_NAME		:=	IRC
 
 ################################################################################

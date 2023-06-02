@@ -26,9 +26,12 @@
 #include	"User.hpp"
 #include	"Irc.hpp"
 #include	"Channel.hpp"
+#include	"Reply.hpp"
 
 #define 	SUCCESS 1
 #define		FAILURE 0
+
+#define		SEND_BUFF_LEN 1024
 
 
 class	SyscallError: public std::exception
@@ -37,6 +40,8 @@ class	SyscallError: public std::exception
 		return (strerror(errno));
 	}
 };
+
+
 
 // select() argument type : see fd_set
 enum	e_fd_triggers
@@ -47,8 +52,6 @@ enum	e_fd_triggers
 	EXCEPT,
 	FD_SET_TYPES
 };
-
-
 
 // Signal management
 void	handleSigINT(int signal);

@@ -29,9 +29,9 @@ Things to do are :
 
 |Done?| Command | Description | Reply | Error |
 |-----|---------|-------------|-------|-------|
-|- [ ]| NICK    |             |       | Error |
-|- [ ]| USER    | Description | Reply | Error |
-|- [ ]| PASS    | Description | Reply | Error |
+|     | NICK    |             |       | Error |
+|     | USER    | Description | Reply | Error |
+|     | PASS    | Description | Reply | Error |
 
 
 ## Help
@@ -60,6 +60,7 @@ Things to do are :
 
  - [x] Accept multiple client and register them under a user id
  - [ ] promotion of registered client as user
+ - [ ] 
 
 ---
 - Command management
@@ -100,6 +101,11 @@ Things to do are :
 
 - [ ] Implement RPL system
  - [ ] Implement ERR
+
+---
+
+- todo next
+ - [ ] fix 
 
 ### Extra
 

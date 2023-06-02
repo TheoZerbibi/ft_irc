@@ -1,7 +1,7 @@
 #include "TestCommand.hpp"
 
 TestCommand::TestCommand(void) :
-_name("Test")
+_name("TEST")
 {}
 
 TestCommand::~TestCommand(void)

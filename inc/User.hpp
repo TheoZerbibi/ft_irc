@@ -9,18 +9,23 @@ class Channel;
 class Client {
 	public:
 		Client(int const &sfd);
+		Client(Client *cpy);
 		virtual ~Client();
 
 		const std::string	&getNick() const;
 		const std::string	&getHost() const;
 		const std::string	&getUser() const;
+
 		const int		&getSockfd() const;
+		const std::string	&getBuff() const;
 
 		void	setNick(std::string nick);
 		void	setHost(std::string host);
 		void	setUser(std::string user);
 
-		bool		   recvData();
+		bool	recvData();
+
+		std::deque<std::string>	&getCmds();
 
 		//		Registration process : need to implement registrement checking
 		bool const	&isRegistered() const;
@@ -40,8 +45,8 @@ class Client {
 		std::string	_hostname;
 		std::string	_username;
 
-		void		extractCmds();
-		void		printCmds();
+		void					extractCmds();
+		void					printCmds();
 	private:
 	//	int		connection_time; //if current_time - connection_time > 2s timeout client
 };
@@ -50,7 +55,7 @@ class User : public Client{
 	public:
 //		User(int fd, const std::string& nick, const std::string& username, const std::string& hostname);
 //		User(int &fd);
-		User(Client &client);
+		User(Client *client);
 		virtual ~User();
 
 		//	const int &getFd() const; // Other methods and data members as needed

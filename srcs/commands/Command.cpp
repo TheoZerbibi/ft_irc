@@ -7,12 +7,9 @@ _name("Default")
 Command::~Command(void)
 {}
 
-void Command::execute(void)
+void Command::execute(int fds, Client *client)
 {
+	(void) fds;
+	(void) client;
 	std::cout << this->_name << std::endl;
-}
-
-std::map<std::string, Command*> getCommandList()
-{
-	return commandList;
 }

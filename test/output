@@ -1,0 +1,35 @@
+listening on 127.0.0.1 port 1025
+calling accept FD 3
+calling accept FD 3
+connection from localhost [127.0.0.1] fd= 4
+connected to chat.freenode.net:6667 fd= 5
+=============== read 115 bytes from SERVER (5) ===================
+:*.freenode.net NOTICE * :*** Looking up your ident...
+:*.freenode.net NOTICE * :*** Looking up your hostname...
+
+=============== read 131 bytes from SERVER (5) ===================
+:*.freenode.net NOTICE * :*** Could not resolve your hostname: Nameserver failure; using your IP address (62.210.32.159) instead.
+
+=============== read 6 bytes from CLIENT (4) ==================
+weweq
+
+=============== read 7 bytes from CLIENT (4) ==================
+qwqweq
+
+=============== read 7 bytes from CLIENT (4) ==================
+ewqewq
+
+=============== read 5 bytes from CLIENT (4) ==================
+USER
+
+=============== read 52 bytes from SERVER (5) ===================
+:*.freenode.net 461 * USER :Not enough parameters.
+
+=============== read 23 bytes from CLIENT (4) ==================
+USER hello hello hello
+
+=============== read 52 bytes from SERVER (5) ===================
+:*.freenode.net 461 * USER :Not enough parameters.
+
+Cleaning up...
+Cleaning up...
