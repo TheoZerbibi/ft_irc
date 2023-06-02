@@ -1,7 +1,7 @@
 #ifndef REPLY_HPP
 # define REPLY_HPP
 
-# include <iostream>
+# include "ft_irc.hpp"
 
 class Reply
 {
@@ -10,7 +10,7 @@ class Reply
 		~Reply(void);
 
 		int			getClientFd(void) const;
-		std::string		getMessage(void) const;
+//		std::string		getMessage(void) const;
 		int			send();
 
 	private:
