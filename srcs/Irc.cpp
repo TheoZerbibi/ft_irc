@@ -27,13 +27,11 @@ Irc::~Irc()
 
 }
 
-Irc::Irc(std::string port, std::string passwd): _pass(passwd)
+void	Irc::setupAddrInfo(std::string port)
 {
 	struct	addrinfo	hint;
 	int			status;
 
-	this->initCommand();
-	(void)port;
 	std::memset(&hint, 0, sizeof(hint));
 	hint.ai_family = AF_UNSPEC;
 	hint.ai_socktype = SOCK_STREAM;
@@ -50,6 +48,20 @@ Irc::Irc(std::string port, std::string passwd): _pass(passwd)
 		std::cerr << "Socket creation failed: ";
 		throw SyscallError();
 	}
+}
+
+void	Irc::setupFds()
+{
+	for (int i = 0; i < 4; i++)
+		FD_ZERO(&(this->fds[i]));
+	FD_SET(this->getSocket(), &(this->fds[MASTER]));
+}
+
+Irc::Irc(std::string port, std::string passwd): _pass(passwd)
+{
+	this->initCommand();
+	this->setupAddrInfo(port);
+	this->setupFds();
 	if (this->_pass.empty())
 		this->_pass = "123";
 	std::cout << "PASS : " << this->_pass << std::endl;

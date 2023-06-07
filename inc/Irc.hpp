@@ -93,11 +93,13 @@ class	Irc{
 		std::vector<Reply>	_replies;
 		int			sendReplies();
 
+		// Setup Server interface
+		void			setupAddrInfo(std::string port);
 		// Setup socket interface
 		int			setup_socket();
 		int			set_socket_option();
 
 		// Operation on fds
-		fd_set				*getFd_set();
+		void				setupFds();
 		fd_set				fds[4];
 };

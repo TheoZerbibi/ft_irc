@@ -60,7 +60,6 @@ int	Irc::data_reception_handler()
 	return (0);
 }
 
-// Need to change iteration to take userlist instead of an index
 int	Irc::manage_incoming_connection()
 {
 	std::cout << "---- Reading fds ---" << std::endl;
