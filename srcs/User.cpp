@@ -11,6 +11,7 @@
 Client::Client(int const &sfd)
 {
 	_sockFd = sfd;
+	this->_isAuth = false;
 	this->_registered = false;
 }
 
@@ -20,6 +21,7 @@ Client::Client(Client *cpy)
 	this->_nickname = cpy->getNick();
 	this->_username = cpy->getUser();
 	this->_hostname = cpy->getHost();
+	this->_isAuth = cpy->isAuth();
 	this->_registered = cpy->isRegistered();
 }
 
@@ -73,6 +75,15 @@ const int	&Client::getSockfd() const
 	return (this->_sockFd);
 }
 
+void	Client::setAuth(bool auth)
+{
+	this->_isAuth = auth;
+}
+
+bool const	&Client::isAuth() const
+{
+	return (this->_isAuth);
+}
 
 bool const	&Client::isRegistered() const
 {

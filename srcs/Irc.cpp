@@ -159,12 +159,17 @@ int	Irc::computeFdMax(void) const
 	return (fdmax + 1);
 }
 
+void Irc::addReply(Reply reply)
+{
+	this->_replies.push_back(reply);
+}
+
 int	Irc::sendReplies(void)
 {
 	std::vector<Reply>::iterator	beg = _replies.begin();
 	std::vector<Reply>::iterator	end = _replies.end();
 
-	std::cout << "<<-- Sending Replies" << std::endl;
+	// std::cout << "<<-- Sending Replies" << std::endl;
 	while (beg != end)
 	{
 		if (FD_ISSET(beg->getClientFd(), &(this->fds[SEND])))

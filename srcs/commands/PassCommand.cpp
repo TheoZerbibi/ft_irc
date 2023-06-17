@@ -15,10 +15,13 @@ void PassCommand::execute(int fds, Client *client)
 	std::string	pass = cmd.substr(cmd.find(" ") + 1);
 	Irc	&ircserv = Irc::getInstance();
 
-	if (pass.empty() || ircserv.getPass() != pass)
-	{
-		std::cout << "PassCommand::execute(" << fds << ", " <<  "Invalid pass )" << std::endl;
-		return ;
-	} else if (ircserv.getPass() == pass)
-		std::cout << "PassCommand::execute(" << fds << ", " << pass << ")" << std::endl;
+	if (client->isRegistered())
+		ircserv.addReply(Reply(fds, ERR_ALREADYREGISTERED(client->getNick())));
+	else if (pass.empty())
+		ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(client->getNick(), "PASS")));
+	else if (ircserv.getPass() == pass)
+		client->setAuth(true);
+	else
+		ircserv.addReply(Reply(fds, ERR_PASSWDMISMATCH(client->getNick())));
+	std::cout << "PassCommand::execute(" << fds << ", " << pass << ")" << std::endl;
 }

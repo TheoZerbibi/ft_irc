@@ -81,7 +81,7 @@ static std::string getCommand(std::string cmd)
 
 int Irc::manageCommand()
 {
-	std::cout << "---- Manage Command ---" << std::endl;
+	// std::cout << "---- Manage Command ---" << std::endl;
 	std::map<int, Client*>::iterator	beg = this->getClients().begin();
 	std::map<int, Client*>::iterator	end = this->getClients().end();
 	std::map<std::string, Command*>		commandList = this->getCommandList();

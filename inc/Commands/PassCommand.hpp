@@ -3,6 +3,9 @@
 # include "Command.hpp"
 
 # include "User.hpp"
+# include "Reply.hpp"
+
+# define ERR_PASSWDMISMATCH(nickname) (":irc.localhost 464 " + nickname + " :Password incorrect.\r\n")
 
 class PassCommand : public Command
 {

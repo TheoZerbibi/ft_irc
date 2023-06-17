@@ -41,18 +41,19 @@ class	Irc{
 		void			addClient(int const &sfd);
 
 		//Getter
-		const	int				&getSocket() const;
-		const	struct addrinfo			*getAi() const;
+		const	int					&getSocket() const;
+		const	struct addrinfo		*getAi() const;
 		const	std::string			&getPass() const;
-		std::map<int, Client *>			&getClients();
-		int					computeFdMax() const;
+		std::map<int, Client *>		&getClients();
+		void						addReply(Reply reply);
 
-		int				main_loop();
+		int	computeFdMax() const;
+		int	main_loop();
 
 
 		// Command manager
-		void			initCommand();
-		std::map<std::string, Command*> getCommandList();
+		void							initCommand();
+		std::map<std::string, Command*>	getCommandList();
 
 
 	private:

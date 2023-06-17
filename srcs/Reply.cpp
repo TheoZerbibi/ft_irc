@@ -18,6 +18,7 @@ int	Reply::send()
 	size_t	len = this->_message.size();
 	ssize_t	nbyte;
 
+		std::cout << "SEND : " << this->_message << std::endl;
 	nbyte = ::send(this->_clientFd, this->_message.c_str(), len, 0);
 	if (nbyte == -1)
 	{
