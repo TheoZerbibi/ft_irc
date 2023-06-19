@@ -122,3 +122,5 @@ Things to do are :
 - [IRC2812](https://www.tech-invite.com/y25/tinv-ietf-rfc-2812.html) 
 
 - [Irssi Doc](https://irssi.org/New-users/)
+
+- [Numerical Replies](https://github.com/marineks/Ft_irc/blob/main/includes/Numerical_replies.hpp)
