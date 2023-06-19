@@ -11,8 +11,6 @@ Things to do are :
 - Reading buffer from client to extract command *Optionnal*
 - Queuing command
 - executing command
-
-
 ### Channel
 - Channel names are string (beginning with a '&', a '#', ...)
 
@@ -27,11 +25,11 @@ Things to do are :
 > Unregistered client should be timeout after 2 second of not getting registered
 
 
-|Done?| Command | Description | Reply | Error |
-|-----|---------|-------------|-------|-------|
-|     | NICK    |             |       | Error |
-|     | USER    | Description | Reply | Error |
-|     | PASS    | Description | Reply | Error |
+|Done?| Command | Description			       | Reply | Error |
+|-----|---------|--------------------------------------|-------|-------|
+|     | PASS    | Supply server password for connexion | None | [461](https://modern.ircdocs.horse/#errneedmoreparams-461), [462](https://modern.ircdocs.horse/#erralreadyregistered-462), [464](https://modern.ircdocs.horse/#errpasswdmismatch-464) |
+|     | NICK    | Setup or change nickname 	       | None  | [431](https://modern.ircdocs.horse/#errnonicknamegiven-431) [432](https://modern.ircdocs.horse/#errerroneusnickname-432), [433](https://modern.ircdocs.horse/#errnicknameinuse-433), [436](https://modern.ircdocs.horse/#errnickcollision-436) |
+|     | USER    | Description 			       | Reply | [461](https://modern.ircdocs.horse/#errneedmoreparams-461), [462](https://modern.ircdocs.horse/#erralreadyregistered-462) |
 
 
 ## Help
