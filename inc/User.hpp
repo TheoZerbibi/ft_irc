@@ -27,6 +27,10 @@ class Client {
 
 		std::deque<std::string>	&getCmds();
 
+		//		Authentification process
+		void	setAuth(bool auth);
+		bool const &isAuth() const;
+
 		//		Registration process : need to implement registrement checking
 		bool const	&isRegistered() const;
 
@@ -37,7 +41,8 @@ class Client {
 		std::string			_buff;
 		std::deque<std::string>		_cmds;
 
-		int		_sockFd;
+		int			_sockFd;
+		bool		_isAuth;
 		bool		_registered;
 
 		// Needed to register users

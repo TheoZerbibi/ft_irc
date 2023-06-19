@@ -60,7 +60,6 @@ int	Irc::data_reception_handler()
 	return (0);
 }
 
-// Need to change iteration to take userlist instead of an index
 int	Irc::manage_incoming_connection()
 {
 	std::cout << "---- Reading fds ---" << std::endl;
@@ -82,7 +81,7 @@ static std::string getCommand(std::string cmd)
 
 int Irc::manageCommand()
 {
-	std::cout << "---- Manage Command ---" << std::endl;
+	// std::cout << "---- Manage Command ---" << std::endl;
 	std::map<int, Client*>::iterator	beg = this->getClients().begin();
 	std::map<int, Client*>::iterator	end = this->getClients().end();
 	std::map<std::string, Command*>		commandList = this->getCommandList();

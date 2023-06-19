@@ -27,13 +27,11 @@ Irc::~Irc()
 
 }
 
-Irc::Irc(std::string port, std::string passwd): _pass(passwd)
+void	Irc::setupAddrInfo(std::string port)
 {
 	struct	addrinfo	hint;
 	int			status;
 
-	this->initCommand();
-	(void)port;
 	std::memset(&hint, 0, sizeof(hint));
 	hint.ai_family = AF_UNSPEC;
 	hint.ai_socktype = SOCK_STREAM;
@@ -50,6 +48,20 @@ Irc::Irc(std::string port, std::string passwd): _pass(passwd)
 		std::cerr << "Socket creation failed: ";
 		throw SyscallError();
 	}
+}
+
+void	Irc::setupFds()
+{
+	for (int i = 0; i < 4; i++)
+		FD_ZERO(&(this->fds[i]));
+	FD_SET(this->getSocket(), &(this->fds[MASTER]));
+}
+
+Irc::Irc(std::string port, std::string passwd): _pass(passwd)
+{
+	this->initCommand();
+	this->setupAddrInfo(port);
+	this->setupFds();
 	if (this->_pass.empty())
 		this->_pass = "123";
 	std::cout << "PASS : " << this->_pass << std::endl;
@@ -147,12 +159,17 @@ int	Irc::computeFdMax(void) const
 	return (fdmax + 1);
 }
 
+void Irc::addReply(Reply reply)
+{
+	this->_replies.push_back(reply);
+}
+
 int	Irc::sendReplies(void)
 {
 	std::vector<Reply>::iterator	beg = _replies.begin();
 	std::vector<Reply>::iterator	end = _replies.end();
 
-	std::cout << "<<-- Sending Replies" << std::endl;
+	// std::cout << "<<-- Sending Replies" << std::endl;
 	while (beg != end)
 	{
 		if (FD_ISSET(beg->getClientFd(), &(this->fds[SEND])))

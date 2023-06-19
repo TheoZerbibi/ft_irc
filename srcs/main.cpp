@@ -13,15 +13,12 @@ int	Irc::main_loop()
 	int				fdMax;
 	timeval				ttd;
 
-	for (int i = 0; i < 4; i++)
-		FD_ZERO(&(this->fds[i]));
-	FD_SET(this->getSocket(), &(this->fds[MASTER]));
+	ttd = (timeval){2, 0};
 	while (1)
 	{
 		fdMax = this->computeFdMax();
 
 		this->fds[READ] = this->fds[MASTER];
-		ttd = (timeval){2, 0};
 		ret = select(fdMax, &(this->fds[READ]), NULL, NULL, &ttd);
 		if (ret == -1)
 		{
@@ -31,6 +28,7 @@ int	Irc::main_loop()
 		else if (ret)
 			this->manage_incoming_connection();
 		this->manageCommand();
+
 
 		this->fds[SEND] = this->fds[MASTER];
 		ret = select(fdMax, NULL, &(this->fds[SEND]), NULL, &ttd);
