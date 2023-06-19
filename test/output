@@ -2,34 +2,31 @@ listening on 127.0.0.1 port 1025
 calling accept FD 3
 calling accept FD 3
 connection from localhost [127.0.0.1] fd= 4
-connected to chat.freenode.net:6667 fd= 5
-=============== read 115 bytes from SERVER (5) ===================
-:*.freenode.net NOTICE * :*** Looking up your ident...
-:*.freenode.net NOTICE * :*** Looking up your hostname...
+connected to irc.undernet.org:6667 fd= 5
+=============== read 80 bytes from CLIENT (4) ==================
+CAP LS
+NICK secondlol
+USER iguidado iguidado localhost :Ismael GUIDADOU
+CAP END
 
-=============== read 131 bytes from SERVER (5) ===================
-:*.freenode.net NOTICE * :*** Could not resolve your hostname: Nameserver failure; using your IP address (62.210.32.159) instead.
+=============== read 43 bytes from SERVER (5) ===================
+NOTICE AUTH :*** Looking up your hostname
 
-=============== read 6 bytes from CLIENT (4) ==================
-weweq
+=============== read 51 bytes from SERVER (5) ===================
+NOTICE AUTH :*** Checking Ident
+PING :3624481147
 
-=============== read 7 bytes from CLIENT (4) ==================
-qwqweq
+=============== read 49 bytes from SERVER (5) ===================
+NOTICE AUTH :*** Couldn't look up your hostname
 
-=============== read 7 bytes from CLIENT (4) ==================
-ewqewq
-
-=============== read 5 bytes from CLIENT (4) ==================
-USER
-
-=============== read 52 bytes from SERVER (5) ===================
-:*.freenode.net 461 * USER :Not enough parameters.
+=============== read 36 bytes from SERVER (5) ===================
+NOTICE AUTH :*** No ident response
 
 =============== read 23 bytes from CLIENT (4) ==================
-USER hello hello hello
+PONG :PING :3624481147
 
-=============== read 52 bytes from SERVER (5) ===================
-:*.freenode.net 461 * USER :Not enough parameters.
+=============== read 82 bytes from SERVER (5) ===================
+:Miami.FL.US.Undernet.Org 513 secondlol :To connect, type /QUOTE PONG 3624481147
 
 Cleaning up...
 Cleaning up...

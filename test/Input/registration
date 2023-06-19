@@ -1,2 +1,4 @@
-NICK midas
-USER iguidado iguidado localhost :Isaac NEWTON
+CAP LS
+NICK secondlol
+USER iguidado iguidado localhost :Ismael GUIDADOU
+CAP END

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./proxy/simple-tcp-proxy 1025 &> output &
+./proxy/simple-tcp-proxy 1025 | tee output &
 PID=$?
 
 function exit_properly()
@@ -14,6 +14,22 @@ function exit_properly()
 	exit
 }
 
+function autopong()
+{
+	while 1
+	do
+		read -r line
+		echo "line = $line"
+		if [[ $line == "PING "* ]]
+		then
+			ping_code="${line#PING }"
+			response="PONG $ping_code"
+			echo "$response" > pipo
+		fi
+	done < output
+}
+
+
 trap "exit_properly $PID" SIGINT
 
 trap -p SIGINT
@@ -23,7 +39,12 @@ then
 	mkfifo pipo
 fi
 
-nc localhost 1025 < pipo &
+sleep 1
+
+
+nc localhost 1025 < pipo &> /dev/null &
+
+autopong &
 
 echo "nbr of argument $#"
 
@@ -33,7 +54,3 @@ then
 else
 	cat > pipo
 fi
-
-rm -f pipo
-
-kill -9 pid

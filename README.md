@@ -27,9 +27,9 @@ Things to do are :
 
 |Done?| Command | Description			       | Reply | Error |
 |-----|---------|--------------------------------------|-------|-------|
-|     | PASS    | Supply server password for connexion | None | [461](https://modern.ircdocs.horse/#errneedmoreparams-461), [462](https://modern.ircdocs.horse/#erralreadyregistered-462), [464](https://modern.ircdocs.horse/#errpasswdmismatch-464) |
-|     | NICK    | Setup or change nickname 	       | None  | [431](https://modern.ircdocs.horse/#errnonicknamegiven-431) [432](https://modern.ircdocs.horse/#errerroneusnickname-432), [433](https://modern.ircdocs.horse/#errnicknameinuse-433), [436](https://modern.ircdocs.horse/#errnickcollision-436) |
-|     | USER    | Description 			       | Reply | [461](https://modern.ircdocs.horse/#errneedmoreparams-461), [462](https://modern.ircdocs.horse/#erralreadyregistered-462) |
+|     | [PASS](https://modern.ircdocs.horse/#pass-message)    | Supply server password for connexion | None | [461](https://modern.ircdocs.horse/#errneedmoreparams-461), [462](https://modern.ircdocs.horse/#erralreadyregistered-462), [464](https://modern.ircdocs.horse/#errpasswdmismatch-464) |
+|     | [NICK](https://modern.ircdocs.horse/#nick-message)    | Setup or change nickname 	       | None  | [431](https://modern.ircdocs.horse/#errnonicknamegiven-431) [432](https://modern.ircdocs.horse/#errerroneusnickname-432), [433](https://modern.ircdocs.horse/#errnicknameinuse-433), [436](https://modern.ircdocs.horse/#errnickcollision-436) |
+|     | [USER](https://modern.ircdocs.horse/#user-message)    | Description 			       | Reply | [461](https://modern.ircdocs.horse/#errneedmoreparams-461), [462](https://modern.ircdocs.horse/#erralreadyregistered-462) |
 
 
 ## Help

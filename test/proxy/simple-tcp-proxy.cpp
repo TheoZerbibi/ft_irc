@@ -273,6 +273,11 @@ int main(int argc, char *argv[]){
     localaddr = strdup("127.0.0.1");
     localport = atoi(argv[1]);
     remoteaddr = strdup("chat.freenode.net");
+//    remoteaddr = strdup("irc.undernet.org");
+
+   // banned
+   // remoteaddr = strdup("irc.efnet.org");
+  //  remoteaddr = strdup("irc.dal.net");
     remoteport = 6667;
 
     assert(localaddr);

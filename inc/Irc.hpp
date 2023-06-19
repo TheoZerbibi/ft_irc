@@ -26,9 +26,9 @@ class	Irc{
 	Command *command;
 	public:
 		//Const & destr
-		static Irc &getInstance() // Init and retrieve server instance
+		static Irc &getInstance(std::string port = "ircd", std::string pass = "123", std::string name = "ircserv") // Init and retrieve server instance
 		{
-			static Irc	instance("ircd", "");
+			static Irc	instance(port, pass, name);
 			return instance;
 		}
 		~Irc();
@@ -41,11 +41,13 @@ class	Irc{
 		void			addClient(int const &sfd);
 
 		//Getter
-		const	int					&getSocket() const;
-		const	struct addrinfo		*getAi() const;
+		const	int				&getSocket() const;
+		const	struct addrinfo			*getAi() const;
 		const	std::string			&getPass() const;
-		std::map<int, Client *>		&getClients();
-		void						addReply(Reply reply);
+		std::map<int, Client *>			&getClients();
+		void					addReply(Reply reply);
+		const	std::string			&getName() const;
+		const Client 				*getUserByNick(std::string const nick) const;
 
 		int	computeFdMax() const;
 		int	main_loop();
@@ -59,7 +61,7 @@ class	Irc{
 	private:
 		// Const & destr
 		Irc();
-		Irc(std::string port, std::string passwd);
+		Irc(std::string port, std::string passwdm, std::string name);
 
 		// Private Copy and assignement to enforce singularity
 		Irc(const Irc &);
@@ -67,7 +69,7 @@ class	Irc{
 
 		// Client, User 
 		std::vector<Channel>	_chans;
-		std::map<int, Client *>	_clients; // Unregistered User, got promoted to User after
+		std::map<int, Client *>	_clients;
 
 		// Client Management
 		int			setup_fds();
@@ -78,6 +80,7 @@ class	Irc{
 
 		// Server info
 		struct	addrinfo		*_net;
+		std::string			_name;
 		std::string			_pass;
 		int				_sockfd;
 

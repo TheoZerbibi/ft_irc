@@ -3,6 +3,16 @@
 Irc::Irc()
 {}
 
+Irc::Irc(std::string port, std::string passwd, std::string name): _name(name), _pass(passwd)
+{
+	this->initCommand();
+	this->setupAddrInfo(port);
+	this->setupFds();
+	if (this->_pass.empty())
+		this->_pass = "123";
+	std::cout << "PASS : " << this->_pass << std::endl;
+}
+
 Irc::~Irc()
 {
 	close(this->_sockfd);
@@ -16,6 +26,7 @@ Irc::~Irc()
 		delete beg->second;
 		beg++;
 	}
+
 	std::map<std::string, Command*>::iterator begC = commandList.begin();
 	std::map<std::string, Command*>::iterator endC = commandList.end();
 	while (begC != endC)
@@ -57,16 +68,6 @@ void	Irc::setupFds()
 	FD_SET(this->getSocket(), &(this->fds[MASTER]));
 }
 
-Irc::Irc(std::string port, std::string passwd): _pass(passwd)
-{
-	this->initCommand();
-	this->setupAddrInfo(port);
-	this->setupFds();
-	if (this->_pass.empty())
-		this->_pass = "123";
-	std::cout << "PASS : " << this->_pass << std::endl;
-}
-
 void Irc::initCommand() {
 	std::cout << "┏ Command Register" << std::endl;
 	this->commandList.insert(std::pair<std::string, Command*>("AWAY", new AwayCommand()));
@@ -92,6 +93,10 @@ const int	&Irc::getSocket() const {
 	return ((this->_sockfd));
 }
 
+const std::string &Irc::getName() const {
+	return (this->_name);
+}
+
 const std::string &Irc::getPass() const {
 	return (this->_pass);
 }
@@ -104,6 +109,24 @@ const struct addrinfo	*Irc::getAi() const
 std::map<int, Client*>	&Irc::getClients()
 {
 	return ((this->_clients));
+}
+
+const Client		*Irc::getUserByNick(std::string const nick) const
+{
+	(void)nick;
+	std::map<int, Client *>::const_iterator	beg = _clients.begin();
+	std::map<int, Client *>::const_iterator	end = _clients.end();
+	
+	while (beg != end)
+	{
+		if (beg->second->isRegistered())
+		{
+			if (beg->second->getNick() == nick)
+				return (beg->second);
+		}
+		++beg;
+	}
+	return (NULL);
 }
 
 //Setter
