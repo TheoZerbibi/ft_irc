@@ -7,8 +7,9 @@ objs/
 *.o
 *.d
 
-#temp file
+#vim file
 .*.sw*
+*.vim
 
 #vscode
 .vscode/*
