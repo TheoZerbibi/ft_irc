@@ -12,9 +12,12 @@ NickCommand::~NickCommand(void)
 void NickCommand::execute(int fds, Client *client)
 {
 	std::string	cmd = client->getCmds().front();
+	size_t		pos = cmd.find(" ");
 	std::string	nick = cmd.substr(cmd.find(" ") + 1);
 	Irc		&ircserv = Irc::getInstance();
 
+	std::cout << "POS = " << pos << std::endl;
+	std::cout << "NICKNAME = " << nick << std::endl;
 	if (nick.empty())
 	{
 		ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name)));

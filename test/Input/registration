@@ -1,4 +1,5 @@
 CAP LS
-NICK secondlol
+PASS 1234
+NICK munin
 USER iguidado iguidado localhost :Ismael GUIDADOU
 CAP END

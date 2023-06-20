@@ -16,7 +16,7 @@ function exit_properly()
 
 function autopong()
 {
-	while 1
+	while true
 	do
 		read -r line
 		echo "line = $line"
@@ -44,7 +44,7 @@ sleep 1
 
 nc localhost 1025 < pipo &> /dev/null &
 
-autopong &
+#autopong &
 
 echo "nbr of argument $#"
 

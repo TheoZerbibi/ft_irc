@@ -3,9 +3,10 @@ calling accept FD 3
 calling accept FD 3
 connection from localhost [127.0.0.1] fd= 4
 connected to chat.freenode.net:6667 fd= 5
-=============== read 80 bytes from CLIENT (4) ==================
+=============== read 86 bytes from CLIENT (4) ==================
 CAP LS
-NICK secondlol
+PASS 1234
+NICK munin
 USER iguidado iguidado localhost :Ismael GUIDADOU
 CAP END
 
@@ -15,84 +16,81 @@ CAP END
 
 =============== read 302 bytes from SERVER (5) ===================
 :*.freenode.net CAP * LS :account-notify account-tag away-notify batch cap-notify chghost draft/relaymsg echo-message extended-join inspircd.org/poison inspircd.org/standard-replies invite-notify labeled-response message-tags multi-prefix sasl server-time setname userhost-in-names 
-PING :stNUBTuuJS
+PING :@oP{Pvi]uE
 
-=============== read 138 bytes from SERVER (5) ===================
-:*.freenode.net NOTICE secondlol :*** Could not resolve your hostname: Nameserver failure; using your IP address (62.210.32.33) instead.
+=============== read 134 bytes from SERVER (5) ===================
+:*.freenode.net NOTICE munin :*** Could not resolve your hostname: Nameserver failure; using your IP address (62.210.32.33) instead.
 
-=============== read 88 bytes from SERVER (5) ===================
-:*.freenode.net NOTICE secondlol :*** Ident lookup timed out, using ~iguidado instead.
+=============== read 84 bytes from SERVER (5) ===================
+:*.freenode.net NOTICE munin :*** Ident lookup timed out, using ~iguidado instead.
 
 =============== read 17 bytes from CLIENT (4) ==================
-PONG :stNUBTuuJS
+PONG :@oP{Pvi]uE
 
 =============== read 2896 bytes from SERVER (5) ===================
-:*.freenode.net 001 secondlol :Welcome to the freenode IRC Network secondlol!~iguidado@62.210.32.33
-:*.freenode.net 002 secondlol :Your host is *.freenode.net, running version InspIRCd-3
-:*.freenode.net 003 secondlol :This server was created 23:06:04 Apr 20 2022
-:*.freenode.net 004 secondlol *.freenode.net InspIRCd-3 BDHILRSTWcdghikorswxz ABCDEFIJKLMNOPQRSTUWXYZbcdefhijklmnoprstuvwz :BEFIJLWXYZbdefhjklovw
-:*.freenode.net 005 secondlol ACCEPT=30 AWAYLEN=200 BOT=B CALLERID=g CASEMAPPING=ascii CHANLIMIT=#:20 CHANMODES=IXZbew,k,BEFJLWdfjl,ACDKMNOPQRSTUcimnprstuz CHANNELLEN=64 CHANTYPES=# ELIST=CMNTU ESILENCE=CcdiNnPpTtx EXCEPTS=e :are supported by this server
-:*.freenode.net 005 secondlol EXTBAN=,ACNOQRSTUacjmnpruwz HOSTLEN=64 INVEX=I KEYLEN=32 KICKLEN=255 LINELEN=512 MAXLIST=I:100,X:100,b:100,e:100,w:100 MAXTARGETS=20 MODES=20 MONITOR=30 NAMELEN=128 NAMESX NETWORK=freenode :are supported by this server
-:*.freenode.net 005 secondlol NICKLEN=30 PREFIX=(Yohv)!@%+ REMOVE SAFELIST SECURELIST=60 SILENCE=32 STATUSMSG=!@%+ TOPICLEN=390 UHNAMES USERIP USERLEN=10 USERMODES=,,s,BDHILRSTWcdghikorwxz VBANLIST :are supported by this server
-:*.freenode.net 005 secondlol VLIST=b WATCH=32 WHOX :are supported by this server
-:*.freenode.net 251 secondlol :There are 19 users and 7963 invisible on 9 servers
-:*.freenode.net 252 secondlol 6 :operator(s) online
-:*.freenode.net 253 secondlol 23 :unknown connections
-:*.freenode.net 254 secondlol 11810 :channels formed
-:*.freenode.net 255 secondlol :I have 2904 clients and 1 servers
-:*.freenode.net 265 secondlol :Current local users: 2904  Max: 4987
-:*.freenode.net 266 secondlol :Current global users: 7982  Max: 10916
-:*.freenode.net 375 secondlol :*.freenode.net message of the day
-:*.freenode.net 372 secondlol :  Hello, World!
-:*.freenode.net 372 secondlol : 
-:*.freenode.net 372 secondlol :  Welcome to the
-:*.freenode.net 372 secondlol :          __                               _
-:*.freenode.net 372 secondlol :         / _|_ __ ___  ___ _ __   ___   __| | ___
-:*.freenode.net 372 secondlol :        | |_| '__/ _ \/ _ \ '_ \ / _ \ / _` |/ _ \
-:*.freenode.net 372 secondlol :        |  _| | |  __/  __/ | | | (_) | (_| |  __/
-:*.freenode.net 372 secondlol :        |_| |_|  \___|\___|_| |_|\___/ \__,_|\___|
-:*.freenode.net 372 secondlol :                                   AUTONOMOUS ZONE
-:*.freenode.net 372 secondlol : 
-:*.freenode.net 372 secondlol :  Connect to us on:
-:*.freenode.net 372 secondlol : 
-:*.freenode.net 372 secondlol :  Hostname: irc.freenode.net / chat.freenode.net
-:*.freenode.net 372 secondlol :  Plaintext: 6660-6669
-:*.freenode.net 372 secondlol :  TLS/SSL: 6697,7000,7070
-:*.freenode.net 372 secondlol :  Webchat: https://webchat.freenode.net
-:*.freenode.net 372 secondlol : 
-:*.freenode.net 372 secondlol :  By connecting to freenode you indicate that you have read and accept our
-=============== read 1597 bytes from SERVER (5) ===================
+:*.freenode.net 001 munin :Welcome to the freenode IRC Network munin!~iguidado@62.210.32.33
+:*.freenode.net 002 munin :Your host is *.freenode.net, running version InspIRCd-3
+:*.freenode.net 003 munin :This server was created 23:52:15 Feb 18 2023
+:*.freenode.net 004 munin *.freenode.net InspIRCd-3 BDHILRSTWcdghikorswxz ABCDEFIJKLMNOPQRSTUWXYZbcdefhijklmnoprstuvwz :BEFIJLWXYZbdefhjklovw
+:*.freenode.net 005 munin ACCEPT=30 AWAYLEN=200 BOT=B CALLERID=g CASEMAPPING=ascii CHANLIMIT=#:20 CHANMODES=IXZbew,k,BEFJLWdfjl,ACDKMNOPQRSTUcimnprstuz CHANNELLEN=64 CHANTYPES=# ELIST=CMNTU ESILENCE=CcdiNnPpTtx EXCEPTS=e :are supported by this server
+:*.freenode.net 005 munin EXTBAN=,ACNOQRSTUacjmnpruwz HOSTLEN=64 INVEX=I KEYLEN=32 KICKLEN=255 LINELEN=512 MAXLIST=I:100,X:100,b:100,e:100,w:100 MAXTARGETS=20 MODES=20 MONITOR=30 NAMELEN=128 NAMESX NETWORK=freenode :are supported by this server
+:*.freenode.net 005 munin NICKLEN=30 PREFIX=(Yohv)!@%+ REMOVE SAFELIST SECURELIST=60 SILENCE=32 STATUSMSG=!@%+ TOPICLEN=390 UHNAMES USERIP USERLEN=10 USERMODES=,,s,BDHILRSTWcdghikorwxz VBANLIST :are supported by this server
+:*.freenode.net 005 munin VLIST=b WATCH=32 WHOX :are supported by this server
+:*.freenode.net 251 munin :There are 19 users and 7971 invisible on 9 servers
+:*.freenode.net 252 munin 6 :operator(s) online
+:*.freenode.net 253 munin 17 :unknown connections
+:*.freenode.net 254 munin 11825 :channels formed
+:*.freenode.net 255 munin :I have 4027 clients and 1 servers
+:*.freenode.net 265 munin :Current local users: 4027  Max: 4570
+:*.freenode.net 266 munin :Current global users: 7990  Max: 8827
+:*.freenode.net 375 munin :*.freenode.net message of the day
+:*.freenode.net 372 munin :  Hello, World!
+:*.freenode.net 372 munin : 
+:*.freenode.net 372 munin :  Welcome to the
+:*.freenode.net 372 munin :          __                               _
+:*.freenode.net 372 munin :         / _|_ __ ___  ___ _ __   ___   __| | ___
+:*.freenode.net 372 munin :        | |_| '__/ _ \/ _ \ '_ \ / _ \ / _` |/ _ \
+:*.freenode.net 372 munin :        |  _| | |  __/  __/ | | | (_) | (_| |  __/
+:*.freenode.net 372 munin :        |_| |_|  \___|\___|_| |_|\___/ \__,_|\___|
+:*.freenode.net 372 munin :                                   AUTONOMOUS ZONE
+:*.freenode.net 372 munin : 
+:*.freenode.net 372 munin :  Connect to us on:
+:*.freenode.net 372 munin : 
+:*.freenode.net 372 munin :  Hostname: irc.freenode.net / chat.freenode.net
+:*.freenode.net 372 munin :  Plaintext: 6660-6669
+:*.freenode.net 372 munin :  TLS/SSL: 6697,7000,7070
+:*.freenode.net 372 munin :  Webchat: https://webchat.freenode.net
+:*.freenode.net 372 munin : 
+:*.freenode.net 372 munin :  By connecting to freenode you indicate that you have read and accept our
+:*.freenode.net 372 munin :  policies and guidelines as set out on https://freenode.net and agree to
+:*.freenode.net 372 munin :  be scanne
+=============== read 1465 bytes from SERVER (5) ===================
+d for an open proxy.
+:*.freenode.net 372 munin : 
+:*.freenode.net 372 munin :  If you are looking for assistance, please try:
+:*.freenode.net 372 munin : 
+:*.freenode.net 372 munin :  #help                    - Help with general IRC and Services.
+:*.freenode.net 372 munin :  #chanhelp                - Help with channels and channel services.
+:*.freenode.net 372 munin :  #IRC                     - Help with the IRC.com by freenode app.
+:*.freenode.net 372 munin : 
+:*.freenode.net 372 munin :  Checkout some of our communities and services:
+:*.freenode.net 372 munin : 
+:*.freenode.net 372 munin :  #freenode-bbs            - BBS [https://bbs.freenode.net/]
+:*.freenode.net 372 munin :  #freenode-bbs-discussion - BBS Discussion
+:*.freenode.net 372 munin :  #freenode-jobs           - Jobs [https://jobs.freenode.net/]
+:*.freenode.net 372 munin :  #freenode                - Chat about freenode.
+:*.freenode.net 372 munin :  #anonchan                - Chat anonymously.
+:*.freenode.net 372 munin : 
+:*.freenode.net 372 munin :  Type /join #<channel>
+:*.freenode.net 372 munin : 
+:*.freenode.net 372 munin :  Thank you for using freenode!
+:*.freenode.net 376 munin :End of message of the day.
+:*.freenode.net 396 munin freenode-q2r.s9b.6vib9m.IP :is now your displayed host
+:munin!~iguidado@freenode-q2r.s9b.6vib9m.IP MODE munin :+wRix
+:*.freenode.net 477 munin munin :You need to be identified to a registered account to message this user
 
-:*.freenode.net 372 secondlol :  policies and guidelines as set out on https://freenode.net and agree to
-:*.freenode.net 372 secondlol :  be scanned for an open proxy.
-:*.freenode.net 372 secondlol : 
-:*.freenode.net 372 secondlol :  If you are looking for assistance, please try:
-:*.freenode.net 372 secondlol : 
-:*.freenode.net 372 secondlol :  #help                    - Help with general IRC and Services.
-:*.freenode.net 372 secondlol :  #chanhelp                - Help with channels and channel services.
-:*.freenode.net 372 secondlol :  #IRC                     - Help with the IRC.com by freenode app.
-:*.freenode.net 372 secondlol : 
-:*.freenode.net 372 secondlol :  Checkout some of our communities and services:
-:*.freenode.net 372 secondlol : 
-:*.freenode.net 372 secondlol :  #freenode-bbs            - BBS [https://bbs.freenode.net/]
-:*.freenode.net 372 secondlol :  #freenode-bbs-discussion - BBS Discussion
-:*.freenode.net 372 secondlol :  #freenode-jobs           - Jobs [https://jobs.freenode.net/]
-:*.freenode.net 372 secondlol :  #freenode                - Chat about freenode.
-:*.freenode.net 372 secondlol :  #anonchan                - Chat anonymously.
-:*.freenode.net 372 secondlol : 
-:*.freenode.net 372 secondlol :  Type /join #<channel>
-:*.freenode.net 372 secondlol : 
-:*.freenode.net 372 secondlol :  Thank you for using freenode!
-:*.freenode.net 376 secondlol :End of message of the day.
-:*.freenode.net 396 secondlol freenode-q2r.s9b.6vib9m.IP :is now your displayed host
-:secondlol!~iguidado@freenode-q2r.s9b.6vib9m.IP MODE secondlol :+wRix
-
-=============== read 6 bytes from CLIENT (4) ==================
-NICK 
-
-=============== read 107 bytes from SERVER (5) ===================
-:*.freenode.net 461 secondlol NICK :Not enough parameters.
-:*.freenode.net 650 secondlol NICK :<newnick>
+=============== read 87 bytes from SERVER (5) ===================
+:NickServ!services@services.freenode.net NOTICE munin :Nick munin isn't registered.
 
 =============== read 22 bytes from SERVER (5) ===================
 PING :*.freenode.net
@@ -101,4 +99,3 @@ PING :*.freenode.net
 ERROR :Closing link: (~iguidado@62.210.32.33) [Ping timeout: 120 seconds]
 
 exiting
-Cleaning up...
