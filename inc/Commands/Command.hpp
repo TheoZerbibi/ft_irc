@@ -3,7 +3,7 @@
 
 # include <iostream>
 # include <string>
-# include <string>
+# include <vector>
 # include <map>
 # include <utility>
 
@@ -25,4 +25,7 @@ public:
 	virtual ~Command();
 	virtual void execute(int fds, Client *client) = 0;
 };
+
+std::vector<std::string> splitArguments(const std::string &cmd);
+
 #endif

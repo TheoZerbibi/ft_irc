@@ -135,9 +135,7 @@ bool Client::recvData()
 		if (nbyte < 0)
 		{
 			std::cout << "Error with recv" << std::endl;
-
 			//Error from recv, maybe print something
-
 		}
 		close(this->_sockFd);
 		return (0);
@@ -174,7 +172,6 @@ void	Client::extractCmds()
 
 	while ((pos = this->_buff.find(DELIM)) != std::string::npos)
 	{
-		std::cout << "found delimiter at pos : " << pos << std::endl;
 		cmd = this->_buff.substr(0, pos);
 		if (!cmd.empty())
 			_cmds.push_back(cmd);
