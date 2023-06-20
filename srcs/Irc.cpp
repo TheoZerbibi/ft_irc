@@ -8,8 +8,6 @@ Irc::Irc(std::string port, std::string passwd, std::string name): _name(name), _
 	this->initCommand();
 	this->setupAddrInfo(port);
 	this->setupFds();
-	if (this->_pass.empty())
-		this->_pass = "123";
 	std::cout << "PASS : " << this->_pass << std::endl;
 }
 
