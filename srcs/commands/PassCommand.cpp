@@ -20,7 +20,10 @@ void PassCommand::execute(int fds, Client *client)
 	else if (pass.empty())
 		ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name)));
 	else if (ircserv.getPass() == pass)
+	{
 		client->setAuth(true);
+		client->readyToRegister();
+	}
 	else
 		ircserv.addReply(Reply(fds, ERR_PASSWDMISMATCH(ircserv.getName(), client->getNick())));
 	std::cout << "PassCommand::execute(" << fds << ", " << pass << ")" << std::endl;

@@ -3,6 +3,10 @@
 
 #define	DELIM "\r\n"
 
+# define RPL_WELCOME(nickname) (":irc.localhost 001 " + nickname + " :Welcome to the Internet Relay Network " + "\r\n")
+# define RPL_YOURHOST(nickname) (":irc.localhost 002 " + nickname + " :Your host is localhost (localhost)\r\n")
+# define RPL_INFO(nickname) (":irc.localhost 003 " + nickname + " :This server was created by iguidado & thzeribi.\r\n")
+
 class Irc;
 class Channel;
 
@@ -15,6 +19,7 @@ class Client {
 		const std::string	&getNick() const;
 		const std::string	&getHost() const;
 		const std::string	&getUser() const;
+		const std::string	&getRealname() const;
 
 		const int		&getSockfd() const;
 		const std::string	&getBuff() const;
@@ -22,6 +27,7 @@ class Client {
 		void	setNick(std::string nick);
 		void	setHost(std::string host);
 		void	setUser(std::string user);
+		void	setRealname(std::string realname);
 
 		bool	recvData();
 
@@ -33,6 +39,7 @@ class Client {
 
 		//		Registration process : need to implement registrement checking
 		bool const	&isRegistered() const;
+		void		readyToRegister();
 
 	protected:
 		Client();
@@ -49,6 +56,7 @@ class Client {
 		std::string	_nickname;   
 		std::string	_hostname;
 		std::string	_username;
+		std::string	_realname;
 
 		void					extractCmds();
 		void					printCmds();
