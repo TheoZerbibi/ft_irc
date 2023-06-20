@@ -109,9 +109,9 @@ void Client::readyToRegister()
 		Irc	&ircserv = Irc::getInstance();
 		this->_registered = true;
 
-		ircserv.addReply(Reply(this->_sockFd, RPL_WELCOME(this->_nickname)));
-		ircserv.addReply(Reply(this->_sockFd, RPL_YOURHOST(this->_nickname)));
-		ircserv.addReply(Reply(this->_sockFd, RPL_INFO(this->_nickname)));
+		ircserv.addReply(Reply(this->_sockFd, RPL_WELCOME(ircserv.getName(), this->_nickname)));
+		ircserv.addReply(Reply(this->_sockFd, RPL_YOURHOST(ircserv.getName(), this->_nickname)));
+		ircserv.addReply(Reply(this->_sockFd, RPL_INFO(ircserv.getName(), this->_nickname)));
 	}
 
 }

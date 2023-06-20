@@ -3,9 +3,9 @@
 
 #define	DELIM "\r\n"
 
-# define RPL_WELCOME(nickname) (":irc.localhost 001 " + nickname + " :Welcome to the Internet Relay Network\r\n")
-# define RPL_YOURHOST(nickname) (":irc.localhost 002 " + nickname + " :Your host is localhost (localhost)\r\n")
-# define RPL_INFO(nickname) (":irc.localhost 003 " + nickname + " :This server was created by iguidado & thzeribi.\r\n")
+# define RPL_WELCOME(server, nickname) (server + " " + nickname + " :Welcome to the Internet Relay Network\r\n")
+# define RPL_YOURHOST(server,nickname) (server + " " + nickname + " :Your host is " + server + " (localhost)\r\n")
+# define RPL_INFO(server,nickname) (server + " " + nickname + " :This server was created by iguidado & thzeribi.\r\n")
 
 class Irc;
 class Channel;
