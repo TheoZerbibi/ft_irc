@@ -13,6 +13,11 @@ int	Reply::getClientFd(void) const
 	return (this->_clientFd);
 }
 
+std::string	Reply::getMessage(void) const
+{
+	return (this->_message);
+}
+
 int	Reply::send()
 {
 	size_t	len = this->_message.size();

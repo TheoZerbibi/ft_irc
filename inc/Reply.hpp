@@ -11,7 +11,7 @@ class Reply
 		~Reply(void);
 
 		int			getClientFd(void) const;
-//		std::string		getMessage(void) const;
+		std::string		getMessage(void) const;
 		int			send();
 
 	private:
