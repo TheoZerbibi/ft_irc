@@ -7,8 +7,8 @@
 # include <map>
 # include <utility>
 
-# define ERR_NEEDMOREPARAMS(nickname, command) (":irc.localhost 461 " + nickname + " " + command + " :Not enough parameters.\r\n")
-# define ERR_ALREADYREGISTERED(nickname) (":irc.localhost 462 " + nickname + " :You may not reregister.\r\n")
+# define ERR_NEEDMOREPARAMS(serv, nickname, command) (":" + serv + " 461 " + nickname + " " + command + " :Not enough parameters.\r\n")
+# define ERR_ALREADYREGISTERED(serv, nickname) (":" + serv + " 462 " + nickname + " :You may not reregister.\r\n")
 
 
 class Client;

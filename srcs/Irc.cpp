@@ -111,7 +111,6 @@ std::map<int, Client*>	&Irc::getClients()
 
 const Client		*Irc::getUserByNick(std::string const nick) const
 {
-	(void)nick;
 	std::map<int, Client *>::const_iterator	beg = _clients.begin();
 	std::map<int, Client *>::const_iterator	end = _clients.end();
 	

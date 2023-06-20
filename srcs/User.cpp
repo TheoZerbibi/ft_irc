@@ -13,6 +13,7 @@ Client::Client(int const &sfd)
 	_sockFd = sfd;
 	this->_isAuth = false;
 	this->_registered = false;
+	this->_nickname = "*";
 }
 
 Client::Client(Client *cpy)

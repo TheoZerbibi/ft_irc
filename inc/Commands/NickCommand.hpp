@@ -4,6 +4,9 @@
 # include "Command.hpp"
 # include "User.hpp"
 
+# define ERR_NICKNAMEINUSE(serv, client, nickname) (":" + serv + " 433 " + client + " " + nickname + " ::Nickname is already in use")
+
+
 class NickCommand : public Command
 {
 private:

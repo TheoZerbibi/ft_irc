@@ -13,11 +13,16 @@ void NickCommand::execute(int fds, Client *client)
 {
 	std::string	cmd = client->getCmds().front();
 	std::string	nick = cmd.substr(cmd.find(" ") + 1);
-	
+	Irc		&ircserv = Irc::getInstance();
 
 	if (nick.empty())
 	{
-		std::cout << "NickCommand::execute(" << fds << ", " <<  "Invalid nick )" << std::endl;
+		ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name)));
+		return ;
+	}
+	if (ircserv.getUserByNick(nick))
+	{
+		ircserv.addReply(Reply(fds, ERR_NICKNAMEINUSE(ircserv.getName(), client->getNick(), nick)));
 		return ;
 	}
 	client->setNick(nick);
