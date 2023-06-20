@@ -21,6 +21,7 @@ Client::Client(Client *cpy)
 	this->_nickname = cpy->getNick();
 	this->_username = cpy->getUser();
 	this->_hostname = cpy->getHost();
+	this->_realname = cpy->getRealname();
 	this->_isAuth = cpy->isAuth();
 	this->_registered = cpy->isRegistered();
 }
@@ -49,6 +50,11 @@ void	Client::setHost(std::string host)
 	this->_hostname = host;
 }
 
+void	Client::setRealname(std::string realname)
+{
+	this->_realname = realname;
+}
+
 // Getter
 const std::string	&Client::getNick() const
 {
@@ -63,6 +69,11 @@ const std::string	&Client::getUser() const
 const std::string	&Client::getHost() const
 {
 	return (this->_hostname);
+}
+
+const std::string	&Client::getRealname() const
+{
+	return (this->_realname);
 }
 
 const std::string	&Client::getBuff() const
@@ -88,6 +99,20 @@ bool const	&Client::isAuth() const
 bool const	&Client::isRegistered() const
 {
 	return(this->_registered);
+}
+
+void Client::readyToRegister()
+{
+	if (!this->_nickname.empty() && !this->_username.empty()
+		&& !this->_hostname.empty() && !this->_realname.empty() && this->_isAuth) {
+		Irc	&ircserv = Irc::getInstance();
+		this->_registered = true;
+
+		ircserv.addReply(Reply(this->_sockFd, RPL_WELCOME(this->_nickname)));
+		ircserv.addReply(Reply(this->_sockFd, RPL_YOURHOST(this->_nickname)));
+		ircserv.addReply(Reply(this->_sockFd, RPL_INFO(this->_nickname)));
+	}
+
 }
 
 // 
