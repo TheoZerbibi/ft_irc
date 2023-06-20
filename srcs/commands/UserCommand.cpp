@@ -18,9 +18,9 @@ void UserCommand::execute(int fds, Client *client)
 	Irc	&ircserv = Irc::getInstance();
 
 	if (client->isRegistered())
-		ircserv.addReply(Reply(fds, ERR_ALREADYREGISTERED(client->getNick())));
+		ircserv.addReply(Reply(fds, ERR_ALREADYREGISTERED(ircserv.getName(), client->getNick())));
 	else if (arguments.size() != 5)
-		ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(client->getNick(), this->_name)));
+		ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name)));
 	else {
 		client->setUser(arguments[1]);
 		client->setHost(arguments[3]);
