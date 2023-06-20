@@ -13,6 +13,7 @@ void NickCommand::execute(int fds, Client *client)
 {
 	std::string	cmd = client->getCmds().front();
 	std::string	nick = cmd.substr(cmd.find(" ") + 1);
+	
 
 	if (nick.empty())
 	{
