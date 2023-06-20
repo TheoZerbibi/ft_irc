@@ -27,7 +27,8 @@ int	Reply::send()
 	}
 	else if (static_cast<size_t>(nbyte) < len)
 	{
-		this->_message.erase(0, nbyte);
+		std::cout << "Wrong nbyte send" << std::endl;
+//		this->_message.erase(0, nbyte);
 		return (1);
 	}
 	return (0);

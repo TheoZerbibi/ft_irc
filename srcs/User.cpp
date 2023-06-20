@@ -113,7 +113,6 @@ void Client::readyToRegister()
 		ircserv.addReply(Reply(this->_sockFd, RPL_YOURHOST(ircserv.getName(), this->_nickname)));
 		ircserv.addReply(Reply(this->_sockFd, RPL_INFO(ircserv.getName(), this->_nickname)));
 	}
-
 }
 
 // 

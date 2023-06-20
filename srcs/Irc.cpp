@@ -187,20 +187,24 @@ void Irc::addReply(Reply reply)
 int	Irc::sendReplies(void)
 {
 	std::vector<Reply>::iterator	beg = _replies.begin();
-	std::vector<Reply>::iterator	end = _replies.end();
+
+	std::vector<Reply>		cpy = _replies;
+	std::vector<Reply>::iterator	cpy_beg = cpy.begin();
+	std::vector<Reply>::iterator	cpy_end = cpy.end();
+
+	int				i  = 0;
 
 	// std::cout << "<<-- Sending Replies" << std::endl;
-	while (beg != end)
+	while (cpy_beg + i != cpy_end)
 	{
-		if (FD_ISSET(beg->getClientFd(), &(this->fds[SEND])))
+		if (FD_ISSET((cpy_beg + i)->getClientFd(), &(this->fds[SEND])))
 		{
-			if (!beg->send())
+			if (!(cpy_beg + i)->send())
 			{
-				_replies.erase(beg++);
+				_replies.erase(beg + i);
 			}
 		}
-		else
-			beg++;
+		i++;
 	}
 	return (0);
 }
