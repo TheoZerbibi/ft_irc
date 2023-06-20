@@ -18,7 +18,7 @@ void PassCommand::execute(int fds, Client *client)
 	if (client->isRegistered())
 		ircserv.addReply(Reply(fds, ERR_ALREADYREGISTERED(client->getNick())));
 	else if (pass.empty())
-		ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(client->getNick(), "PASS")));
+		ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(client->getNick(), this->_name)));
 	else if (ircserv.getPass() == pass)
 		client->setAuth(true);
 	else
