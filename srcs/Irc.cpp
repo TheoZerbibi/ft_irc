@@ -126,12 +126,23 @@ const Client		*Irc::getUserByNick(std::string const nick) const
 	return (NULL);
 }
 
+
+
 //Setter
 void	Irc::addClient(int const &sfd)
 {
 	Client	*client = new Client(sfd);
 
 	_clients.insert(std::make_pair(sfd, client));
+}
+
+void	Irc::promoteClient(Client *client)
+{
+	std::map<int, Client *>::iterator client_it = _clients.find(client->getSockfd());
+
+	User	*user = new User(client);
+	delete client_it->second;
+	client_it->second = user;
 }
 
 void	Irc::printAi() const
@@ -148,19 +159,6 @@ void	Irc::printAi() const
 }
 
 // Client Management
-
-void	Irc::promote_client(std::map<int, Client *>::iterator &client_it)
-{
-	Client *client = client_it->second;
-
-	if (client->isRegistered())
-	{
-		return ;
-	}
-	User	*user = new User(client_it->second);
-	delete client_it->second;
-	client_it->second = user;
-}
 
 int	Irc::computeFdMax(void) const
 {

@@ -107,7 +107,8 @@ void Client::readyToRegister()
 	if (this->_nickname != "*" && !this->_username.empty()
 		&& !this->_hostname.empty() && !this->_realname.empty() && this->_isAuth) {
 		Irc	&ircserv = Irc::getInstance();
-		this->_registered = true;
+
+		ircserv.promoteClient(this);
 
 		Reply rpl01 = Reply(this->_sockFd, RPL_WELCOME(ircserv.getName(), this->_nickname));
 		Reply rpl02 = Reply(this->_sockFd, RPL_YOURHOST(ircserv.getName(), this->_nickname));
@@ -181,7 +182,9 @@ void	Client::extractCmds()
 
 User::User(Client *client): Client(*client)
 {
-	this->_registered = 1;
+	this->_registered = true;
+	this->_isOper = false;
+	this->_isInvis = false;
 }
 
 User::User()
