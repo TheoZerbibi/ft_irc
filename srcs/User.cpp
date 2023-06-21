@@ -104,7 +104,7 @@ bool const	&Client::isRegistered() const
 
 void Client::readyToRegister()
 {
-	if (!this->_nickname.empty() && !this->_username.empty()
+	if (this->_nickname != "*" && !this->_username.empty()
 		&& !this->_hostname.empty() && !this->_realname.empty() && this->_isAuth) {
 		Irc	&ircserv = Irc::getInstance();
 		this->_registered = true;

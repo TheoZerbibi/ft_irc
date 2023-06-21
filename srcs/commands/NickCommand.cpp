@@ -30,4 +30,5 @@ void NickCommand::execute(int fds, Client *client)
 	}
 	client->setNick(nick);
 	std::cout << "NickCommand::execute(" << fds << ", " << client->getNick() << ")" << std::endl;
+	client->readyToRegister();
 }
