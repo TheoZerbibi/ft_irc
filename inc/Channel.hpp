@@ -10,10 +10,10 @@ class	Channel
 		void	addUser(User &_user);
 		User	&getUser(std::string _nick);
 	private:
-		std::string			_name;
+		std::string					_name;
 		std::map<int, std::string>	_operator;
 		std::map<int, std::string>	_users;
-		bool				_topicIsOpOnly;
-		int				_maxUser;
-		std::string			_key;
+		bool						_topicIsOpOnly;
+		int							_maxUser;
+		std::string					_key;
 };

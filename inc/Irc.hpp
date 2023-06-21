@@ -3,7 +3,6 @@
 
 #include	"Command.hpp"
 #include 	"AwayCommand.hpp"
-#include 	"CapCommand.hpp"
 #include	"InviteCommand.hpp"
 #include	"JoinCommand.hpp"
 #include	"KickCommand.hpp"
@@ -41,11 +40,11 @@ class	Irc{
 		void			addClient(int const &sfd);
 
 		//Getter
-		const	int				&getSocket() const;
-		const	struct addrinfo			*getAi() const;
+		const	int					&getSocket() const;
+		const	struct addrinfo		*getAi() const;
 		const	std::string			&getPass() const;
-		std::map<int, Client *>			&getClients();
-		void					addReply(Reply reply);
+		std::map<int, Client *>		&getClients();
+		void						addReply(Reply reply);
 		const	std::string			&getName() const;
 		const Client 				*getUserByNick(std::string const nick) const;
 		void					promoteClient(Client *client);
@@ -58,6 +57,8 @@ class	Irc{
 		void							initCommand();
 		std::map<std::string, Command*>	getCommandList();
 
+		// Channel Manager
+
 
 	private:
 		// Const & destr
@@ -69,22 +70,22 @@ class	Irc{
 		Irc &operator=(const Irc &);
 
 		// Client, User 
-		std::vector<Channel>	_chans;
-		std::map<int, Client *>	_clients;
+		std::map<std::string, Channel>	_chans;
+		std::map<int, Client *>			_clients;
 
 		// Client Management
 		int			setup_fds();
 
 		//Commands
-		std::map<std::string, Command*> commandList;
+		std::map<std::string, Command*>	commandList;
 
 		// Server info
-		struct	addrinfo		*_net;
+		struct	addrinfo	*_net;
 		std::string			_name;
 		std::string			_pass;
-		int				_sockfd;
+		int					_sockfd;
 
-		//// Receiving data
+		// Receiving data
 		int			accept_client();
 		int			receive_client_data(Client *user);
 		int			data_reception_handler();
@@ -93,17 +94,17 @@ class	Irc{
 		int			read_client_socket(Client &user);
 		int			manageCommand();
 
-		//// Send data
+		// Send data
 		std::vector<Reply>	_replies;
-		int			sendReplies();
+		int					sendReplies();
 
 		// Setup Server interface
-		void			setupAddrInfo(std::string port);
+		void		setupAddrInfo(std::string port);
 		// Setup socket interface
 		int			setup_socket();
 		int			set_socket_option();
 
 		// Operation on fds
-		void				setupFds();
-		fd_set				fds[4];
+		void		setupFds();
+		fd_set		fds[4];
 };
