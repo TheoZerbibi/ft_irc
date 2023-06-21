@@ -181,7 +181,9 @@ void	Client::extractCmds()
 
 User::User(Client *client): Client(*client)
 {
-	this->_registered = 1;
+	this->_registered = true;
+	this->_isOper = false;
+	this->_isInvis = false;
 }
 
 User::User()

@@ -57,7 +57,12 @@ class	Irc{
 		std::map<std::string, Command*>	getCommandList();
 
 		// Channel Manager
-
+		void								addChannel(std::string name);
+		Channel								&getChannel(std::string name);
+		Channel								*getChannelByName(std::string name);
+		std::map<std::string, Channel *>	&getChannelList(void);
+		bool								channelExists(std::string name);
+		void								removeChannel(std::string name);
 
 	private:
 		// Const & destr
@@ -69,8 +74,8 @@ class	Irc{
 		Irc &operator=(const Irc &);
 
 		// Client, User 
-		std::map<std::string, Channel>	_chans;
-		std::map<int, Client *>			_clients;
+		std::map<std::string, Channel *>	_channels;
+		std::map<int, Client *>				_clients;
 
 		// Client Management
 		int		setup_fds();
@@ -107,4 +112,8 @@ class	Irc{
 		// Operation on fds
 		void		setupFds();
 		fd_set		fds[4];
+
+		void		_removeAllChannel();
+		void		_removeAllClient();
+		void		_removeAllCommands();
 };

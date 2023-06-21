@@ -75,7 +75,7 @@ class User : public Client{
 
 	private:
 		User();
-		std::vector<Channel *>	_chans;
+		std::vector<Channel *>	_channels;
 		bool			_isOper;
 		bool			_isInvis;
 };

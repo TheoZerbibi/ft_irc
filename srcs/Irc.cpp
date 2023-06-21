@@ -16,22 +16,10 @@ Irc::~Irc()
 	close(this->_sockfd);
 	freeaddrinfo(this->_net);
 	
-	std::map<int, Client *>::iterator beg = _clients.begin();
-	std::map<int, Client *>::iterator end = _clients.end();
+	this->_removeAllChannel();
+	this->_removeAllClient();
+	this->_removeAllCommands();
 
-	while (beg != end)
-	{
-		delete beg->second;
-		beg++;
-	}
-
-	std::map<std::string, Command*>::iterator begC = commandList.begin();
-	std::map<std::string, Command*>::iterator endC = commandList.end();
-	while (begC != endC)
-	{
-		delete begC->second;
-		begC++;
-	}
 	std::cout << "Exiting" << std::endl;
 
 }
@@ -66,7 +54,7 @@ void	Irc::setupFds()
 	FD_SET(this->getSocket(), &(this->fds[MASTER]));
 }
 
-void Irc::initCommand() {
+void	Irc::initCommand() {
 	std::cout << "┏ Command Register" << std::endl;
 	this->commandList.insert(std::pair<std::string, Command*>("AWAY", new AwayCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("INVITE", new InviteCommand()));
@@ -81,8 +69,19 @@ void Irc::initCommand() {
 	this->commandList.insert(std::pair<std::string, Command*>("USER", new UserCommand()));
 }
 
+void	Irc::_removeAllCommands() {
+	std::map<std::string, Command*>::iterator beg = this->commandList.begin();
+	std::map<std::string, Command*>::iterator end = this->commandList.end();
+
+	while (beg != end)
+	{
+		delete beg->second;
+		beg++;
+	}
+}
+
 // Getter
-std::map<std::string, Command*> Irc::getCommandList() {
+std::map<std::string, Command*>	Irc::getCommandList() {
 	return this->commandList;
 }
 
@@ -206,4 +205,76 @@ int	Irc::sendReplies(void)
 		i++;
 	}
 	return (0);
+}
+
+void	Irc::_removeAllClient() {
+	std::map<int, Client *>::iterator beg = this->_clients.begin();
+	std::map<int, Client *>::iterator end = this->_clients.end();
+
+	while (beg != end)
+	{
+		delete beg->second;
+		beg++;
+	}
+}
+
+// Channel Management
+
+std::map<std::string, Channel *>	&Irc::getChannelList() {
+	return (this->_channels);
+}
+
+void	Irc::addChannel(std::string name)
+{
+	if (this->channelExists(name))
+		return ;
+	Channel	*channel = new Channel(name);
+
+	_channels.insert(std::pair<std::string, Channel *>(name, channel));
+}
+
+bool	Irc::channelExists(std::string name)
+{
+	std::map<std::string, Channel *>::iterator it = _channels.find(name);
+	
+	if (it != _channels.end())
+		return (true);
+	return (false);
+}
+
+Channel	*Irc::getChannelByName(std::string name)
+{
+	if (!this->channelExists(name))
+		return NULL;
+	return (this->_channels[name]);
+}
+
+void	Irc::removeChannel(std::string name)
+{
+	if (this->channelExists(name))
+		return ;
+	std::map<std::string, Channel *>::iterator it = _channels.begin();
+	std::map<std::string, Channel *>::iterator ite = _channels.end();
+
+	while (it != ite)
+	{
+		if (it->first == name)
+		{
+			delete it->second;
+			_channels.erase(it);
+			return ;
+		}
+		it++;
+	}
+}
+
+void Irc::_removeAllChannel() {
+	std::map<std::string, Channel *>::iterator beg = this->_channels.begin();
+	std::map<std::string, Channel *>::iterator end = this->_channels.end();
+
+	while (beg != end)
+	{
+		delete beg->second;
+		beg++;
+	}
 }
