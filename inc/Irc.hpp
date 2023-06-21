@@ -47,6 +47,7 @@ class	Irc{
 		void						addReply(Reply reply);
 		const	std::string			&getName() const;
 		const Client 				*getUserByNick(std::string const nick) const;
+		void					promoteClient(Client *client);
 
 		int	computeFdMax() const;
 		int	main_loop();
@@ -78,8 +79,7 @@ class	Irc{
 		std::map<int, Client *>				_clients;
 
 		// Client Management
-		int		setup_fds();
-		void	promote_client(std::map<int, Client *>::iterator &_client);
+		int			setup_fds();
 
 		//Commands
 		std::map<std::string, Command*>	commandList;
