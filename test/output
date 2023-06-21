@@ -16,33 +16,33 @@ CAP END
 
 =============== read 302 bytes from SERVER (5) ===================
 :*.freenode.net CAP * LS :account-notify account-tag away-notify batch cap-notify chghost draft/relaymsg echo-message extended-join inspircd.org/poison inspircd.org/standard-replies invite-notify labeled-response message-tags multi-prefix sasl server-time setname userhost-in-names 
-PING :upiFIcw`lI
+PING :sibZk{roOY
 
-=============== read 135 bytes from SERVER (5) ===================
-:*.freenode.net NOTICE munin :*** Could not resolve your hostname: Nameserver failure; using your IP address (62.210.32.245) instead.
+=============== read 134 bytes from SERVER (5) ===================
+:*.freenode.net NOTICE munin :*** Could not resolve your hostname: Nameserver failure; using your IP address (62.210.32.28) instead.
 
 =============== read 84 bytes from SERVER (5) ===================
 :*.freenode.net NOTICE munin :*** Ident lookup timed out, using ~iguidado instead.
 
 =============== read 17 bytes from CLIENT (4) ==================
-PONG :upiFIcw`lI
+PONG :sibZk{roOY
 
 =============== read 4096 bytes from SERVER (5) ===================
-:*.freenode.net 001 munin :Welcome to the freenode IRC Network munin!~iguidado@62.210.32.245
+:*.freenode.net 001 munin :Welcome to the freenode IRC Network munin!~iguidado@62.210.32.28
 :*.freenode.net 002 munin :Your host is *.freenode.net, running version InspIRCd-3
-:*.freenode.net 003 munin :This server was created 23:06:04 Apr 20 2022
+:*.freenode.net 003 munin :This server was created 23:52:15 Feb 18 2023
 :*.freenode.net 004 munin *.freenode.net InspIRCd-3 BDHILRSTWcdghikorswxz ABCDEFIJKLMNOPQRSTUWXYZbcdefhijklmnoprstuvwz :BEFIJLWXYZbdefhjklovw
 :*.freenode.net 005 munin ACCEPT=30 AWAYLEN=200 BOT=B CALLERID=g CASEMAPPING=ascii CHANLIMIT=#:20 CHANMODES=IXZbew,k,BEFJLWdfjl,ACDKMNOPQRSTUcimnprstuz CHANNELLEN=64 CHANTYPES=# ELIST=CMNTU ESILENCE=CcdiNnPpTtx EXCEPTS=e :are supported by this server
 :*.freenode.net 005 munin EXTBAN=,ACNOQRSTUacjmnpruwz HOSTLEN=64 INVEX=I KEYLEN=32 KICKLEN=255 LINELEN=512 MAXLIST=I:100,X:100,b:100,e:100,w:100 MAXTARGETS=20 MODES=20 MONITOR=30 NAMELEN=128 NAMESX NETWORK=freenode :are supported by this server
 :*.freenode.net 005 munin NICKLEN=30 PREFIX=(Yohv)!@%+ REMOVE SAFELIST SECURELIST=60 SILENCE=32 STATUSMSG=!@%+ TOPICLEN=390 UHNAMES USERIP USERLEN=10 USERMODES=,,s,BDHILRSTWcdghikorwxz VBANLIST :are supported by this server
 :*.freenode.net 005 munin VLIST=b WATCH=32 WHOX :are supported by this server
-:*.freenode.net 251 munin :There are 18 users and 8504 invisible on 9 servers
+:*.freenode.net 251 munin :There are 19 users and 7961 invisible on 9 servers
 :*.freenode.net 252 munin 6 :operator(s) online
-:*.freenode.net 253 munin 23 :unknown connections
-:*.freenode.net 254 munin 11948 :channels formed
-:*.freenode.net 255 munin :I have 3136 clients and 1 servers
-:*.freenode.net 265 munin :Current local users: 3136  Max: 4987
-:*.freenode.net 266 munin :Current global users: 8522  Max: 10916
+:*.freenode.net 253 munin 17 :unknown connections
+:*.freenode.net 254 munin 11818 :channels formed
+:*.freenode.net 255 munin :I have 4049 clients and 1 servers
+:*.freenode.net 265 munin :Current local users: 4049  Max: 4570
+:*.freenode.net 266 munin :Current global users: 7980  Max: 8827
 :*.freenode.net 375 munin :*.freenode.net message of the day
 :*.freenode.net 372 munin :  Hello, World!
 :*.freenode.net 372 munin : 
@@ -82,21 +82,41 @@ PONG :upiFIcw`lI
 :*.freenode.net 372 munin :  Type /join #<channel>
 :*.freenode.net 372 munin : 
 :*.freenode.net 372 munin :  Thank you for using freenode!
-:*.freenode.net 376 munin :End of mess
-=============== read 267 bytes from SERVER (5) ===================
-age of the day.
-:*.freenode.net 396 munin freenode-4tl.s9b.6vib9m.IP :is now your displayed host
-:munin!~iguidado@freenode-4tl.s9b.6vib9m.IP MODE munin :+wRix
+:*.freenode.net 376 munin :End of messag
+=============== read 265 bytes from SERVER (5) ===================
+e of the day.
+:*.freenode.net 396 munin freenode-6sb.s9b.6vib9m.IP :is now your displayed host
+:munin!~iguidado@freenode-6sb.s9b.6vib9m.IP MODE munin :+wRix
 :*.freenode.net 477 munin munin :You need to be identified to a registered account to message this user
 
 =============== read 87 bytes from SERVER (5) ===================
 :NickServ!services@services.freenode.net NOTICE munin :Nick munin isn't registered.
 
-=============== read 10 bytes from CLIENT (4) ==================
-PASS 1234
+=============== read 12 bytes from CLIENT (4) ==================
+JOIN #hello
 
-=============== read 51 bytes from SERVER (5) ===================
-:*.freenode.net 462 munin :You may not reregister
+=============== read 157 bytes from SERVER (5) ===================
+:munin!~iguidado@freenode-6sb.s9b.6vib9m.IP JOIN :#hello
+:*.freenode.net 353 munin = #hello :@munin
+:*.freenode.net 366 munin #hello :End of /NAMES list.
 
-Cleaning up...
+=============== read 12 bytes from CLIENT (4) ==================
+JOIN &hello
+
+=============== read 56 bytes from SERVER (5) ===================
+:*.freenode.net 476 munin &hello :Invalid channel name
+
+=============== read 11 bytes from CLIENT (4) ==================
+JOIN hello
+
+=============== read 55 bytes from SERVER (5) ===================
+:*.freenode.net 476 munin hello :Invalid channel name
+
+=============== read 22 bytes from SERVER (5) ===================
+PING :*.freenode.net
+
+=============== read 75 bytes from SERVER (5) ===================
+ERROR :Closing link: (~iguidado@62.210.32.28) [Ping timeout: 120 seconds]
+
+exiting
 Cleaning up...

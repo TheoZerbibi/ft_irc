@@ -54,8 +54,16 @@ Things to do are :
 
 ## Requirement
 
+- todo next
+ - [ ] Promotion des clients en user
+ - [ ] Join
+ - [ ] mode
+ - [ ] privmsg
+
+
 - Server / client socket connection
 
+---
  - [x] Accept multiple client and register them under a user id
  - [ ] promotion of registered client as user
  - [ ] 
@@ -90,7 +98,7 @@ Things to do are :
 - Operator command
 
 > These are channel command that can only be used by operator of channel (you first need to be on the channel to do these operation)
- - [ ]  [MODE](https://modern.ircdocs.horse/#mode-message) : user('o', ), channel( )   'i', 't', 'k', 'o' 'l'
+ - [ ]  [MODE](https://modern.ircdocs.horse/#mode-message) : user('o':operator, 'i':invisible), channel('t':topic requirement, 'k':key, 'l':limits )
  - [ ]  [KICK](https://modern.ircdocs.horse/#kick-message)
  - [ ]  [INVITE](https://modern.ircdocs.horse/#invite-message)
  - [ ]  [TOPIC](https://modern.ircdocs.horse/#topic-message)
@@ -100,10 +108,6 @@ Things to do are :
 - [ ] Implement RPL system
  - [ ] Implement ERR
 
----
-
-- todo next
- - [ ] fix 
 
 ### Extra
 

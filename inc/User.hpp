@@ -34,8 +34,8 @@ class Client {
 		std::deque<std::string>	&getCmds();
 
 		//		Authentification process
-		void	setAuth(bool auth);
-		bool const &isAuth() const;
+		void		setAuth(bool auth);
+		bool const	&isAuth() const;
 
 		//		Registration process : need to implement registrement checking
 		bool const	&isRegistered() const;
@@ -75,9 +75,9 @@ class User : public Client{
 
 	private:
 		User();
-		std::vector<std::string>	channel;
-		// Other data members as needed
-		//	int		mode;
+		std::vector<Channel *>	_chans;
+		bool			_isOper;
+		bool			_isInvis;
 };
 
 // User 

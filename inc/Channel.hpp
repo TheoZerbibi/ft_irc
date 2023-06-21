@@ -13,4 +13,7 @@ class	Channel
 		std::string			_name;
 		std::map<int, std::string>	_operator;
 		std::map<int, std::string>	_users;
+		bool				_topicIsOpOnly;
+		int				_maxUser;
+		std::string			_key;
 };
