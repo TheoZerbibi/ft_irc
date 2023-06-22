@@ -110,15 +110,9 @@ void Client::readyToRegister()
 
 		ircserv.promoteClient(this);
 
-		Reply rpl01 = Reply(this->_sockFd, RPL_WELCOME(ircserv.getName(), this->_nickname));
-		Reply rpl02 = Reply(this->_sockFd, RPL_YOURHOST(ircserv.getName(), this->_nickname));
-		Reply rpl03 = Reply(this->_sockFd, RPL_INFO(ircserv.getName(), this->_nickname));
-
-		std::cout << "rpl01 - " << rpl01.getMessage() << "rpl02 - " << rpl02.getMessage() << "rpl03 - " << rpl03.getMessage() << std::endl;
-
-		ircserv.addReply(rpl01);
-		ircserv.addReply(rpl02);
-		ircserv.addReply(rpl03);
+		ircserv.addReply(Reply(this->_sockFd, RPL_WELCOME(ircserv.getName(), this->_nickname)));
+		ircserv.addReply(Reply(this->_sockFd, RPL_YOURHOST(ircserv.getName(), this->_nickname)));
+		ircserv.addReply(Reply(this->_sockFd, RPL_INFO(ircserv.getName(), this->_nickname)));
 	}
 }
 
