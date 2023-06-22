@@ -101,10 +101,11 @@ class	Irc{
 
 		// Send data
 		std::vector<Reply>	_replies;
-		int					sendReplies();
+		int			sendReplies();
 
 		// Setup Server interface
-		void		setupAddrInfo(std::string port);
+		void			setupAddrInfo(std::string port);
+
 		// Setup socket interface
 		int			setup_socket();
 		int			set_socket_option();

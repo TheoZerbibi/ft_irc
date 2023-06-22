@@ -51,7 +51,7 @@ class Client {
 		int			_sockFd;
 		bool		_isAuth;
 		bool		_registered;
-
+  
 		// Needed to register users
 		std::string	_nickname;   
 		std::string	_hostname;
@@ -60,7 +60,7 @@ class Client {
 
 		void					extractCmds();
 		void					printCmds();
-	private:
+//	private:
 	//	int		connection_time; //if current_time - connection_time > 2s timeout client
 };
 
@@ -73,9 +73,12 @@ class User : public Client{
 
 		//	const int &getFd() const; // Other methods and data members as needed
 
+		bool	isOper() const;
+		bool	isInvis() const;
+		bool	isChannelOper(Channel *chan) const;
 	private:
 		User();
-		std::vector<Channel *>	_channels;
+		std::vector<Channel *>	_chans;
 		bool			_isOper;
 		bool			_isInvis;
 };

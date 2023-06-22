@@ -1,4 +1,8 @@
+#pragma once
 #include "ft_irc.hpp"
+#include "User.hpp"
+
+class User;
 
 class	Channel
 {
@@ -10,10 +14,11 @@ class	Channel
 		void	addUser(User &_user);
 		User	&getUser(std::string _nick);
 	private:
-		std::string					_name;
-		std::map<int, std::string>	_operator;
-		std::map<int, std::string>	_users;
-		bool						_topicIsOpOnly;
-		int							_maxUser;
-		std::string					_key;
+		std::map<std::string, User *>	_operator;
+		std::map<std::string, User *>	_users;
+
+		std::string			_name;
+		std::string			_key;
+		bool				_topicIsOpOnly;
+		int				_maxUser;
 };

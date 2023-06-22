@@ -102,6 +102,27 @@ bool const	&Client::isRegistered() const
 	return(this->_registered);
 }
 
+bool User::isOper() const
+{
+	return (_isOper);
+}
+
+bool User::isInvis() const
+{
+	return (_isInvis);
+}
+
+bool User::isChannelOper(Channel *chan) const
+{
+	(void)chan;
+//	Irc				&ircserv = Irc::getInstance();
+
+//	std::map<int, std::string>::iterator  beg = ircserv.begin();
+//	std::map<int, std::string>::iterator  end = ircserv.end();
+
+	return (false);
+}
+
 void Client::readyToRegister()
 {
 	if (this->_nickname != "*" && !this->_username.empty()
