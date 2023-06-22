@@ -19,6 +19,7 @@ jobs:
       run: |
         set -x
         ./ircserv 6667 123 &
+        sleep 1
         echo "TEST test/Input/registration"
         nc -C -N localhost 6667 < test/Input/registration
     - name: make debug
@@ -27,5 +28,6 @@ jobs:
       run: |
         set -x
         valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./ircserv 6667 123 &
+        sleep 1
         echo "TEST test/Input/registration"
         nc -C -N localhost 6667 < test/Input/registration
