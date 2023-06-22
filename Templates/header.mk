@@ -6,7 +6,7 @@
 #    By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/26 01:52:22 by thzeribi          #+#    #+#              #
-#    Updated: 2023/05/31 04:40:44 by thzeribi         ###   ########.fr        #
+#    Updated: 2023/06/22 02:02:57 by thzeribi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,5 +39,7 @@ define print_header
 endef
 
 header:
+ifdef TERM
 	clear
+endif
 	$(call print_header)

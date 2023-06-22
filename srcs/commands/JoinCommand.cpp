@@ -20,7 +20,9 @@ void JoinCommand::execute(int fds, Client *client)
 		arg.clear();
 	std::cout << "POS = " << pos << std::endl;
 	std::cout << "[JoinCommand] CMD = " << cmd << std::endl << "ARG = " << arg << std::endl;
-	if (arg.empty() || !this->_parseArguments(arg))
+	if (!arg.empty() && arg[0] == '0')
+		std::cout << "Leave all channel for " << client->getNick() << std::endl;
+	else if (arg.empty() || !this->_parseArguments(arg))
 	{
 		ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name)));
 		return ;

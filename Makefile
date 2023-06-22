@@ -6,7 +6,7 @@
 #    By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/19 12:13:48 by thzeribi          #+#    #+#              #
-#    Updated: 2023/06/01 23:14:34 by iguidado         ###   ########.fr        #
+#    Updated: 2023/06/22 02:06:20 by thzeribi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ DEPS		:=	$(OBJECTS:.o=.d)
 ################################################################################
 
 CXXFLAGS		=	-MMD -Wall -Wextra -Werror -Weffc++ -std=c++98
-CXX				:=	c++
+CXX				?=	c++
 DBG				:=	0
 
 INCLUDES		:= $(addprefix -I,$(shell find ${INCLUDES_FOLDER} -type d -print))
