@@ -19,12 +19,11 @@ jobs:
       run: |
         set -x
         ./ircserv 6667 123 &
-        cat test/Input/registration | netcat localhost 6667 -C
+        nc -C -N localhost 6667 < test/Input/registration
     - name: make debug
       run: CXX=clang++ make re debug
     - name: test leak
       run: |
         set -x
         valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./ircserv 6667 123 &
-        cat test/Input/registration | netcat localhost 6667 -C
-        
+        nc -C -N localhost 6667 < test/Input/registration
