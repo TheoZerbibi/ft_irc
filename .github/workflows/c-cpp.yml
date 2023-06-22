@@ -23,6 +23,7 @@ jobs:
         echo "TEST test/Input/registration"
         cat test/Input/registration | netcat localhost 6667 -C -N
         netcat -z localhost 6667
+        echo $?
     - name: make debug
       run: CXX=clang++ make re debug
     - name: test leak
