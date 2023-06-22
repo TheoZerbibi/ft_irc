@@ -20,7 +20,7 @@ jobs:
     - name: make fsanitize
       run: CXX=clang++ make asan
     - name: test with fsanitize
-      shell: zsh
+      shell: zsh {0}
       run: |
         set -x
         ./ircserv 6667 123 &
@@ -32,7 +32,7 @@ jobs:
     - name: make debug
       run: CXX=clang++ make re debug
     - name: test leak
-      shell: zsh
+      shell: zsh {0}
       run: |
         set -x
         valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./ircserv 6667 123 &
