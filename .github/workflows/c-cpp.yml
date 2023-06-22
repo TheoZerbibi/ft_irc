@@ -16,11 +16,10 @@ jobs:
     - name: setup
       run: |
         sudo apt update
-        sudo apt install -y zsh
+        sudo apt install -y valgrind
     - name: make fsanitize
       run: CXX=clang++ make asan
     - name: test with fsanitize
-      shell: zsh {0}
       run: |
         set -x
         ./ircserv 6667 123 &
@@ -28,11 +27,9 @@ jobs:
         echo "TEST test/Input/registration"
         cat test/Input/registration | netcat localhost 6667 -C -N
         netcat -z localhost 6667
-        echo $?
     - name: make debug
       run: CXX=clang++ make re debug
     - name: test leak
-      shell: zsh {0}
       run: |
         set -x
         valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./ircserv 6667 123 &
