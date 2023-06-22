@@ -2,4 +2,3 @@ CAP LS
 PASS 123
 NICK munin
 USER iguidado iguidado localhost :Ismael GUIDADOU
-CAP END

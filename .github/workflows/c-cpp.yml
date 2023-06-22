@@ -31,3 +31,5 @@ jobs:
         sleep 1
         echo "TEST test/Input/registration"
         nc -C -N localhost 6667 < test/Input/registration
+
+
