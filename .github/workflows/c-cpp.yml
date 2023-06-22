@@ -13,15 +13,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: setup
-      run: |
-        sudo apt update
-        sudo apt install -y zsh
     - name: make fsanitize
       run: CXX=clang++ make asan
     - name: test with fsanitize
+      shell: zsh
       run: |
-        zsh
         set -x
         ./ircserv 6667 123 &
         sleep 1
@@ -32,8 +28,8 @@ jobs:
     - name: make debug
       run: CXX=clang++ make re debug
     - name: test leak
+      shell: zsh
       run: |
-        zsh
         set -x
         valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./ircserv 6667 123 &
         sleep 1
