@@ -28,6 +28,6 @@ void PassCommand::execute(int fds, Client *client)
 		return (ircserv.addReply(Reply(fds, ERR_PASSWDMISMATCH(ircserv.getName(), client->getNick()))));
 
 	client->setAuth(true);
-	client->readyToRegister();
+	ircserv.promoteClient(client);
 	std::cout << "PassCommand::execute(" << fds << ", " << pass << ")" << std::endl;
 }

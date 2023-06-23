@@ -142,11 +142,27 @@ void	Irc::addClient(int const &sfd)
 
 void	Irc::promoteClient(Client *client)
 {
-	std::map<int, Client *>::iterator client_it = _clients.find(client->getSockfd());
+	std::string nick = client->getNick();
+	std::string user = client->getUser();
+	std::string host = client->getHost();
+	std::string real = client->getRealname();
+	int	    fd = client->getSockfd();
+	bool	    isAuth = client->isAuth();
 
-	User	*user = new User(client);
-	delete client_it->second;
-	client_it->second = user;
+	if (nick != "*" && !user.empty()
+		&& !host.empty() && !real.empty() && isAuth) {
+		Irc	&ircserv = Irc::getInstance();
+
+		ircserv.addReply(Reply(fd, RPL_WELCOME(ircserv.getName(), nick)));
+		ircserv.addReply(Reply(fd, RPL_YOURHOST(ircserv.getName(), nick)));
+		ircserv.addReply(Reply(fd, RPL_INFO(ircserv.getName(), nick)));
+
+		std::map<int, Client *>::iterator client_it = _clients.find(client->getSockfd());
+
+		User	*user = new User(client);
+		delete client_it->second;
+		client_it->second = user;
+	}
 }
 
 void	Irc::printAi() const
@@ -240,7 +256,7 @@ void	Irc::addChannel(std::string name)
 bool	Irc::channelExists(std::string name)
 {
 	std::map<std::string, Channel *>::iterator it = _channels.find(name);
-	
+
 	if (it != _channels.end())
 		return (true);
 	return (false);
@@ -270,6 +286,11 @@ void	Irc::removeChannel(std::string name)
 		}
 		it++;
 	}
+}
+
+void	Irc::addUserToChannel(User *user, Channel *chan)
+{
+	chan->addUser(user);
 }
 
 void Irc::_removeAllChannel() {

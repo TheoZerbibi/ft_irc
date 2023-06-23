@@ -3,9 +3,9 @@ calling accept FD 3
 calling accept FD 3
 connection from localhost [127.0.0.1] fd= 4
 connected to chat.freenode.net:6667 fd= 5
-=============== read 86 bytes from CLIENT (4) ==================
+=============== read 85 bytes from CLIENT (4) ==================
 CAP LS
-PASS 1234
+PASS 123
 NICK munin
 USER iguidado iguidado localhost :Ismael GUIDADOU
 CAP END
@@ -16,33 +16,33 @@ CAP END
 
 =============== read 302 bytes from SERVER (5) ===================
 :*.freenode.net CAP * LS :account-notify account-tag away-notify batch cap-notify chghost draft/relaymsg echo-message extended-join inspircd.org/poison inspircd.org/standard-replies invite-notify labeled-response message-tags multi-prefix sasl server-time setname userhost-in-names 
-PING :wza_vq}qwz
+PING :cBzNWS^H{g
 
 =============== read 134 bytes from SERVER (5) ===================
-:*.freenode.net NOTICE munin :*** Could not resolve your hostname: Nameserver failure; using your IP address (62.210.32.65) instead.
+:*.freenode.net NOTICE munin :*** Could not resolve your hostname: Nameserver failure; using your IP address (62.210.32.14) instead.
 
 =============== read 84 bytes from SERVER (5) ===================
 :*.freenode.net NOTICE munin :*** Ident lookup timed out, using ~iguidado instead.
 
 =============== read 17 bytes from CLIENT (4) ==================
-PONG :wza_vq}qwz
+PONG :cBzNWS^H{g
 
-=============== read 4096 bytes from SERVER (5) ===================
-:*.freenode.net 001 munin :Welcome to the freenode IRC Network munin!~iguidado@62.210.32.65
+=============== read 2896 bytes from SERVER (5) ===================
+:*.freenode.net 001 munin :Welcome to the freenode IRC Network munin!~iguidado@62.210.32.14
 :*.freenode.net 002 munin :Your host is *.freenode.net, running version InspIRCd-3
-:*.freenode.net 003 munin :This server was created 09:22:41 Jun 22 2023
+:*.freenode.net 003 munin :This server was created 23:06:04 Apr 20 2022
 :*.freenode.net 004 munin *.freenode.net InspIRCd-3 BDHILRSTWcdghikorswxz ABCDEFIJKLMNOPQRSTUWXYZbcdefhijklmnoprstuvwz :BEFIJLWXYZbdefhjklovw
 :*.freenode.net 005 munin ACCEPT=30 AWAYLEN=200 BOT=B CALLERID=g CASEMAPPING=ascii CHANLIMIT=#:20 CHANMODES=IXZbew,k,BEFJLWdfjl,ACDKMNOPQRSTUcimnprstuz CHANNELLEN=64 CHANTYPES=# ELIST=CMNTU ESILENCE=CcdiNnPpTtx EXCEPTS=e :are supported by this server
 :*.freenode.net 005 munin EXTBAN=,ACNOQRSTUacjmnpruwz HOSTLEN=64 INVEX=I KEYLEN=32 KICKLEN=255 LINELEN=512 MAXLIST=I:100,X:100,b:100,e:100,w:100 MAXTARGETS=20 MODES=20 MONITOR=30 NAMELEN=128 NAMESX NETWORK=freenode :are supported by this server
 :*.freenode.net 005 munin NICKLEN=30 PREFIX=(Yohv)!@%+ REMOVE SAFELIST SECURELIST=60 SILENCE=32 STATUSMSG=!@%+ TOPICLEN=390 UHNAMES USERIP USERLEN=10 USERMODES=,,s,BDHILRSTWcdghikorwxz VBANLIST :are supported by this server
 :*.freenode.net 005 munin VLIST=b WATCH=32 WHOX :are supported by this server
-:*.freenode.net 251 munin :There are 19 users and 8106 invisible on 9 servers
+:*.freenode.net 251 munin :There are 19 users and 8113 invisible on 9 servers
 :*.freenode.net 252 munin 4 :operator(s) online
-:*.freenode.net 253 munin 14 :unknown connections
-:*.freenode.net 254 munin 11718 :channels formed
-:*.freenode.net 255 munin :I have 372 clients and 1 servers
-:*.freenode.net 265 munin :Current local users: 372  Max: 376
-:*.freenode.net 266 munin :Current global users: 8125  Max: 8393
+:*.freenode.net 253 munin 19 :unknown connections
+:*.freenode.net 254 munin 11749 :channels formed
+:*.freenode.net 255 munin :I have 6473 clients and 1 servers
+:*.freenode.net 265 munin :Current local users: 6473  Max: 7273
+:*.freenode.net 266 munin :Current global users: 8132  Max: 10916
 :*.freenode.net 375 munin :*.freenode.net message of the day
 :*.freenode.net 372 munin :  Hello, World!
 :*.freenode.net 372 munin : 
@@ -63,7 +63,9 @@ PONG :wza_vq}qwz
 :*.freenode.net 372 munin : 
 :*.freenode.net 372 munin :  By connecting to freenode you indicate that you have read and accept our
 :*.freenode.net 372 munin :  policies and guidelines as set out on https://freenode.net and agree to
-:*.freenode.net 372 munin :  be scanned for an open proxy.
+:*.freenode.net 372 munin :  be scann
+=============== read 1466 bytes from SERVER (5) ===================
+ed for an open proxy.
 :*.freenode.net 372 munin : 
 :*.freenode.net 372 munin :  If you are looking for assistance, please try:
 :*.freenode.net 372 munin : 
@@ -82,70 +84,30 @@ PONG :wza_vq}qwz
 :*.freenode.net 372 munin :  Type /join #<channel>
 :*.freenode.net 372 munin : 
 :*.freenode.net 372 munin :  Thank you for using freenode!
-:*.freenode.net 376 munin :End of message o
-=============== read 262 bytes from SERVER (5) ===================
-f the day.
-:*.freenode.net 396 munin freenode-nur.s9b.6vib9m.IP :is now your displayed host
-:munin!~iguidado@freenode-nur.s9b.6vib9m.IP MODE munin :+wRix
+:*.freenode.net 376 munin :End of message of the day.
+:*.freenode.net 396 munin freenode-kuj.s9b.6vib9m.IP :is now your displayed host
+:munin!~iguidado@freenode-kuj.s9b.6vib9m.IP MODE munin :+wRix
 :*.freenode.net 477 munin munin :You need to be identified to a registered account to message this user
 
 =============== read 87 bytes from SERVER (5) ===================
 :NickServ!services@services.freenode.net NOTICE munin :Nick munin isn't registered.
 
+=============== read 11 bytes from CLIENT (4) ==================
+mode qweqw
+
+=============== read 47 bytes from SERVER (5) ===================
+:*.freenode.net 401 munin qweqw :No such nick
+
+=============== read 22 bytes from SERVER (5) ===================
+PING :*.freenode.net
+
 =============== read 21 bytes from CLIENT (4) ==================
-JOIN #test1234 hello
-
-=============== read 173 bytes from SERVER (5) ===================
-:munin!~iguidado@freenode-nur.s9b.6vib9m.IP JOIN :#test1234
-:*.freenode.net 353 munin * #test1234 :@hello_ munin
-:*.freenode.net 366 munin #test1234 :End of /NAMES list.
-
-=============== read 15 bytes from CLIENT (4) ==================
-MODE #1234 wqe
-
-=============== read 125 bytes from SERVER (5) ===================
-:*.freenode.net 472 munin q :is not a recognised channel mode.
-:*.freenode.net 911 munin #1234 :End of Channel Access List
-
-=============== read 11 bytes from CLIENT (4) ==================
-JOIN #1234
-
-=============== read 159 bytes from SERVER (5) ===================
-:munin!~iguidado@freenode-nur.s9b.6vib9m.IP JOIN :#1234
-:*.freenode.net 353 munin = #1234 :@KOKI munin
-:*.freenode.net 366 munin #1234 :End of /NAMES list.
-
-=============== read 11 bytes from CLIENT (4) ==================
-PART #1234
-
-=============== read 57 bytes from SERVER (5) ===================
-:munin!~iguidado@freenode-nur.s9b.6vib9m.IP PART :#1234
-
-=============== read 20 bytes from CLIENT (4) ==================
-MODE #test1234 tyty
-
-=============== read 338 bytes from SERVER (5) ===================
-:*.freenode.net 472 munin y :is not a recognised channel mode.
-:*.freenode.net 472 munin y :is not a recognised channel mode.
-:*.freenode.net 482 munin #test1234 :You must have channel halfop access or above to set channel mode t
-:*.freenode.net 482 munin #test1234 :You must have channel halfop access or above to set channel mode t
-
-=============== read 24 bytes from CLIENT (4) ==================
-MODE #test1234 t y r e 
-
-=============== read 105 bytes from SERVER (5) ===================
-:*.freenode.net 482 munin #test1234 :You must have channel halfop access or above to set channel mode t
-
-=============== read 24 bytes from CLIENT (4) ==================
-MODE #test1234 t t t t 
-
-=============== read 105 bytes from SERVER (5) ===================
-:*.freenode.net 482 munin #test1234 :You must have channel halfop access or above to set channel mode t
+PONG :*.freenode.net
 
 =============== read 22 bytes from SERVER (5) ===================
 PING :*.freenode.net
 
 =============== read 75 bytes from SERVER (5) ===================
-ERROR :Closing link: (~iguidado@62.210.32.65) [Ping timeout: 120 seconds]
+ERROR :Closing link: (~iguidado@62.210.32.14) [Ping timeout: 120 seconds]
 
 exiting

@@ -25,6 +25,6 @@ void UserCommand::execute(int fds, Client *client)
 		client->setHost(arguments[3]);
 		client->setRealname(arguments[4]);
 		std::cout << "UserCommand::execute(" << fds << ", " << arguments.at(1) << ", " << arguments.at(2) << ", " << arguments.at(3) << ", " << arguments.at(4) << ")" << std::endl;
-		client->readyToRegister();
+		ircserv.promoteClient(client);
 	}
 }

@@ -54,14 +54,15 @@ class	Irc{
 
 
 		// Command manager
-		void							initCommand();
-		std::map<std::string, Command*>	getCommandList();
+		void								initCommand();
+		std::map<std::string, Command*>					getCommandList();
 
 		// Channel Manager
+		std::map<std::string, Channel *>				&getChannelList(void);
 		void								addChannel(std::string name);
 		Channel								&getChannel(std::string name);
 		Channel								*getChannelByName(std::string name);
-		std::map<std::string, Channel *>	&getChannelList(void);
+		void								addUserToChannel(User *user, Channel *chan);
 		bool								channelExists(std::string name);
 		void								removeChannel(std::string name);
 

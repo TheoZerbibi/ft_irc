@@ -10,8 +10,14 @@ class	Channel
 		Channel(std::string	name, std::string key = "", bool topicIsOpOnly = false, int maxUser = 0);
 		~Channel();
 
-		void	addUser(User &_user);
-		User	&getUser(std::string _nick);
+		std::string	const &getName() const;
+		void		addUser(User *user);
+		User		*getOper(std::string nick);
+		User		*getUser(std::string nick);
+		std::string	const &getKey() const;
+		int		const &getLimit() const;
+		bool		const &topicIsRestricted() const;
+		void		setKey();
 	private:
 		std::map<std::string, User *>	_operator;
 		std::map<std::string, User *>	_users;

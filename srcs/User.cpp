@@ -127,32 +127,14 @@ bool User::isInvis() const
 	return (_isInvis);
 }
 
-bool User::isChannelOper(Channel *chan) const
+bool	User::isChannelOper(Channel *chan) const
 {
-	(void)chan;
-//	Irc				&ircserv = Irc::getInstance();
 
-//	std::map<int, std::string>::iterator  beg = ircserv.begin();
-//	std::map<int, std::string>::iterator  end = ircserv.end();
-
+	if (chan->getOper(this->_nickname))
+		return (true);
 	return (false);
 }
 
-void Client::readyToRegister()
-{
-	if (this->_nickname != "*" && !this->_username.empty()
-		&& !this->_hostname.empty() && !this->_realname.empty() && this->_isAuth) {
-		Irc	&ircserv = Irc::getInstance();
-
-		ircserv.promoteClient(this);
-
-		ircserv.addReply(Reply(this->_sockFd, RPL_WELCOME(ircserv.getName(), this->_nickname)));
-		ircserv.addReply(Reply(this->_sockFd, RPL_YOURHOST(ircserv.getName(), this->_nickname)));
-		ircserv.addReply(Reply(this->_sockFd, RPL_INFO(ircserv.getName(), this->_nickname)));
-	}
-}
-
-// 
 bool Client::recvData()
 {
 	int	nbyte;

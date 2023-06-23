@@ -24,10 +24,10 @@ class Client {
 		const int		&getSockfd() const;
 		const std::string	&getBuff() const;
 
-		void	setNick(std::string nick);
-		void	setHost(std::string host);
-		void	setUser(std::string user);
-		void	setRealname(std::string realname);
+		void			setNick(std::string nick);
+		void			setHost(std::string host);
+		void			setUser(std::string user);
+		void			setRealname(std::string realname);
 
 		bool	recvData();
 
@@ -39,7 +39,6 @@ class Client {
 
 		//		Registration process : need to implement registrement checking
 		bool const	&isRegistered() const;
-		void		readyToRegister();
 
 	protected:
 		Client();
