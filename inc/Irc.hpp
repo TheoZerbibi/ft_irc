@@ -67,7 +67,7 @@ class	Irc{
 
 	private:
 		// Const & destr
-		Irc();
+
 		Irc(std::string port, std::string passwdm, std::string name);
 
 		// Private Copy and assignement to enforce singularity

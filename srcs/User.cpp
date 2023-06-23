@@ -8,26 +8,41 @@
 //	{
 //	}
 
-Client::Client(int const &sfd)
+Client::Client(int const &sfd):
+_buff(),
+_cmds(),
+_sockFd(sfd),
+_isAuth(false),
+_registered(false),
+_nickname("*"),
+_hostname(),
+_username(),
+_realname()
+{}
+
+Client::Client(Client *cpy):
+_buff(),
+_cmds(),
+_sockFd(cpy->getSockfd()),
+_isAuth(cpy->isAuth()),
+_registered(cpy->isRegistered()),
+_nickname(cpy->getNick()),
+_hostname(cpy->getHost()),
+_username(cpy->getUser()),
+_realname(cpy->getRealname())
 {
-	_sockFd = sfd;
-	this->_isAuth = false;
-	this->_registered = false;
-	this->_nickname = "*";
 }
 
-Client::Client(Client *cpy)
-{
-	this->_sockFd = cpy->getSockfd();
-	this->_nickname = cpy->getNick();
-	this->_username = cpy->getUser();
-	this->_hostname = cpy->getHost();
-	this->_realname = cpy->getRealname();
-	this->_isAuth = cpy->isAuth();
-	this->_registered = cpy->isRegistered();
-}
-
-Client::Client():_sockFd(0)
+Client::Client():
+_buff(),
+_cmds(),
+_sockFd(0),
+_isAuth(false),
+_registered(false),
+_nickname("*"),
+_hostname(),
+_username(),
+_realname()
 {
 }
 
@@ -195,14 +210,19 @@ void	Client::extractCmds()
 	}
 }
 
-User::User(Client *client): Client(*client)
+User::User(Client *client):
+Client(*client),
+_chans(),
+_isOper(false),
+_isInvis(false)
 {
 	this->_registered = true;
-	this->_isOper = false;
-	this->_isInvis = false;
 }
 
-User::User()
+User::User():
+_chans(),
+_isOper(false),
+_isInvis(false)
 {
 }
 

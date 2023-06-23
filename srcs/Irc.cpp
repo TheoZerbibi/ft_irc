@@ -1,9 +1,15 @@
 #include "ft_irc.hpp"
 
-Irc::Irc()
-{}
-
-Irc::Irc(std::string port, std::string passwd, std::string name): _name(name), _pass(passwd)
+Irc::Irc(std::string port, std::string passwd, std::string name):
+command(),
+_channels(),
+_clients(),
+commandList(),
+_net(),
+_name(name),
+_pass(passwd),
+_sockfd(),
+_replies()
 {
 	this->initCommand();
 	this->setupAddrInfo(port);

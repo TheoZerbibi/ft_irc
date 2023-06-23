@@ -23,9 +23,10 @@ jobs:
       run: |
         set -x
         ./ircserv 6667 123 &
-        sleep 1
+        sleep 0.5
         echo "TEST test/Input/registration"
         cat test/Input/registration | netcat localhost 6667 -C -N
+        sleep 0.5
         netcat -z localhost 6667
     - name: make debug
       run: CXX=clang++ make re debug
@@ -33,7 +34,11 @@ jobs:
       run: |
         set -x
         valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./ircserv 6667 123 &
-        sleep 1
+        sleep 0.5
+        valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./ircserv 6667 123 > check_leak &
+        sleep 0.5
+        valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./ircserv 6667 123 > check_leak &
+        sleep 0.5
         echo "TEST test/Input/registration"
         cat test/Input/registration | netcat localhost 6667 -C -N
         netcat -z localhost 6667

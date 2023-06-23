@@ -7,8 +7,7 @@ class User;
 class	Channel
 {
 	public:
-		Channel(std::string	name);
-		Channel();
+		Channel(std::string	name, std::string key = "", bool topicIsOpOnly = false, int maxUser = 0);
 		~Channel();
 
 		void	addUser(User &_user);
@@ -20,5 +19,5 @@ class	Channel
 		std::string			_name;
 		std::string			_key;
 		bool				_topicIsOpOnly;
-		int				_maxUser;
+		int					_maxUser;
 };
