@@ -28,16 +28,16 @@ void	ModeCommand::printUserMode(int fds, User *user, std::string nickname)
 
 void ModeCommand::executeUserMode(int fds, User *user, std::vector<std::string> &args)
 {
-//	Irc 	&ircserv= Irc::getInstance();
+	Irc 	&ircserv= Irc::getInstance();
 	(void)fds, (void)user, (void)args;
 
 
-//	Client		*target = ircserv.getUserByNick();
-//	if (!target)
-//		return (ircserv.addReply(Reply(fds, ERR_NOSUCHNICK(ircserv.getName(), user->getNick()))));
-//	args.erase(args.begin());
-//	if (args.size() == 0)
-//		return (printUserMode(fds, user, target));
+	Client		*target = ircserv.getUserByNick();
+	if (!target)
+		return (ircserv.addReply(Reply(fds, ERR_NOSUCHNICK(ircserv.getName(), user->getNick()))));
+	args.erase(args.begin());
+	if (args.size() == 0)
+		return (printUserMode(fds, user, target));
 //	if (target != user)
 //		return (ircserv.addReply(Reply(fds, ERR_USERSDONTMATCH(ircserv.getName(), user->getNick()))));
 }
@@ -51,7 +51,8 @@ void ModeCommand::executeUserMode(int fds, User *user, std::vector<std::string> 
 //			return (ircserv.addReply(Reply(fds, ERR_USERSDONTMATCH(ircserv.getName(), user->getNick()))));
 //		}
 //	}
-//	
+	
+
 void	ModeCommand::printChannelMode(int fds, User *user, Channel *chan)
 {
 	Irc				&ircserv = Irc::getInstance();

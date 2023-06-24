@@ -9,24 +9,58 @@ _name("JOIN")
 JoinCommand::~JoinCommand(void)
 {}
 
+void	JoinCommand::joinChannels(int fds, User *user, std::vector<std::string> &channels, std::vector<std::string> *chans_key)
+{
+	
+}
+
+void	JoinCommand::replyToSuccefulJoin(int fds, User *user, Channel *chan)
+{
+}
+
+
+//	void JoinCommand::execute(int fds, Client *client)
+//	{
+//		std::string	cmd =	client->getCmds().front();
+//		size_t		pos =	cmd.find(" ");
+//		std::string	arg =	cmd.substr(cmd.find(" ") + 1);
+//		Irc		&ircserv =	Irc::getInstance();
+//	
+//		if (arg == cmd)
+//			arg.clear();
+//		std::cout << "POS = " << pos << std::endl;
+//		std::cout << "[JoinCommand] CMD = " << cmd << std::endl << "ARG = " << arg << std::endl;
+//		if (!arg.empty() && arg[0] == '0')
+//			std::cout << "Leave all channel for " << client->getNick() << std::endl;
+//		else if (arg.empty() || !this->_parseArguments(arg))
+//		{
+//			ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name)));
+//			return ;
+//		}
+//	}
+
 void JoinCommand::execute(int fds, Client *client)
 {
-	std::string	cmd =	client->getCmds().front();
-	size_t		pos =	cmd.find(" ");
-	std::string	arg =	cmd.substr(cmd.find(" ") + 1);
-	Irc		&ircserv =	Irc::getInstance();
+	std::string			cmd =	client->getCmds().front();
+	std::vector<std::string>	args =	splitArguments(cmd);
+	std::vector<std::string>	channels;
+	std::vector<std::string>	chans_key;
+	Irc				&ircserv =	Irc::getInstance();
 
-	if (arg == cmd)
-		arg.clear();
-	std::cout << "POS = " << pos << std::endl;
-	std::cout << "[JoinCommand] CMD = " << cmd << std::endl << "ARG = " << arg << std::endl;
-	if (!arg.empty() && arg[0] == '0')
-		std::cout << "Leave all channel for " << client->getNick() << std::endl;
-	else if (arg.empty() || !this->_parseArguments(arg))
+	if (args.empty())
 	{
 		ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name)));
 		return ;
 	}
+	channels = splitStr(args.at(0), ',');
+	args.erase(args.begin());
+	if (args.empty())
+		return (joinChannels(fds, dynamic_cast<User *>(client), channels, NULL));
+	chans_key = splitStr(args.at(0), ',');
+	joinChannels(fds, dynamic_cast<User *>(client), channels, &chans_key);
+	
+//	if (!args.empty() && arg[0] == '0')
+//		std::cout << "Leave all channel for " << client->getNick() << std::endl;
 }
 
 bool JoinCommand::_parseArguments(std::string str)

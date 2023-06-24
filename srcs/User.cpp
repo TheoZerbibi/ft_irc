@@ -71,6 +71,7 @@ void	Client::setRealname(std::string realname)
 	this->_realname = realname;
 }
 
+
 // Getter
 const std::string	&Client::getNick() const
 {
@@ -102,21 +103,6 @@ const int	&Client::getSockfd() const
 	return (this->_sockFd);
 }
 
-void	Client::setAuth(bool auth)
-{
-	this->_isAuth = auth;
-}
-
-bool const	&Client::isAuth() const
-{
-	return (this->_isAuth);
-}
-
-bool const	&Client::isRegistered() const
-{
-	return(this->_registered);
-}
-
 bool User::isOper() const
 {
 	return (_isOper);
@@ -133,6 +119,22 @@ bool	User::isChannelOper(Channel *chan) const
 	if (chan->getOper(this->_nickname))
 		return (true);
 	return (false);
+}
+
+
+void	Client::setAuth(bool auth)
+{
+	this->_isAuth = auth;
+}
+
+bool const	&Client::isAuth() const
+{
+	return (this->_isAuth);
+}
+
+bool const	&Client::isRegistered() const
+{
+	return(this->_registered);
 }
 
 bool Client::recvData()
@@ -161,6 +163,34 @@ bool Client::recvData()
 	return (SUCCESS);
 }
 
+void	User::joinChannel(std::string channame, std::string key)
+{
+	Irc	&ircserv = Irc::getInstance();
+	Channel	*chan = irc.getChannelByName();
+
+	if (!chan)
+	{
+		chan = ircserv.addChannel(channame);
+		chan.addOper(this);
+	}
+	chan.addUser(this);
+}
+
+void	User::joinChannelsByNames(std::vector<std::string>::iterator beg_chans, std::vector<std::string> end_chans)
+{
+	while (beg_chans != end_chans)
+	{
+		this->joinChannel(*beg_chans);
+		beg_chans++;
+	}
+}
+
+std::deque<std::string> &Client::getCmds()
+{
+	return (this->_cmds);
+}
+
+// Utils
 void	Client::printCmds()
 {
 	std::deque<std::string>::iterator beg = _cmds.begin();
@@ -171,11 +201,6 @@ void	Client::printCmds()
 		std::cout << *beg << std::endl;
 		beg++;
 	}
-}
-
-std::deque<std::string> &Client::getCmds()
-{
-	return (this->_cmds);
 }
 
 void	Client::extractCmds()
@@ -191,6 +216,7 @@ void	Client::extractCmds()
 		_buff.erase(0, pos + sizeof(DELIM) - 1);
 	}
 }
+
 
 User::User(Client *client):
 Client(*client),

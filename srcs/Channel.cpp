@@ -54,7 +54,6 @@ std::string	const &Channel::getKey() const
 	return (this->_key);
 }
 
-
 int		const &Channel::getLimit() const
 {
 	return (this->_maxUser);
@@ -65,6 +64,11 @@ bool		const &Channel::topicIsRestricted() const
 	return (this->_topicIsOpOnly);
 }
 
+std::string	const &Channel::getTopic() const
+{
+	return (this->_topic);
+}
+
 //Setter
 void		Channel::addUser(User *user)
 {
@@ -72,7 +76,18 @@ void		Channel::addUser(User *user)
 	this->_users.insert(user_entry);
 }
 
-//	bool	ft_check_channel_name(std::string &channel)
-//	{
-//		
-//	}
+void		Channel::addOper(User *user)
+{
+	std::pair<std::string, User *> user_entry = std::make_pair<std::string, User*>("@" + user->getNick(), user);
+	this->_operator.insert(user_entry);
+}
+
+void		setTopic(std::string topic)
+{
+	this->_topic = topic;
+}
+
+void		setKey(std::string key)
+{
+	this->_key = key;
+}

@@ -244,13 +244,14 @@ std::map<std::string, Channel *>	&Irc::getChannelList() {
 	return (this->_channels);
 }
 
-void	Irc::addChannel(std::string name)
+Channel	*Irc::addChannel(std::string name)
 {
 	if (this->channelExists(name))
-		return ;
+		return (NULL);
 	Channel	*channel = new Channel(name);
 
 	_channels.insert(std::pair<std::string, Channel *>(name, channel));
+	return (channel);
 }
 
 bool	Irc::channelExists(std::string name)

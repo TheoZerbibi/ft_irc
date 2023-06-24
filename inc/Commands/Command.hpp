@@ -9,7 +9,7 @@
 
 # define ERR_NEEDMOREPARAMS(serv, nickname, command) (":" + serv + " 461 " + nickname + " " + command + " :Not enough parameters.\r\n")
 # define ERR_ALREADYREGISTERED(serv, nickname) (":" + serv + " 462 " + nickname + " :You may not reregister.\r\n")
-
+# define RPL_TOPIC(serv, nick, chan, topic) (":" + serv + " 332 " + nick + " " + chan + " :" + topic)
 
 class Client;
 class Reply;
@@ -26,6 +26,7 @@ public:
 	virtual void execute(int fds, Client *client) = 0;
 };
 
+std::vector<std::string> splitStr(const std::string str, const char sep);
 std::vector<std::string> splitArguments(const std::string &cmd);
 
 #endif

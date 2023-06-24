@@ -14,8 +14,7 @@ void Command::execute(int fds, Client *client)
 	std::cout << this->_name << std::endl;
 }
 
-
-std::vector<std::string> splitArguments(const std::string &cmd)
+std::vector<std::string> splitStr(const std::string &str, const char sep)
 {
 	std::vector<std::string> tokens;
 	std::string		tmp;
@@ -28,10 +27,17 @@ std::vector<std::string> splitArguments(const std::string &cmd)
 			tokens.push_back(cmd.substr(start + 1));
 			return (tokens);
 		}
-		end = cmd.find(' ', start);     // if not find end == npos, it's ok
+		end = cmd.find(sep, start);     // if not find end == npos, it's ok
 		tokens.push_back(cmd.substr(start, end - start)); //it will simply substr until end of cmd
-		start = cmd.find_first_not_of(' ', end);
+		start = cmd.find_first_not_of(sep, end);
 	}
+	return (tokens);
+}
+
+std::vector<std::string> splitArguments(const std::string &cmd)
+{
+	std::vector<std::string> tokens = splitStr(cmd, ' ');
+	tokens.erase(tokens.begin());
 	return (tokens);
 }
 

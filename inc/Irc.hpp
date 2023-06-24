@@ -14,7 +14,6 @@
 #include	"TopicCommand.hpp"
 #include	"UserCommand.hpp"
 
-
 class Command;
 class Client;
 class User;
@@ -40,31 +39,30 @@ class	Irc{
 		void			addClient(int const &sfd);
 
 		//Getter
-		const	int					&getSocket() const;
-		const	struct addrinfo		*getAi() const;
-		const	std::string			&getPass() const;
-		std::map<int, Client *>		&getClients();
-		void						addReply(Reply reply);
-		const	std::string			&getName() const;
-		const Client 				*getUserByNick(std::string const nick) const;
-		void					promoteClient(Client *client);
+		const	int		&getSocket() const;
+		const	struct addrinfo	*getAi() const;
+		const	std::string	&getPass() const;
+		std::map<int, Client *>	&getClients();
+		void			addReply(Reply reply);
+		const	std::string	&getName() const;
+		const Client 		*getUserByNick(std::string const nick) const;
+		void			promoteClient(Client *client);
 
 		int	computeFdMax() const;
 		int	main_loop();
 
-
 		// Command manager
-		void								initCommand();
-		std::map<std::string, Command*>					getCommandList();
+		void					initCommand();
+		std::map<std::string, Command*>		getCommandList();
 
 		// Channel Manager
-		std::map<std::string, Channel *>				&getChannelList(void);
-		void								addChannel(std::string name);
-		Channel								&getChannel(std::string name);
-		Channel								*getChannelByName(std::string name);
-		void								addUserToChannel(User *user, Channel *chan);
-		bool								channelExists(std::string name);
-		void								removeChannel(std::string name);
+		std::map<std::string, Channel *>	&getChannelList(void);
+		Channel					&getChannel(std::string name);
+		Channel					*getChannelByName(std::string name);
+		Channel					*addChannel(std::string name);
+		void					addUserToChannel(User *user, Channel *chan);
+		bool					channelExists(std::string name);
+		void					removeChannel(std::string name);
 
 	private:
 		// Const & destr
