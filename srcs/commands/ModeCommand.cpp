@@ -64,13 +64,14 @@ void	applyUserMode(int fds, User *user, Client *target, std::string &modstr, std
 				user.setInvis(mod_mode);
 		else if (*beg == 'o')
 		{
-			if	(
-				user.setInvis(mod_mode);
+			if	(user->isOper())
+				target->setInvis(mod_mode);
 		}
 		else
 		{
-
+		ircserv.addReply(Reply(fds, ERR_UMODEUNKNOWNFLAG(ircserv.getName(), user->getNick(), chan->getName(), modestring, mode_value)));
 		}
+		++beg;
 	}
 }
 
@@ -92,7 +93,6 @@ void	ModeCommand::printChannelMode(int fds, User *user, Channel *chan)
 	std::string			mode_value = "";
 	std::stringstream		ss;
 
-
 	const std::string			key_value = chan->getKey();
 	const int				user_limit = chan->getLimit();
 	ss << user_limit;
@@ -106,9 +106,7 @@ void	ModeCommand::printChannelMode(int fds, User *user, Channel *chan)
 			mode_value += "<key>";
 	}
 	if (chan->topicIsRestricted())
-	{
 		modestring += "t";
-	}
 	if ((user_limit))
 	{
 		modestring += "l";
@@ -119,13 +117,17 @@ void	ModeCommand::printChannelMode(int fds, User *user, Channel *chan)
 	return (ircserv.addReply(Reply(fds, RPL_CHANNELMODIS(ircserv.getName(), user->getNick(), chan->getName(), modestring, mode_value))));
 }
 
+void	ModeCommand::applyChannelMode(int fds, User *user, Channel *chan, std::string &modstr, std::vector<std::string> *modvalue)
+{
+	if (!user->isChannelOper(chan))
+		return (ircserv.addReply(Reply(fds, ERR_CHANOPRIVSNEEDED(ircserv.getName(), user->getNick(), chan->getName()))));
+}
+
 void	ModeCommand::executeChannelMode(int fds, User *user, std::vector<std::string> &args)
 {
 	Irc				&ircserv = Irc::getInstance();
 	Channel 			*chan = ircserv.getChannelByName(args.at(0));
-	//	int				value_i = 1;
-	//	int				mode_modifier = ADDING;
-
+	std::string			modstr;
 
 	if (!chan)
 		return (ircserv.addReply(Reply(fds, ERR_NOSUCHCHANNEL(ircserv.getName(), user->getNick(), args.at(0)))));
@@ -133,8 +135,11 @@ void	ModeCommand::executeChannelMode(int fds, User *user, std::vector<std::strin
 	args.erase(args.begin());
 	if (args.size() == 0)
 		return (printChannelMode(fds, user, chan));
-	if (!user->isChannelOper(chan))
-		return (ircserv.addReply(Reply(fds, ERR_CHANOPRIVSNEEDED(ircserv.getName(), user->getNick(), chan->getName()))));
+	modstr = args.at(0);
+	args.erase(args.begin());
+	if (args.empty())
+		return (this->applyChannelMode(fds, user, modstr, NULL));
+	this->applyChannelMode(fds, user, modestr, &args);
 }
 
 void ModeCommand::execute(int fds, Client *client)

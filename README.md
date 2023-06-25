@@ -41,7 +41,6 @@ Things to do are :
 - htons / htonl : convert value given to a valid value for network using. Network value can only be big-endian style.
 - ntohl / ntohs : Convert value Network-style representation to system representation (Big or Little endian)
 
-
 - in_addr_t inet_addr(char \*addr) : Convert string representation of ipv4 address to binary representation for further usage.
 - char \*inet_ntoa(struct \*in_addr in) : Convert struct adress to string representation for printing (buffer returned is static stored so further call will overwrite it).
 
@@ -55,10 +54,16 @@ Things to do are :
 ## Requirement
 
 - todo next
- - [ ] Promotion des clients en user
  - [ ] Join
  - [ ] mode
  - [ ] privmsg
+
+- [ ] merge reply to same client to conform to subject : src/main.cpp:31
+- [ ] change read to recv
+- [ ] change sendReplies to use erase functionnality
+
+
+- [ ] mode only manage channel mode (i is for invitationnal only, and o is promote user to a channel operator)
 
 
 - Server / client socket connection

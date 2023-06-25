@@ -17,7 +17,7 @@ class	Channel
 
 		std::string	const &getTopic() const ;
 		std::string	const &getKey() const;
-		int			const &getLimit() const;
+		int		const &getLimit() const;
 		bool		const &topicIsRestricted() const;
 
 		//setter

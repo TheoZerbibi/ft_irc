@@ -25,9 +25,9 @@ int	Irc::receive_client_data(Client *user)
 		fd = user->getSockfd();
 		if (FD_ISSET(fd, &fds[READ]))
 		{
-			if (user->isRegistered())
-				Ctype = "User";
-			std::cout << Ctype;
+//			if (user->isRegistered())
+//				Ctype = "User";
+//			std::cout << Ctype;
 			std::cout << "--- > New message from fd : " << fd <<  std::endl;
 			if (user->recvData() <= 0)
 			{
@@ -43,9 +43,6 @@ int	Irc::data_reception_handler()
 {
 	std::map<int, Client*>::iterator	beg = this->getClients().begin();
 	std::map<int, Client*>::iterator	end = this->getClients().end();
-
-//	std::map<int, User>::iterator	beg = this->getUsers().begin();
-//	std::map<int, User>::iterator	end = this->getUsers().end();
 
 	while (beg != end)
 	{

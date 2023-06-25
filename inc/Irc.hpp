@@ -89,7 +89,7 @@ class	Irc{
 		std::string			_name;
 		std::string			_pass;
 		std::string			_oper_pass;
-		int					_sockfd;
+		int				_sockfd;
 
 		// Receiving data
 		int			accept_client();

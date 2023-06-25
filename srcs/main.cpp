@@ -28,7 +28,7 @@ int	Irc::main_loop()
 		else if (ret)
 			this->manage_incoming_connection();
 		this->manageCommand();
-
+//		this->mergeReply();
 		this->fds[SEND] = this->fds[MASTER];
 		ret = select(fdMax, NULL, &(this->fds[SEND]), NULL, &ttd);
 		if (ret == -1)

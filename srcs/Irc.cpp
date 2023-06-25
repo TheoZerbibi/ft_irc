@@ -12,9 +12,9 @@ _pass(passwd),
 _sockfd(),
 _replies()
 {
-	this->initCommand();
 	this->setupAddrInfo(port);
 	this->setupFds();
+	this->initCommand();
 	std::cout << "PASS : " << this->_pass << std::endl;
 }
 
@@ -28,7 +28,6 @@ Irc::~Irc()
 	this->_removeAllCommands();
 
 	std::cout << "Exiting" << std::endl;
-
 }
 
 void	Irc::setupAddrInfo(std::string port)
@@ -128,10 +127,7 @@ const User		*Irc::getUserByNick(std::string const nick) const
 
 			std::cout << "MODE : found a user named " << beg->second->getNick() << "|| searching for nick = " << nick << std::endl;
 			if (beg->second->getNick() == nick)
-			{
-
 				return (dynamic_cast<const User *>(beg->second));
-			}
 		}
 		++beg;
 	}
@@ -187,7 +183,6 @@ void	Irc::printAi() const
 }
 
 // Client Management
-
 int	Irc::computeFdMax(void) const
 {
 	int	fdmax = this->getSocket();
@@ -205,11 +200,12 @@ int	Irc::computeFdMax(void) const
 	return (fdmax + 1);
 }
 
-void Irc::addReply(Reply reply)
+void	Irc::addReply(Reply reply)
 {
 	this->_replies.push_back(reply);
 }
 
+// erase return next element after the erased one
 int	Irc::sendReplies(void)
 {
 	std::vector<Reply>::iterator	beg = _replies.begin();
