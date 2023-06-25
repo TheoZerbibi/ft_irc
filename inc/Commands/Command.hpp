@@ -26,7 +26,7 @@ public:
 	virtual void execute(int fds, Client *client) = 0;
 };
 
-std::vector<std::string> splitStr(const std::string str, const char sep);
+std::vector<std::string> splitStr(const std::string &cmd, const char sep);
 std::vector<std::string> splitArguments(const std::string &cmd);
 
 #endif

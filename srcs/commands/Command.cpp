@@ -14,10 +14,10 @@ void Command::execute(int fds, Client *client)
 	std::cout << this->_name << std::endl;
 }
 
-std::vector<std::string> splitStr(const std::string &str, const char sep)
+std::vector<std::string> splitStr(const std::string &cmd, const char sep)
 {
 	std::vector<std::string> tokens;
-	std::string		tmp;
+	std::string				tmp;
 	std::size_t start = 0, end = 0;
 
 	while (start != std::string::npos)

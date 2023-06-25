@@ -29,15 +29,14 @@ void	ModeCommand::printUserMode(int fds, User *user, std::string nickname)
 void ModeCommand::executeUserMode(int fds, User *user, std::vector<std::string> &args)
 {
 	Irc 	&ircserv= Irc::getInstance();
-	(void)fds, (void)user, (void)args;
 
 
-	Client		*target = ircserv.getUserByNick();
+	Client		*target = NULL;//ircserv.getUserByNick();
 	if (!target)
 		return (ircserv.addReply(Reply(fds, ERR_NOSUCHNICK(ircserv.getName(), user->getNick()))));
 	args.erase(args.begin());
 	if (args.size() == 0)
-		return (printUserMode(fds, user, target));
+		return (printUserMode(fds, user, target->getNick()));
 //	if (target != user)
 //		return (ircserv.addReply(Reply(fds, ERR_USERSDONTMATCH(ircserv.getName(), user->getNick()))));
 }

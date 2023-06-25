@@ -4,6 +4,7 @@
 Channel::Channel(std::string name, std::string key, bool topicIsOpOnly, int maxUser) :
 _operator(),
 _users(),
+_topic(),
 _name(name),
 _key(key),
 _topicIsOpOnly(topicIsOpOnly),
@@ -82,12 +83,12 @@ void		Channel::addOper(User *user)
 	this->_operator.insert(user_entry);
 }
 
-void		setTopic(std::string topic)
+void		Channel::setTopic(std::string topic)
 {
 	this->_topic = topic;
 }
 
-void		setKey(std::string key)
+void		Channel::setKey(std::string key)
 {
 	this->_key = key;
 }
