@@ -97,12 +97,6 @@ int Irc::manageCommand()
 				beg->second->getCmds().pop_front();
 				continue ;
 			}
-
-			if (cmd == "CAP") {
-				beg->second->getCmds().pop_front();
-				if (beg->second->getCmds().size() > 0)
-					cmd = beg->second->getCmds().front();
-			}
 			cmd = getCommand(cmd);
 			if (cmd.empty()) {
 				beg->second->getCmds().pop_front();

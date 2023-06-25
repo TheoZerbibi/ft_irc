@@ -3,6 +3,7 @@
 
 #include	"Command.hpp"
 #include 	"AwayCommand.hpp"
+#include	"CapCommand.hpp"
 #include	"InviteCommand.hpp"
 #include	"JoinCommand.hpp"
 #include	"KickCommand.hpp"
@@ -11,6 +12,7 @@
 #include	"PartCommand.hpp"
 #include	"PassCommand.hpp"
 #include	"PrivMsgCommand.hpp"
+#include	"QuitCommand.hpp"
 #include	"TopicCommand.hpp"
 #include	"UserCommand.hpp"
 

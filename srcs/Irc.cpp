@@ -64,6 +64,7 @@ void	Irc::setupFds()
 void	Irc::initCommand() {
 	std::cout << "┏ Command Register" << std::endl;
 	this->commandList.insert(std::pair<std::string, Command*>("AWAY", new AwayCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("CAP", new CapCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("INVITE", new InviteCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("JOIN", new JoinCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("KICK", new KickCommand()));
@@ -72,6 +73,7 @@ void	Irc::initCommand() {
 	this->commandList.insert(std::pair<std::string, Command*>("PART", new PartCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("PASS", new PassCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("PRIVMSG", new PrivMsgCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("QUIT", new QuitCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("TOPIC", new TopicCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("USER", new UserCommand()));
 }
