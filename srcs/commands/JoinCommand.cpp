@@ -9,13 +9,21 @@ _name("JOIN")
 JoinCommand::~JoinCommand(void)
 {}
 
-void	JoinCommand::joinChannels(int fds, User *user, std::vector<std::string> &channels, std::vector<std::string> *chans_key)
+void
+	JoinCommand::joinChannels(int fds, User *user, std::vector<std::string> &channels, std::vector<std::string> *chans_key)
 {
-	
+	(void)fds;
+	(void)user;
+	(void)channels;
+	(void)chans_key;
 }
 
-void	JoinCommand::replyToSuccefulJoin(int fds, User *user, Channel *chan)
+void
+	JoinCommand::replyToSuccefulJoin(int fds, User &user, Channel &chan)
 {
+	(void)fds;
+	(void)user;
+	(void)chan;
 }
 
 //	void JoinCommand::execute(int fds, Client *client)
@@ -57,6 +65,9 @@ void JoinCommand::execute(int fds, Client *client)
 		return (joinChannels(fds, dynamic_cast<User *>(client), channels, NULL));
 	chans_key = splitStr(args.at(0), ',');
 	joinChannels(fds, dynamic_cast<User *>(client), channels, &chans_key);
+	
+//	if (!args.empty() && arg[0] == '0')
+//		std::cout << "Leave all channel for " << client->getNick() << std::endl;
 }
 
 bool JoinCommand::_parseArguments(std::string str)

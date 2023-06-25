@@ -71,8 +71,8 @@ class User : public Client{
 		virtual ~User();
 
 		//	const int &getFd() const; // Other methods and data members as needed
-		void	joinChannel(Channel *chan);
-		void	joinChannelsByNames(std::vector<std::string>::iterator beg_chans, std::vector<std::string> end_chans);
+		void	joinChannel(std::string channame, std::string key);
+		void	joinChannelsByNames(std::vector<std::string>::iterator beg_chans, std::vector<std::string>::iterator end_chans);
 
 		bool	isOper() const;
 		bool	isInvis() const;

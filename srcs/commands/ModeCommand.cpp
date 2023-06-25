@@ -28,14 +28,14 @@ void	ModeCommand::printUserMode(int fds, User *user, std::string nickname)
 void ModeCommand::executeUserMode(int fds, User *user, std::vector<std::string> &args)
 {
 	Irc 	&ircserv= Irc::getInstance();
-	(void)fds, (void)user, (void)args;
 
-	Client		*target = ircserv.getUserByNick();
+	const User		*target = ircserv.getUserByNick(args.at(0));
+
 	if (!target)
 		return (ircserv.addReply(Reply(fds, ERR_NOSUCHNICK(ircserv.getName(), user->getNick()))));
 	args.erase(args.begin());
 	if (args.size() == 0)
-		return (printUserMode(fds, user, target));
+		return (printUserMode(fds, user, target->getNick()));
 //	if (target != user)
 //		return (ircserv.addReply(Reply(fds, ERR_USERSDONTMATCH(ircserv.getName(), user->getNick()))));
 }
@@ -110,9 +110,8 @@ void ModeCommand::execute(int fds, Client *client)
 	Irc				&ircserv = Irc::getInstance();
 
 	std::cout << "MODE: Starting" << std::endl;
-	if (args.size() == 1)
+	if (args.empty())
 		return (ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name))));
-	args.erase(args.begin());
 	std::cout << "MODE: Enough param" << std::endl;
 	if (args.at(0)[0] == '#')
 	{

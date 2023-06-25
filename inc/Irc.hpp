@@ -45,7 +45,7 @@ class	Irc{
 		std::map<int, Client *>	&getClients();
 		void			addReply(Reply reply);
 		const	std::string	&getName() const;
-		const Client 		*getUserByNick(std::string const nick) const;
+		const User 		*getUserByNick(std::string const nick) const;
 		void			promoteClient(Client *client);
 
 		int	computeFdMax() const;
