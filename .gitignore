@@ -6,6 +6,8 @@ a.out
 objs/
 *.o
 *.d
+simple-tcp-proxy
+output
 
 #vim file
 .*.sw*
