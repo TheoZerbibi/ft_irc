@@ -7,6 +7,8 @@
 # include <map>
 # include <utility>
 
+# define MODES "oklit"
+
 # define ERR_NEEDMOREPARAMS(serv, nickname, command) (":" + serv + " 461 " + nickname + " " + command + " :Not enough parameters.\r\n")
 
 # define ERR_ALREADYREGISTERED(serv, nickname) (":" + serv + " 462 " + nickname + " :You may not reregister.\r\n")
@@ -34,5 +36,7 @@ public:
 
 std::vector<std::string> splitStr(const std::string &cmd, const char sep);
 std::vector<std::string> splitArguments(const std::string &cmd);
+
+size_t			is_mode(char c);
 
 #endif

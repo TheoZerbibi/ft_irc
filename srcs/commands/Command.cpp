@@ -41,6 +41,14 @@ std::vector<std::string> splitArguments(const std::string &cmd)
 	return (tokens);
 }
 
+size_t			is_mode(char c)
+{
+	std::string modes = MODES;
+	size_t		pos = modes.find(c);
+
+	return ((pos == std::string::npos ? -1 : pos));
+}
+
 // Probleme !
 // tokenize apres une occurence de :
 // Ignore totalement le dernier token lorsqu'il n'est pas suivie par au moins un espace

@@ -26,13 +26,24 @@ class	Channel
 		void		setTopic(std::string topic);
 		void		setKey(std::string key);
 
+		int		setMode(int mode, int modemod, User *user, std::vector<std::string> &value);
 	private:
 		std::map<std::string, User *>	_operator;
 		std::map<std::string, User *>	_users;
+
+
+		int				setKey(int mod, User *user, std::string	*value);
+		int				setMaxUser(int mod, User *user, std::string *value);
+		int				setOper(int mod, User *ser, std::string *value);
+		int				setTopicMode(int mod, User *user);
+		int				setInvis(int mod, User *user);
+
+
 
 		std::string			_topic;
 		std::string			_name;
 		std::string			_key;
 		bool				_topicIsOpOnly;
-		int					_maxUser;
+		bool				_isInvis;
+		int				_maxUser;
 };

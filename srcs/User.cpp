@@ -182,14 +182,14 @@ void	User::joinChannel(std::string chanName, std::string key)
 	chan->addUser(this);
 }
 
-void	User::joinChannelsByNames(std::vector<std::string>::iterator beg_chans, std::vector<std::string>::iterator end_chans)
-{
-	while (beg_chans != end_chans)
-	{
-		this->joinChannel(*beg_chans, "");
-		beg_chans++;
-	}
-}
+//	void	User::joinChannelsByNames(std::vector<std::string>::iterator beg_chans, std::vector<std::string>::iterator end_chans)
+//	{
+//		while (beg_chans != end_chans)
+//		{
+//			this->joinChannel(*beg_chans, "");
+//			beg_chans++;
+//		}
+//	}
 
 std::deque<std::string> &Client::getCmds()
 {

@@ -8,6 +8,7 @@ _topic(),
 _name(name),
 _key(key),
 _topicIsOpOnly(topicIsOpOnly),
+_isInvis(false),
 _maxUser(maxUser)
 {
 }

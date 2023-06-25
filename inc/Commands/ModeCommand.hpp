@@ -17,7 +17,11 @@
 #define ERR_USERSDONTMATCHVIEW(server, user) (":" + server + " 502 " + user + " :Cant view mode for other users\r\n")
 #define ERR_USERSDONTMATCH(server, user) (":" + server + " 502 " + user + " :Cant change mode for other users\r\n")
 
-#define ERR_UMODEUNKNOWNFLAG(server, user) (":" + server " 501 " + user + " :Unkown MODE flag")
+#define ERR_UMODEUNKNOWNFLAG(server, user) (":" + server + " 501 " + user + " :Unkown MODE flag")
+
+#define ERR_MODEUNKNOWN(server, user, modechar) (":" + server + " 472 " + modechar + " :is unknown mode char to me")
+
+//#define ERR_INVALIDMODEPARAM(server, user,)
 
 
 #define REMOVING 0
@@ -31,7 +35,8 @@ class ModeCommand : public Command
 
 		void	executeUserMode(int fds, User *user, std::vector<std::string> &args);
 		void	printUserMode(int fds, User *user, std::string nickname);
-		void	applyUserMode(int fds, User *user, Client *target, std::string &modstr, std::vector<std::string> &modvalue);
+		void	applyUserMode(int fds, User *user, Client *target, std::string &modstr, std::vector<std::string> *modvalue);
+		void	applyChannelMode(int fds, User *user, Channel *chan, std::string &modstr, std::vector<std::string> *modvalue);
 		void	executeChannelMode(int fds, User *user, std::vector<std::string> &args);
 		void	printChannelMode(int fds, User *user, Channel *chan);
 	public:
