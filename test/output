@@ -16,7 +16,7 @@ CAP END
 
 =============== read 302 bytes from SERVER (5) ===================
 :*.freenode.net CAP * LS :account-notify account-tag away-notify batch cap-notify chghost draft/relaymsg echo-message extended-join inspircd.org/poison inspircd.org/standard-replies invite-notify labeled-response message-tags multi-prefix sasl server-time setname userhost-in-names 
-PING :ipapLq{LzA
+PING :kv\_O`iw?B
 
 =============== read 133 bytes from SERVER (5) ===================
 :*.freenode.net NOTICE munin :*** Could not resolve your hostname: Nameserver failure; using your IP address (62.210.32.4) instead.
@@ -25,7 +25,7 @@ PING :ipapLq{LzA
 :*.freenode.net NOTICE munin :*** Ident lookup timed out, using ~iguidado instead.
 
 =============== read 17 bytes from CLIENT (4) ==================
-PONG :ipapLq{LzA
+PONG :kv\_O`iw?B
 
 =============== read 4096 bytes from SERVER (5) ===================
 :*.freenode.net 001 munin :Welcome to the freenode IRC Network munin!~iguidado@62.210.32.4
@@ -36,13 +36,13 @@ PONG :ipapLq{LzA
 :*.freenode.net 005 munin EXTBAN=,ACNOQRSTUacjmnpruwz HOSTLEN=64 INVEX=I KEYLEN=32 KICKLEN=255 LINELEN=512 MAXLIST=I:100,X:100,b:100,e:100,w:100 MAXTARGETS=20 MODES=20 MONITOR=30 NAMELEN=128 NAMESX NETWORK=freenode :are supported by this server
 :*.freenode.net 005 munin NICKLEN=30 PREFIX=(Yohv)!@%+ REMOVE SAFELIST SECURELIST=60 SILENCE=32 STATUSMSG=!@%+ TOPICLEN=390 UHNAMES USERIP USERLEN=10 USERMODES=,,s,BDHILRSTWcdghikorwxz VBANLIST :are supported by this server
 :*.freenode.net 005 munin VLIST=b WATCH=32 WHOX :are supported by this server
-:*.freenode.net 251 munin :There are 19 users and 7726 invisible on 9 servers
+:*.freenode.net 251 munin :There are 19 users and 7675 invisible on 9 servers
 :*.freenode.net 252 munin 5 :operator(s) online
-:*.freenode.net 253 munin 21 :unknown connections
-:*.freenode.net 254 munin 11637 :channels formed
-:*.freenode.net 255 munin :I have 6201 clients and 1 servers
-:*.freenode.net 265 munin :Current local users: 6201  Max: 7273
-:*.freenode.net 266 munin :Current global users: 7745  Max: 10916
+:*.freenode.net 253 munin 19 :unknown connections
+:*.freenode.net 254 munin 11651 :channels formed
+:*.freenode.net 255 munin :I have 6105 clients and 1 servers
+:*.freenode.net 265 munin :Current local users: 6105  Max: 7273
+:*.freenode.net 266 munin :Current global users: 7694  Max: 10916
 :*.freenode.net 375 munin :*.freenode.net message of the day
 :*.freenode.net 372 munin :  Hello, World!
 :*.freenode.net 372 munin : 
@@ -92,19 +92,40 @@ e of the day.
 =============== read 87 bytes from SERVER (5) ===================
 :NickServ!services@services.freenode.net NOTICE munin :Nick munin isn't registered.
 
-=============== read 21 bytes from CLIENT (4) ==================
-JOIN #test1234 hello
+=============== read 15 bytes from CLIENT (4) ==================
+JOIN #test1234
 
-=============== read 166 bytes from SERVER (5) ===================
+=============== read 325 bytes from SERVER (5) ===================
 :munin!~iguidado@freenode-adn.s9b.6vib9m.IP JOIN :#test1234
-:*.freenode.net 353 munin = #test1234 :@munin
+:*.freenode.net 332 munin #test1234 :"testing sum things"
+:*.freenode.net 333 munin #test1234 hello_!~iguidado@freenode-adn.s9b.6vib9m.IP :1687650363
+:*.freenode.net 353 munin = #test1234 :@hello_ munin
 :*.freenode.net 366 munin #test1234 :End of /NAMES list.
 
-=============== read 62 bytes from SERVER (5) ===================
-:hello_!~iguidado@freenode-adn.s9b.6vib9m.IP JOIN :#test1234
+=============== read 15 bytes from CLIENT (4) ==================
+JOIN #test1234
+
+=============== read 1 bytes from CLIENT (4) ==================
+
+
+=============== read 16 bytes from CLIENT (4) ==================
+JOIN #test12345
+
+=============== read 169 bytes from SERVER (5) ===================
+:munin!~iguidado@freenode-adn.s9b.6vib9m.IP JOIN :#test12345
+:*.freenode.net 353 munin = #test12345 :@munin
+:*.freenode.net 366 munin #test12345 :End of /NAMES list.
+
+=============== read 15 bytes from CLIENT (4) ==================
+JOIN #test1234
+
+=============== read 1 bytes from CLIENT (4) ==================
+
 
 =============== read 22 bytes from SERVER (5) ===================
 PING :*.freenode.net
 
-Cleaning up...
-Cleaning up...
+=============== read 74 bytes from SERVER (5) ===================
+ERROR :Closing link: (~iguidado@62.210.32.4) [Ping timeout: 120 seconds]
+
+exiting

@@ -25,12 +25,10 @@ void	ModeCommand::printUserMode(int fds, User *user, std::string nickname)
 	ircserv.addReply(Reply(fds, RPL_UMODEIS(ircserv.getName(), nickname, modes)));
 }
 
-
 void ModeCommand::executeUserMode(int fds, User *user, std::vector<std::string> &args)
 {
 	Irc 	&ircserv= Irc::getInstance();
 	(void)fds, (void)user, (void)args;
-
 
 	Client		*target = ircserv.getUserByNick();
 	if (!target)

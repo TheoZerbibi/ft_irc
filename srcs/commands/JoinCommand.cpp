@@ -18,7 +18,6 @@ void	JoinCommand::replyToSuccefulJoin(int fds, User *user, Channel *chan)
 {
 }
 
-
 //	void JoinCommand::execute(int fds, Client *client)
 //	{
 //		std::string	cmd =	client->getCmds().front();
@@ -58,9 +57,6 @@ void JoinCommand::execute(int fds, Client *client)
 		return (joinChannels(fds, dynamic_cast<User *>(client), channels, NULL));
 	chans_key = splitStr(args.at(0), ',');
 	joinChannels(fds, dynamic_cast<User *>(client), channels, &chans_key);
-	
-//	if (!args.empty() && arg[0] == '0')
-//		std::cout << "Leave all channel for " << client->getNick() << std::endl;
 }
 
 bool JoinCommand::_parseArguments(std::string str)
@@ -78,10 +74,12 @@ bool JoinCommand::_parseArguments(std::string str)
 	}
 	return (false);
 }
+
 /*
 ** #foo -> Public chan - Anyone can join.
 ** &foo -> Private chan - Only invited users can join.
 */
+
 bool JoinCommand::_isJoinable(const std::string &channel)
 {
 	if (channel.empty())

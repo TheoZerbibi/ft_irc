@@ -24,12 +24,12 @@ class Client {
 		const int		&getSockfd() const;
 		const std::string	&getBuff() const;
 
-		void			setNick(std::string nick);
-		void			setHost(std::string host);
-		void			setUser(std::string user);
-		void			setRealname(std::string realname);
+		void		setNick(std::string nick);
+		void		setHost(std::string host);
+		void		setUser(std::string user);
+		void		setRealname(std::string realname);
 
-		bool	recvData();
+		bool			recvData();
 
 		std::deque<std::string>	&getCmds();
 
@@ -48,8 +48,8 @@ class Client {
 		std::deque<std::string>		_cmds;
 
 		int			_sockFd;
-		bool		_isAuth;
-		bool		_registered;
+		bool			_isAuth;
+		bool			_registered;
   
 		// Needed to register users
 		std::string	_nickname;   
@@ -57,8 +57,8 @@ class Client {
 		std::string	_username;
 		std::string	_realname;
 
-		void					extractCmds();
-		void					printCmds();
+		void		extractCmds();
+		void		printCmds();
 //	private:
 	//	int		connection_time; //if current_time - connection_time > 2s timeout client
 };
@@ -82,6 +82,7 @@ class User : public Client{
 		std::vector<Channel *>	_chans;
 		bool			_isOper;
 		bool			_isInvis;
+		bool	isChannelUser(Channel *chan) const;
 };
 
 // User 

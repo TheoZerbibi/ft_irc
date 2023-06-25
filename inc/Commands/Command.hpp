@@ -8,8 +8,14 @@
 # include <utility>
 
 # define ERR_NEEDMOREPARAMS(serv, nickname, command) (":" + serv + " 461 " + nickname + " " + command + " :Not enough parameters.\r\n")
+
 # define ERR_ALREADYREGISTERED(serv, nickname) (":" + serv + " 462 " + nickname + " :You may not reregister.\r\n")
+
 # define RPL_TOPIC(serv, nick, chan, topic) (":" + serv + " 332 " + nick + " " + chan + " :" + topic)
+
+# define RPL_TOPICWHOTIME(serv, user, channel, nick, setat) (":" + serv +  + " 333 " + user + " " + channel + " " + nick + " " + setat)
+
+# define RPL_NAMREPLY(serv, user, symbol, channel, names) (":" + serv + " 353 " + symbol + " " + channel + " :" + names)
 
 class Client;
 class Reply;

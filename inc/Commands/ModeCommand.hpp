@@ -27,15 +27,16 @@ class ModeCommand : public Command
 {
 	private:
 		std::string _name;
-	public:
-		ModeCommand();
-		virtual ~ModeCommand();
-		void execute(int fds, Client *client);
+
 		void	executeUserMode(int fds, User *user, std::vector<std::string> &args);
 		void	printUserMode(int fds, User *user, std::string nickname);
 		void	changeUserMode(int fds, User *user, Client *target, std::vector<std::string> &args);
 		void	executeChannelMode(int fds, User *user, std::vector<std::string> &args);
 		void	printChannelMode(int fds, User *user, Channel *chan);
+	public:
+		ModeCommand();
+		virtual ~ModeCommand();
+		void execute(int fds, Client *client);
 };
 
 #endif

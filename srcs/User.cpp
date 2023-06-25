@@ -115,12 +115,17 @@ bool User::isInvis() const
 
 bool	User::isChannelOper(Channel *chan) const
 {
-
 	if (chan->getOper(this->_nickname))
 		return (true);
 	return (false);
 }
 
+bool	User::isChannelUser(Channel *chan) const
+{
+	if (chan->getUser(this->_nickname))
+		return (true);
+	return (false);
+}
 
 void	Client::setAuth(bool auth)
 {

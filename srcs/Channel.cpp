@@ -15,13 +15,11 @@ Channel::~Channel()
 {
 }
 
-
 //Getter
 std::string const &Channel::getName() const
 {
 	return (this->_name);
 }
-
 
 User	*Channel::getOper(std::string nick)
 {
