@@ -6,7 +6,7 @@
 # include "Channel.hpp"
 # include <sstream>
 
-#define RPL_UMODEIS(server, user, modes) (":" + server + "221 "+ user + " :+" + modes)
+#define RPL_UMODEIS(server, user, modes) (":" + server + " 221 "+ user + " :+" + modes)
 #define RPL_CHANNELMODIS(server, user, channel, modes, modsarg) (":" + server + " 324 " + user + " " + channel + " " + modes + " " + modsarg)
 
 #define ERR_NOSUCHNICK(server, user) (":" + server + " 401 " + user + " :No such nick")
@@ -18,8 +18,8 @@
 #define ERR_USERSDONTMATCH(server, user) (":" + server + " 502 " + user + " :Cant change mode for other users\r\n")
 
 
+#define REMOVING 0
 #define ADDING 1
-#define REMOVING 2
 
 
 
@@ -30,7 +30,7 @@ class ModeCommand : public Command
 
 		void	executeUserMode(int fds, User *user, std::vector<std::string> &args);
 		void	printUserMode(int fds, User *user, std::string nickname);
-		void	changeUserMode(int fds, User *user, Client *target, std::vector<std::string> &args);
+		void	applyUserMode(int fds, User *user, Client *target, std::string &modstr, std::vector<std::string> &modvalue);
 		void	executeChannelMode(int fds, User *user, std::vector<std::string> &args);
 		void	printChannelMode(int fds, User *user, Channel *chan);
 	public:

@@ -30,14 +30,48 @@ void ModeCommand::executeUserMode(int fds, User *user, std::vector<std::string> 
 	Irc 	&ircserv= Irc::getInstance();
 
 	const User		*target = ircserv.getUserByNick(args.at(0));
+	std::string		modestr;
 
 	if (!target)
 		return (ircserv.addReply(Reply(fds, ERR_NOSUCHNICK(ircserv.getName(), user->getNick()))));
 	args.erase(args.begin());
 	if (args.size() == 0)
 		return (printUserMode(fds, user, target->getNick()));
-//	if (target != user)
-//		return (ircserv.addReply(Reply(fds, ERR_USERSDONTMATCH(ircserv.getName(), user->getNick()))));
+	if (target != user)
+		return (ircserv.addReply(Reply(fds, ERR_USERSDONTMATCH(ircserv.getName(), user->getNick()))));
+	args.erase(args.begin());
+	modestr = args.at(0);
+	std::cout << "modestr = " << modestr << std::endl;
+	args.erase(args.begin());
+}
+
+
+void	applyUserMode(int fds, User *user, Client *target, std::string &modstr, std::vector<std::string> &modvalue)
+{
+	Irc 	&ircserv= Irc::getInstance();
+	int	mod_mode = ADDING;
+
+	std::vector<std::string>::const_iterator  beg = modstr.begin();
+	std::vector<std::string>::const_iterator  end = modstr.end();
+
+	while (beg != end)
+	{
+		if (*beg == '+')
+			mod_mode = ADDING;
+		else if (*beg == '-')
+			mod_mode = REMOVING;
+		else if (*beg == 'i')
+				user.setInvis(mod_mode);
+		else if (*beg == 'o')
+		{
+			if	(
+				user.setInvis(mod_mode);
+		}
+		else
+		{
+
+		}
+	}
 }
 
 //	void ModeCommand::changeUserMode(int fds, User *user, Client *target, std::vector<std::string> &args)

@@ -7,6 +7,7 @@ _clients(),
 commandList(),
 _net(),
 _name(name),
+_oper_pass("sesame"),
 _pass(passwd),
 _sockfd(),
 _replies()

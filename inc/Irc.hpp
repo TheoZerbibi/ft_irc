@@ -66,7 +66,6 @@ class	Irc{
 
 	private:
 		// Const & destr
-
 		Irc(std::string port, std::string passwdm, std::string name);
 
 		// Private Copy and assignement to enforce singularity
@@ -87,6 +86,7 @@ class	Irc{
 		struct	addrinfo	*_net;
 		std::string			_name;
 		std::string			_pass;
+		std::string			_oper_pass;
 		int					_sockfd;
 
 		// Receiving data

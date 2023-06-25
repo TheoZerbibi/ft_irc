@@ -16,6 +16,7 @@ void
 	(void)user;
 	(void)channels;
 	(void)chans_key;
+//	std::vector<std::string>::iterator	beg_channel;
 }
 
 void
