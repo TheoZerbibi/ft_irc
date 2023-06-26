@@ -168,18 +168,9 @@ bool Client::recvData()
 	return (SUCCESS);
 }
 
-void	User::joinChannel(std::string chanName, std::string key)
+void	User::joinChannel(Channel *channel)
 {
-	Irc	&ircserv = Irc::getInstance();
-	Channel	*chan = ircserv.getChannelByName(chanName);
-	(void)key;
-
-	if (!chan)
-	{
-		chan = ircserv.addChannel(chanName);
-		chan->addOper(this);
-	}
-	chan->addUser(this);
+	channel->addUser(this);
 }
 
 //	void	User::joinChannelsByNames(std::vector<std::string>::iterator beg_chans, std::vector<std::string>::iterator end_chans)

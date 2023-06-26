@@ -116,7 +116,7 @@ std::map<int, Client*>	&Irc::getClients()
 	return ((this->_clients));
 }
 
-const User		*Irc::getUserByNick(std::string const nick) const
+User		*Irc::getUserByNick(std::string const nick) const
 {
 	std::map<int, Client *>::const_iterator	beg = _clients.begin();
 	std::map<int, Client *>::const_iterator	end = _clients.end();
@@ -128,7 +128,7 @@ const User		*Irc::getUserByNick(std::string const nick) const
 
 			std::cout << "MODE : found a user named " << beg->second->getNick() << "|| searching for nick = " << nick << std::endl;
 			if (beg->second->getNick() == nick)
-				return (dynamic_cast<const User *>(beg->second));
+				return (dynamic_cast<User *>(beg->second));
 		}
 		++beg;
 	}
