@@ -5,6 +5,11 @@
 # include "User.hpp"
 # include "Channel.hpp"
 
+#define RPL_JOIN(server, userID, channel) (":" + server + " " + userID + " JOIN :#" +  channel + "\r\n")
+#define ERR_BANNEDFROMCHAN(server, client, channel) (":" + server + " 474 " + client + " #" + channel + " :Cannot join channel (+b)\r\n")
+#define ERR_BADCHANMASK(server, client, channel) (":" + server + " 476 " + client + " #" + channel + " :Bad Channel Mask\r\n")
+# define ERR_BADCHANNELKEY(server, client, channel) (":" + server + " 475 " + client + " #" + channel + " :Cannot join channel (+k)\r\n")
+
 
 class User;
 class Channel;
@@ -14,16 +19,14 @@ class JoinCommand : public Command
 	private:
 		std::string _name;
 
-		bool	_isJoinable(const std::string &channel);
-		bool	_parseArguments(std::string str);
-		void	joinChannels(int fds, User *user, std::vector<std::string> &channels, std::vector<std::string> *chans_key);
+		std::map<std::string , std::string>	_parseCommand(int fds, Client *client, std::string str);
+		bool								_chanIsValid(const std::string &name);
+		bool								_passwordIsValid(std::string &password);
+
 	public:
 		JoinCommand();
 		virtual ~JoinCommand();
 		void execute(int fds, Client *client);
-
-		//	void	joinChannels(int fds, User &user, std::string &channels, std::string &chans_key);
-		void	replyToSuccefulJoin(int fds, User &user, Channel &chan);
 };
 
 #endif
