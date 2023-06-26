@@ -33,6 +33,8 @@
 
 #define		SEND_BUFF_LEN 1024
 
+# define user_id(serv, nick, user) (":" + nick + "!" + user + "@" + serv)
+
 
 class	SyscallError: public std::exception
 {

@@ -3,7 +3,7 @@
 
 #define	DELIM "\r\n"
 
-# define RPL_WELCOME(server, nickname) (":" + server + " 001 " + nickname + " :Welcome to the Internet Relay Network\r\n")
+# define RPL_WELCOME(server, userID) (":" + server + " 001 " + " :Welcome to the Internet Relay Network" + userID + "\r\n")
 # define RPL_YOURHOST(server,nickname) (":" + server + " 002 " + nickname + " :Your host is " + server + " (localhost)\r\n")
 # define RPL_INFO(server,nickname) (":" + server + " 003 " + nickname + " :This server was created by iguidado & thzeribi.\r\n")
 
@@ -75,6 +75,7 @@ class User : public Client{
 		std::vector<Channel *>::iterator	getChannel(Channel *chan);
 	//	Channel					*getChannel(std::string chan);
 		bool					isOnChannel(Channel *chan);
+		void		joinChannel(Channel *channel);
 
 		void	setInvis(bool status);
 		void	setOper(bool status);

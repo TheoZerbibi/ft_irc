@@ -6,12 +6,12 @@
 
 class InviteCommand : public Command
 {
-private:
-	std::string _name;
-public:
-	InviteCommand();
-	virtual ~InviteCommand();
-	void execute(int fds, Client *client);
+	private:
+		std::string _name;
+	public:
+		InviteCommand();
+		virtual ~InviteCommand();
+		void execute(int fds, Client *client);
 };
 
 #endif

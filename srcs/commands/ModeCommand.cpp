@@ -113,7 +113,7 @@ void	ModeCommand::printChannelMode(int fds, User *user, Channel *chan)
 			mode_value += " ";
 		mode_value += ss.str();
 	}
-	if (chan->isInvis())
+	if (chan->isInvit())
 	{
 		modestring += "i";
 	}
@@ -190,7 +190,7 @@ void	ModeCommand::applyChannelMode(User *user, Channel *chan, std::string &modst
 void	ModeCommand::executeChannelMode(int fds, User *user, std::vector<std::string> &args)
 {
 	Irc				&ircserv = Irc::getInstance();
-	Channel 			*chan = ircserv.getChannelByName(args.at(0));
+	Channel 			*chan = ircserv.getChannel(args.at(0));
 	std::string			modstr;
 
 	if (!chan)

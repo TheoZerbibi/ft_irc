@@ -47,7 +47,7 @@ class	Irc{
 		const	std::string	&getName() const;
 		const	std::string	&getPass() const;
 		std::map<int, Client *>	&getClients();
-		const User 		*getUserByNick(std::string const nick) const;
+		User	 		*getUserByNick(std::string const nick) const;
 
 		int	computeFdMax() const;
 		int	main_loop();
@@ -60,7 +60,6 @@ class	Irc{
 
 		// Channel Manager
 		std::map<std::string, Channel *>	&getChannelList(void);
-	//	Channel					&getChannel(std::string name);
 		Channel					*getChannel(std::string name);
 		Channel					*addChannel(std::string name);
 		void					addUserToChannel(User *user, Channel *chan);

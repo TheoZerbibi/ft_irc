@@ -6,12 +6,12 @@
 
 class TopicCommand : public Command
 {
-private:
-	std::string _name;
-public:
-	TopicCommand();
-	virtual ~TopicCommand();
-	void execute(int fds, Client *client);
+	private:
+		std::string _name;
+	public:
+		TopicCommand();
+		virtual ~TopicCommand();
+		void execute(int fds, Client *client);
 };
 
 #endif

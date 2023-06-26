@@ -76,12 +76,21 @@ void	Client::setRealname(std::string realname)
 
 std::vector<Channel *>::iterator	User::getChannel(Channel *chan)
 {
-	return (_channels.find(chan));
+	std::vector<Channel *>::iterator	beg = _chans.begin();
+	std::vector<Channel *>::iterator	end = _chans.end();
+
+	while (beg != end)
+	{
+		if (*beg == chan)
+			return (beg);
+		beg++;
+	}
+	return (end);
 }
 
 bool					User::isOnChannel(Channel *chan)
 {
-	if (getChannel(chan) == _channels.end())
+	if (getChannel(chan) == _chans.end())
 		return (false);
 	return (true);
 }
@@ -179,6 +188,17 @@ bool Client::recvData()
 	this->printCmds();
 	std::cout << "Buffer = \'" << this->_buff << "\'" << std::endl;
 	return (SUCCESS);
+}
+
+//	void	User::joinChannel(std::string channame, std::string key)
+//	{
+//	
+//	}
+
+
+void	User::joinChannel(Channel *chan)
+{
+	this->_chans.push_back(chan);
 }
 
 void	User::joinChannel(std::string chanName, std::string key)
