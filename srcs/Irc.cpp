@@ -71,6 +71,7 @@ void	Irc::initCommand() {
 	this->commandList.insert(std::pair<std::string, Command*>("NICK", new NickCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("PART", new PartCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("PASS", new PassCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("PING", new PingCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("PRIVMSG", new PrivMsgCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("QUIT", new QuitCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("TOPIC", new TopicCommand()));

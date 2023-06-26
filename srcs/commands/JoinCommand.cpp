@@ -50,7 +50,7 @@ void
 void JoinCommand::execute(int fds, Client *client)
 {
 	std::string			cmd =	client->getCmds().front();
-	std::vector<std::string>	args =	splitArguments(cmd);
+	std::vector<std::string>	args =	this->splitArguments(cmd);
 	std::vector<std::string>	channels;
 	std::vector<std::string>	chans_key;
 	Irc				&ircserv =	Irc::getInstance();
@@ -62,6 +62,7 @@ void JoinCommand::execute(int fds, Client *client)
 	}
 	channels = splitStr(args.at(0), ',');
 	args.erase(args.begin());
+	// std::cout << "ARGS = " << args.at(0) << std::endl;
 	if (args.empty())
 		return (joinChannels(fds, dynamic_cast<User *>(client), channels, NULL));
 	chans_key = splitStr(args.at(0), ',');

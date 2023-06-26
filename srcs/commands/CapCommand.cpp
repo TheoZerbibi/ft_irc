@@ -1,7 +1,7 @@
 #include "CapCommand.hpp"
 
 CapCommand::CapCommand(void) :
-_name("AWAY")
+_name("CAP")
 {
 	std::cout << "┣⮕ CapCommand." << std::endl;
 }

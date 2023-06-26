@@ -32,10 +32,11 @@ public:
 	Command();
 	virtual ~Command();
 	virtual void execute(int fds, Client *client) = 0;
+	
+	std::vector<std::string> splitStr(const std::string &cmd, const char sep);
+	std::vector<std::string> splitArguments(const std::string &cmd);
 };
 
-std::vector<std::string> splitStr(const std::string &cmd, const char sep);
-std::vector<std::string> splitArguments(const std::string &cmd);
 
 size_t			is_mode(char c);
 

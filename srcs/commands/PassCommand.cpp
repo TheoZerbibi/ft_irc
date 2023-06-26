@@ -12,7 +12,7 @@ PassCommand::~PassCommand(void)
 void PassCommand::execute(int fds, Client *client)
 {
 	std::string			cmd = client->getCmds().front();
-	std::vector<std::string> 	args = splitArguments(cmd);
+	std::vector<std::string> 	args = this->splitArguments(cmd);
 	Irc				&ircserv = Irc::getInstance();
 	std::string			pass;
 

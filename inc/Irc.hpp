@@ -11,6 +11,7 @@
 #include	"NickCommand.hpp"
 #include	"PartCommand.hpp"
 #include	"PassCommand.hpp"
+#include	"PingCommand.hpp"
 #include	"PrivMsgCommand.hpp"
 #include	"QuitCommand.hpp"
 #include	"TopicCommand.hpp"
