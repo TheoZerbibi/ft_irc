@@ -73,6 +73,19 @@ void	Client::setRealname(std::string realname)
 
 
 // Getter
+
+std::vector<Channel *>::iterator	User::getChannel(Channel *chan)
+{
+	return (_channels.find(chan));
+}
+
+bool					User::isOnChannel(Channel *chan)
+{
+	if (getChannel(chan) == _channels.end())
+		return (false);
+	return (true);
+}
+
 const std::string	&Client::getNick() const
 {
 	return (this->_nickname);
@@ -171,7 +184,7 @@ bool Client::recvData()
 void	User::joinChannel(std::string chanName, std::string key)
 {
 	Irc	&ircserv = Irc::getInstance();
-	Channel	*chan = ircserv.getChannelByName(chanName);
+	Channel	*chan = ircserv.getChannel(chanName);
 	(void)key;
 
 	if (!chan)

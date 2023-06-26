@@ -8,7 +8,7 @@ _topic(),
 _name(name),
 _key(key),
 _topicIsOpOnly(topicIsOpOnly),
-_isInvis(false),
+_isInvit(false),
 _maxUser(maxUser)
 {
 }
@@ -69,9 +69,9 @@ std::string	const &Channel::getTopic() const
 	return (this->_topic);
 }
 
-bool		const &Channel::isInvis() const
+bool		const &Channel::isInvit() const
 {
-	return (this->_isInvis);
+	return (this->_isInvit);
 }
 
 //Setter
@@ -102,9 +102,9 @@ void		Channel::setMaxUser(int value)
 	this->_maxUser = value;
 }
 
-void		Channel::setInvis(bool value)
+void		Channel::setInvit(bool value)
 {
-	this->_isInvis = value;
+	this->_isInvit = value;
 }
 
 void		Channel::removeOper(User *user)

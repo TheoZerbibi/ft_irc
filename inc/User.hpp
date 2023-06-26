@@ -72,6 +72,9 @@ class User : public Client{
 
 		//	const int &getFd() const; // Other methods and data members as needed
 		void	joinChannel(std::string channame, std::string key);
+		std::vector<Channel *>::iterator	getChannel(Channel *chan);
+	//	Channel					*getChannel(std::string chan);
+		bool					isOnChannel(Channel *chan);
 
 		void	setInvis(bool status);
 		void	setOper(bool status);
@@ -84,7 +87,7 @@ class User : public Client{
 		std::vector<Channel *>	_chans;
 		bool			_isOper;
 		bool			_isInvis;
-		bool	isChannelUser(Channel *chan) const;
+		bool			isChannelUser(Channel *chan) const;
 };
 
 // User 

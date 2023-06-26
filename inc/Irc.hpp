@@ -44,12 +44,10 @@ class	Irc{
 		//Getter
 		const	int		&getSocket() const;
 		const	struct addrinfo	*getAi() const;
+		const	std::string	&getName() const;
 		const	std::string	&getPass() const;
 		std::map<int, Client *>	&getClients();
-		void			addReply(Reply reply);
-		const	std::string	&getName() const;
 		const User 		*getUserByNick(std::string const nick) const;
-		void			promoteClient(Client *client);
 
 		int	computeFdMax() const;
 		int	main_loop();
@@ -57,15 +55,20 @@ class	Irc{
 		// Command manager
 		void					initCommand();
 		std::map<std::string, Command*>		getCommandList();
+		// Reply
+		void			addReply(Reply reply);
 
 		// Channel Manager
 		std::map<std::string, Channel *>	&getChannelList(void);
-		Channel					&getChannel(std::string name);
-		Channel					*getChannelByName(std::string name);
+	//	Channel					&getChannel(std::string name);
+		Channel					*getChannel(std::string name);
 		Channel					*addChannel(std::string name);
 		void					addUserToChannel(User *user, Channel *chan);
 		bool					channelExists(std::string name);
 		void					removeChannel(std::string name);
+
+		//Client Manager
+		void			promoteClient(Client *client);
 
 	private:
 		// Const & destr

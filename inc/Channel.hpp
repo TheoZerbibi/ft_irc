@@ -19,7 +19,7 @@ class	Channel
 		std::string	const &getKey() const;
 		int		const &getLimit() const;
 		bool		const &topicIsRestricted() const;
-		bool		const &isInvis() const;
+		bool		const &isInvit() const;
 
 		//setter
 		void		addUser(User *user);
@@ -35,7 +35,7 @@ class	Channel
 		void		setMaxUser(int value);
 		void		setOper(std::string nick, bool value);
 		void		setTopicMode(bool value);
-		void		setInvis(bool value);
+		void		setInvit(bool value);
 	private:
 		std::map<std::string, User *>	_operator;
 		std::map<std::string, User *>	_users;
@@ -44,6 +44,6 @@ class	Channel
 		std::string			_name;
 		std::string			_key;
 		bool				_topicIsOpOnly;
-		bool				_isInvis;
+		bool				_isInvit;
 		int				_maxUser;
 };

@@ -4,6 +4,38 @@
 # include "ft_irc.hpp"
 
 
+# define RPL_TOPICWHOTIME(serv, user, channel, nick, setat) (":" + serv +  + " 333 " + user + " " + channel + " " + nick + " " + setat)
+
+# define RPL_NAMREPLY(serv, user, symbol, channel, names) (":" + serv + " 353 " + symbol + " " + channel + " :" + names)
+
+#define RPL_UMODEIS(server, user, modes) (":" + server + " 221 "+ user + " :+" + modes)
+
+#define	RPL_NOTOPIC(server, user, channel) (":" + server + " 331 " + user + " " + channel + " :No topic is set")
+
+# define RPL_TOPIC(serv, nick, chan, topic) (":" + serv + " 332 " + nick + " " + chan + " :" + topic)
+
+#define RPL_CHANNELMODIS(server, user, channel, modes, modsarg) (":" + server + " 324 " + user + " " + channel + " " + modes + " " + modsarg)
+
+#define ERR_NOSUCHNICK(server, user) (":" + server + " 401 " + user + " :No such user")
+
+#define ERR_NOSUCHCHANNEL(server, user, channel) (":" + server + " 403 " + user + " " + channel + " :No such channel")
+
+#define ERR_NOTONCHANNEL(server, user, channel) (":" + server + " 442 " + user + " " + channel + " :You're not on that channel")
+
+# define ERR_NEEDMOREPARAMS(serv, nickname, command) (":" + serv + " 461 " + nickname + " " + command + " :Not enough parameters.\r\n")
+
+# define ERR_ALREADYREGISTERED(serv, nickname) (":" + serv + " 462 " + nickname + " :You may not reregister.\r\n")
+
+#define ERR_MODEUNKNOWN(server, user, modechar) (":" + server + " 472 " + modechar + " :is unknown mode char to me")
+
+#define ERR_CHANOPRIVSNEEDED(server, user, channel) ( ":" + server + " 482 " + user + " " + channel + " :You'not channel operator")
+
+#define ERR_USERSDONTMATCHVIEW(server, user) (":" + server + " 502 " + user + " :Cant view mode for other users\r\n")
+#define ERR_USERSDONTMATCH(server, user) (":" + server + " 502 " + user + " :Cant change mode for other users\r\n")
+
+#define ERR_UMODEUNKNOWNFLAG(server, user) (":" + server + " 501 " + user + " :Unkown MODE flag")
+
+
 class Reply
 {
 	public:

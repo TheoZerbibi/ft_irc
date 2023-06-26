@@ -268,7 +268,7 @@ bool	Irc::channelExists(std::string name)
 	return (false);
 }
 
-Channel	*Irc::getChannelByName(std::string name)
+Channel	*Irc::getChannel(std::string name)
 {
 	if (!this->channelExists(name))
 		return NULL;
