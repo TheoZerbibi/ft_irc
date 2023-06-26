@@ -71,11 +71,15 @@ class User : public Client{
 		virtual ~User();
 
 		//	const int &getFd() const; // Other methods and data members as needed
-		void	joinChannel(std::string channame, std::string key);
+		
+		// Channel management
+		void					addChannel(Channel *chan);
+		void					joinChannel(std::string channame, std::string key);
+		void					quitChannel(Channel *chan);
+
 		std::vector<Channel *>::iterator	getChannel(Channel *chan);
 	//	Channel					*getChannel(std::string chan);
 		bool					isOnChannel(Channel *chan);
-		void		joinChannel(Channel *channel);
 
 		void	setInvis(bool status);
 		void	setOper(bool status);

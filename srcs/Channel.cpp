@@ -85,6 +85,7 @@ void		Channel::addOper(User *user)
 {
 	std::pair<std::string, User *> user_entry = std::make_pair<std::string, User*>("@" + user->getNick(), user);
 	this->_operator.insert(user_entry);
+	user->addChannel(this);
 }
 
 void		Channel::setTopic(std::string topic)

@@ -84,7 +84,7 @@ void
 			}
 			if (it->second != "x")
 				channel->setKey(it->second);
-			user->joinChannel(channel);
+			user->addChannel(channel);
 			channel->addOper(user);
 			ircserv.addReply(Reply(fds, RPL_JOIN(ircserv.getName(), client->getNick(), channel->getName())));
 			ircserv.addReply(Reply(fds, RPL_TOPIC(ircserv.getName(), client->getNick(), client->getUser(), channel->getTopic())));

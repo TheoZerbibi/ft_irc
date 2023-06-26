@@ -196,7 +196,7 @@ bool Client::recvData()
 //	}
 
 
-void	User::joinChannel(Channel *chan)
+void	User::addChannel(Channel *chan)
 {
 	this->_chans.push_back(chan);
 }
@@ -214,6 +214,13 @@ void	User::joinChannel(std::string chanName, std::string key)
 	}
 	chan->addUser(this);
 }
+
+void	User::quitChannel(Channel *chan)
+{
+	chan->removeOper(this);
+	chan->removeUser(this);
+}
+
 
 //	void	User::joinChannelsByNames(std::vector<std::string>::iterator beg_chans, std::vector<std::string>::iterator end_chans)
 //	{
