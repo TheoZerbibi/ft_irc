@@ -53,6 +53,10 @@ void	ModeCommand::appChannelMode(char mode, int modmode, Channel *chan, std::str
 	std::cout << "MODE : Applying mode" << std::endl;
 		if (mode == 'i')
 			chan->setInvit(modmode);
+		else if (mode == 'o')
+			chan->setOper(arg, modmode);
+		else if (mode == 't')
+			chan->setTopicMode(modmode);
 		else if (mode == 'k')
 		{
 			if (modmode == REMOVING)
@@ -67,14 +71,6 @@ void	ModeCommand::appChannelMode(char mode, int modmode, Channel *chan, std::str
 			else
 				chan->setMaxUser(std::atoi(arg->c_str()));
 		}
-		else if (mode == 't')
-		{
-			chan->setTopicMode(modmode);
-		}
-//		else if (mode == 'o')
-//	{
-//			chan->setOper
-//	}
 }
 
 int	ModeCommand::checkOperMode(int fds, User *user, std::string &target)
@@ -280,5 +276,5 @@ int			ModeCommand::checkMode(char mode, bool modmode, User *user, Channel *chan,
 //			return (ircserv.addReply(Reply(fds, ERR_USERSDONTMATCH(ircserv.getName(), user->getNick()))));
 //		}
 //	}
-	
+
 

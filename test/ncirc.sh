@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./proxy/simple-tcp-proxy 1025 | tee output &
+#./proxy/simple-tcp-proxy 1025 | tee output &
 PID=$?
 
 function exit_properly()
@@ -42,7 +42,7 @@ fi
 sleep 1
 
 
-nc localhost 1025 < pipo &> /dev/null &
+nc localhost 1024 < pipo & #> /dev/null &
 
 #autopong &
 
