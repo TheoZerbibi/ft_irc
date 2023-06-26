@@ -69,6 +69,11 @@ std::string	const &Channel::getTopic() const
 	return (this->_topic);
 }
 
+bool		const &Channel::isInvis() const
+{
+	return (this->_isInvis);
+}
+
 //Setter
 void		Channel::addUser(User *user)
 {
@@ -90,4 +95,77 @@ void		Channel::setTopic(std::string topic)
 void		Channel::setKey(std::string key)
 {
 	this->_key = key;
+}
+
+void		Channel::setMaxUser(int value)
+{
+	this->_maxUser = value;
+}
+
+void		Channel::setInvis(bool value)
+{
+	this->_isInvis = value;
+}
+
+void		Channel::removeOper(User *user)
+{
+	std::string nick = user->getNick();
+	this->removeOper(nick);
+}
+
+void		Channel::removeOper(std::string nick)
+{
+	std::map<std::string, User *>::iterator  found = _operator.find('@' + nick);
+	std::map<std::string, User *>::iterator  end = _operator.end();
+	
+	if (found != end)
+	{
+		_operator.erase(found);
+	}
+}
+
+void		Channel::removeUser(User *user)
+{
+	std::string	nick = user->getNick();
+	this->removeUser(nick);
+}
+
+void		Channel::removeUser(std::string nick)
+{
+	std::map<std::string, User *>::iterator  found = _users.find(nick);
+	std::map<std::string, User *>::iterator  end = _users.end();
+	
+	if (found != end)
+	{
+		_users.erase(found);
+	}
+}
+
+void		Channel::setOper(std::string nick, bool value)
+{
+	User *user;
+
+	if (value)
+	{
+		user = this->getUser(nick);
+		if (user)
+		{
+			removeUser(user);
+			addOper(user);
+		}
+	}
+	else
+	{
+		user = this->getOper(nick);
+		if (user)
+		{
+			removeOper(user);
+			addUser(user);
+		}
+	}
+}
+
+void		Channel::setTopicMode(bool value)
+{
+	this->_topicIsOpOnly = value;
 }

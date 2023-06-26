@@ -40,11 +40,3 @@ std::vector<std::string> Command::splitArguments(const std::string &cmd)
 	tokens.erase(tokens.begin());
 	return (tokens);
 }
-
-size_t			is_mode(char c)
-{
-	std::string modes = MODES;
-	size_t		pos = modes.find(c);
-
-	return ((pos == std::string::npos ? -1 : pos));
-}
