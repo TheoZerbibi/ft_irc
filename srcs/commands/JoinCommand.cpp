@@ -51,8 +51,19 @@ std::map<std::string , std::string>
 	return (channels);
 }
 
-void
-	JoinCommand::_joinChannel(int fds, Client *client, std::map<std::string , std::string> channels)
+void	JoinCommand::rplJoin(int fds, User *user, Channel *chan)
+{
+	Irc &ircserv = Irc::getInstance();
+
+	ircserv.addReply(Reply(fds, RPL_JOIN(ircserv.getName(), user->getNick(), chan->getName())));
+	ircserv.addReply(Reply(fds, RPL_TOPIC(ircserv.getName(), user->getNick(), user->getUser(), chan->getTopic())));
+	 ircserv.addReply(Reply(fds, RPL_NAMREPLY(ircserv.getName(), user->getNick(), chan->getName(), chan->getType(), chan->getUsersNick())));
+	 ircserv.addReply(Reply(fds, RPL_ENDOFNAMES(ircserv.getName(), user->getNick(), chan->getName())));
+
+}
+
+	void
+JoinCommand::_joinChannel(int fds, Client *client, std::map<std::string , std::string> channels)
 {
 	Irc			&ircserv =	Irc::getInstance();
 	User		*user = ircserv.getUserByNick(client->getNick());
@@ -61,21 +72,21 @@ void
 	(void)client;
 	if (user == NULL)
 		return ;
-	for (std::map<std::string , std::string>::iterator it = channels.begin(); it != channels.end(); it++) {
+	for (std::map<std::string , std::string>::iterator it = channels.begin(); it != channels.end(); it++)
+	{
 		std::cout << "Joining " << it->first << " with key " << it->second << std::endl;
-		if (ircserv.channelExists(it->first)) {
+		if (ircserv.channelExists(it->first))
+		{
 			Channel *channel = ircserv.getChannel(it->first);
 			std::cout << "Channel" << channel->getName() << " exists" << std::endl;
-	
-			// if (channel->isInvited(client->getNick())) {
-			// 	channel->addUser(client->getNick(), client->getUsername(), client->getHostname(), client->getRealname());
-			// 	ircserv.addReply(Reply(fds, RPL_TOPIC(ircserv.getName(), client->getNick(), channel->getName(), channel->getTopic())));
-			// 	ircserv.addReply(Reply(fds, RPL_NAMREPLY(ircserv.getName(), client->getNick(), channel->getName(), channel->getUsers())));
-			// 	ircserv.addReply(Reply(fds, RPL_ENDOFNAMES(ircserv.getName(), client->getNick(), channel->getName())));
-			// } else {
-			// 	ircserv.addReply(Reply(fds, ERR_INVITEONLYCHAN(ircserv.getName(), client->getNick(), channel->getName())));
-			// }
-		} else {
+			if (channel->isInvit() && !user->isInvited(channel))
+				return (ircserv.addReply(Reply(fds, ERR_INVITEONLYCHAN(ircserv.getName(), client->getNick(), channel->getName()))));
+			user->addChannel(channel);
+			channel->addUser(user);
+			rplJoin(fds, user, channel);
+		}
+		else
+		{
 			std::cout << "Channel" << it->first << " doesn't exists" << std::endl;
 			Channel *channel = ircserv.addChannel(it->first);
 			if (channel == NULL) {
@@ -86,10 +97,7 @@ void
 				channel->setKey(it->second);
 			user->addChannel(channel);
 			channel->addOper(user);
-			ircserv.addReply(Reply(fds, RPL_JOIN(ircserv.getName(), client->getNick(), channel->getName())));
-			ircserv.addReply(Reply(fds, RPL_TOPIC(ircserv.getName(), client->getNick(), client->getUser(), channel->getTopic())));
-			// ircserv.addReply(Reply(fds, RPL_NAMREPLY(ircserv.getName(), client->getNick(), channel->getName(), channel->getUsers())));
-			// ircserv.addReply(Reply(fds, RPL_ENDOFNAMES(ircserv.getName(), client->getNick(), channel->getName())));
+			rplJoin(fds, user, channel);
 		}
 	}
 }
@@ -139,11 +147,11 @@ void JoinCommand::execute(int fds, Client *client)
 	else
 	{
 		try {
-		channels = parseArg(args);
-					if (!channels.empty())
-						this->_joinChannel(fds, client, channels);
-				} catch (std::exception &e) {
-					return ;
+			channels = parseArg(args);
+			if (!channels.empty())
+				this->_joinChannel(fds, client, channels);
+		} catch (std::exception &e) {
+			return ;
 		}
 	}
 }

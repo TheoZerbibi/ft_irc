@@ -13,9 +13,14 @@ int	Reply::getClientFd(void) const
 	return (this->_clientFd);
 }
 
-std::string	Reply::getMessage(void) const
+std::string	const &Reply::getMessage(void) const
 {
 	return (this->_message);
+}
+
+void		Reply::setMessage(std::string mess)
+{
+	this->_message = mess;
 }
 
 int	Reply::send()

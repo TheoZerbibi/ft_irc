@@ -6,6 +6,8 @@
 # define RPL_WELCOME(server, userID) (":" + server + " 001 " + " :Welcome to the Internet Relay Network" + userID + "\r\n")
 # define RPL_YOURHOST(server,nickname) (":" + server + " 002 " + nickname + " :Your host is " + server + " (localhost)\r\n")
 # define RPL_INFO(server,nickname) (":" + server + " 003 " + nickname + " :This server was created by iguidado & thzeribi.\r\n")
+# define RPL_INVITELIST(server, user, channel) (":" + server + " 336 " + user + " " + channel)
+# define RPL_ENDOFINVITELIST(server, client) (":" + server + " 337 " + client + " :End of /INVITE list")
 
 class Irc;
 class Channel;
@@ -16,14 +18,15 @@ class Client {
 		Client(Client *cpy);
 		virtual ~Client();
 
+		//Getter
 		const std::string	&getNick() const;
 		const std::string	&getHost() const;
 		const std::string	&getUser() const;
 		const std::string	&getRealname() const;
-
 		const int		&getSockfd() const;
 		const std::string	&getBuff() const;
-
+		
+		//Setter
 		void		setNick(std::string nick);
 		void		setHost(std::string host);
 		void		setUser(std::string user);
@@ -37,7 +40,7 @@ class Client {
 		void		setAuth(bool auth);
 		bool const	&isAuth() const;
 
-		//		Registration process : need to implement registrement checking
+		//		Registration process
 		bool const	&isRegistered() const;
 
 	protected:
@@ -70,29 +73,37 @@ class User : public Client{
 		User(Client *client);
 		virtual ~User();
 
-		//	const int &getFd() const; // Other methods and data members as needed
-		
+		//getter
+		bool	isOper() const;
+		bool	isInvis() const;
+		bool	isChannelOper(Channel *chan) const;
+		bool	isInvited(Channel *chan);
+
+
+
+
 		// Channel management
 		void					addChannel(Channel *chan);
 		void					joinChannel(std::string channame, std::string key);
 		void					quitChannel(Channel *chan);
-
 		std::vector<Channel *>::iterator	getChannel(Channel *chan);
-	//	Channel					*getChannel(std::string chan);
-		bool					isOnChannel(Channel *chan);
+		void	inviteOnChannel(Channel *chan);
+
+		//Utils
+		void	printInvited();
+
+		bool		isOnChannel(Channel *chan);
 
 		void	setInvis(bool status);
 		void	setOper(bool status);
-
-		bool	isOper() const;
-		bool	isInvis() const;
-		bool	isChannelOper(Channel *chan) const;
 	private:
 		User();
 		std::vector<Channel *>	_chans;
+		std::vector<Channel *>	_invited;
 		bool			_isOper;
 		bool			_isInvis;
 		bool			isChannelUser(Channel *chan) const;
+
 };
 
 // User 

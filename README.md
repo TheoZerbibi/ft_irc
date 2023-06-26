@@ -54,12 +54,18 @@ Things to do are :
 ## Requirement
 
 - todo next
- - [ ] Join
+ - [+] Join
+	- [ ] Multiple Join
+	- [ ] Key restriction
+	- [ ] Multiple Join w/ multiple key
  - [ ] mode
+	- [x] o : Change Oper 
+	- [ ] i : invite Only 
+	- [ ] k : Key on channel
+	- [ ] l : Limit User on Channel
+	- [ ] t : Restrict topic modification
  - [ ] privmsg
 
-- [ ] merge reply to same client to conform to subject : src/main.cpp:31
-- [ ] change read to recv
 - [ ] change sendReplies to use erase functionnality
 
 
@@ -70,27 +76,25 @@ Things to do are :
 
 ---
  - [x] Accept multiple client and register them under a user id
- - [ ] promotion of registered client as user
- - [ ] 
+ - [x] promotion of registered client as user
 
 ---
 - Command management
 
  - [x] Get command on user-sockfd (Should use a buffer for eachuser)
  - [x] Parse command
- - [ ] Implementation of cmd
+ - [x] Implementation of cmd
   
 
 ---
 - Signal handling
 
- - [ ] CTRL+C : still have to check for cmd > to buffer size and management of lost fd
+ - [x] CTRL+C : still have to check for cmd > to buffer size and management of lost fd
  - [x] CTRL+D : Management of partial cmd
  - [ ] CTRL+Z
 
-
-- [ ] Define client structure including: socket-fd, Id, command buffer
-- [ ] Define rooms with userid
+- [x] Define client structure including: socket-fd, Id, command buffer
+- [x] Define Channel with userid
 
 ---
 - Server command

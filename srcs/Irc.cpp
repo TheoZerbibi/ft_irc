@@ -125,7 +125,6 @@ User		*Irc::getUserByNick(std::string const nick) const
 	{
 		if (beg->second->isRegistered())
 		{
-
 			std::cout << "MODE : found a user named " << beg->second->getNick() << "|| searching for nick = " << nick << std::endl;
 			if (beg->second->getNick() == nick)
 				return (dynamic_cast<User *>(beg->second));
@@ -134,8 +133,6 @@ User		*Irc::getUserByNick(std::string const nick) const
 	}
 	return (NULL);
 }
-
-
 
 //Setter
 void	Irc::addClient(int const &sfd)
@@ -205,6 +202,53 @@ void	Irc::addReply(Reply reply)
 {
 	this->_replies.push_back(reply);
 }
+
+void	Irc::mergeReplies()
+{
+	std::vector<Reply>::iterator	beg = _replies.begin();
+	std::vector<Reply>::iterator	end = _replies.begin();
+	std::vector<Reply>::iterator	crawler;
+
+	while (beg != end)
+	{
+		crawler = beg + 1;
+		std::cout << "merged \'" << beg->getMessage() << " + " << crawler->getMessage() << std::endl;
+		while (crawler != end)
+		{
+			if (beg->getClientFd() == crawler->getClientFd())
+			{
+				beg->setMessage(beg->getMessage() + crawler->getMessage());
+				crawler = _replies.erase(crawler);
+			}
+			else
+				crawler++;
+		}
+		++beg;
+	}
+}
+//	
+//	// erase return next element after the erased one
+//	int	Irc::sendReplies(void)
+//	{
+//		std::vector<Reply>::iterator	beg = _replies.begin();
+//		std::vector<Reply>::iterator	end = _replies.begin();
+//	
+//		if (beg != end)
+//			std::cout << "Fd: " << beg->getClientFd() << " mss:" << beg->getMessage() << std::endl;
+//		while (beg != end)
+//		{
+//			if (FD_ISSET((beg)->getClientFd(), &(this->fds[SEND])))
+//			{
+//				if (((beg)->send()))
+//					beg = _replies.erase(beg);
+//				else
+//					++beg;
+//			}
+//			else 
+//				++beg;
+//		}
+//		return (0);
+//	}
 
 // erase return next element after the erased one
 int	Irc::sendReplies(void)

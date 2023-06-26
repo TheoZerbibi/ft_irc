@@ -51,26 +51,29 @@ void	ModeCommand::appChannelMode(char mode, int modmode, Channel *chan, std::str
 	(void)chan;
 	(void)arg;
 	std::cout << "MODE : Applying mode" << std::endl;
-		if (mode == 'i')
-			chan->setInvit(modmode);
-		else if (mode == 'o')
-			chan->setOper(arg, modmode);
-		else if (mode == 't')
-			chan->setTopicMode(modmode);
-		else if (mode == 'k')
-		{
-			if (modmode == REMOVING)
-				chan->setKey("");
-			else
-				chan->setKey(*arg);
-		}
-		else if (mode == 'l')
-		{
-			if (modmode == REMOVING)
-				chan->setMaxUser(0);
-			else
-				chan->setMaxUser(std::atoi(arg->c_str()));
-		}
+	if (mode == 'i')
+		chan->setInvit(modmode);
+	else if (mode == 'o')
+	{
+		std::cout << "doing o mode --> user: " << *arg << " mode = " << modmode << std::endl;
+		chan->setOper(*arg, modmode);
+	}
+	else if (mode == 't')
+		chan->setTopicMode(modmode);
+	else if (mode == 'k')
+	{
+		if (modmode == REMOVING)
+			chan->setKey("");
+		else
+			chan->setKey(*arg);
+	}
+	else if (mode == 'l')
+	{
+		if (modmode == REMOVING)
+			chan->setMaxUser(0);
+		else
+			chan->setMaxUser(std::atoi(arg->c_str()));
+	}
 }
 
 int	ModeCommand::checkOperMode(int fds, User *user, std::string &target)

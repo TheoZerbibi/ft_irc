@@ -8,9 +8,6 @@
 # include <utility>
 //# include "Reply.hpp"
 
-# define MODES "oklit"
-# define MODES_WARG "okl"
-
 # define user_id(serv, nick, user) (":" + nick + "!" + user + "@" + serv)
 
 #define REMOVING 0

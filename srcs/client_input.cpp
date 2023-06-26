@@ -59,7 +59,6 @@ int	Irc::data_reception_handler()
 
 int	Irc::manage_incoming_connection()
 {
-	std::cout << "---- Reading fds ---" << std::endl;
 	this->accept_client();
 	this->data_reception_handler();
 	return (0);

@@ -73,7 +73,6 @@ void	Client::setRealname(std::string realname)
 
 
 // Getter
-
 std::vector<Channel *>::iterator	User::getChannel(Channel *chan)
 {
 	std::vector<Channel *>::iterator	beg = _chans.begin();
@@ -88,7 +87,7 @@ std::vector<Channel *>::iterator	User::getChannel(Channel *chan)
 	return (end);
 }
 
-bool					User::isOnChannel(Channel *chan)
+bool			User::isOnChannel(Channel *chan)
 {
 	if (getChannel(chan) == _chans.end())
 		return (false);
@@ -147,6 +146,48 @@ bool	User::isChannelUser(Channel *chan) const
 	if (chan->getUser(this->_nickname))
 		return (true);
 	return (false);
+}
+
+bool	User::isInvited(Channel *chan)
+{
+	std::vector<Channel *>::iterator beg = _invited.begin();
+	std::vector<Channel *>::iterator end = _invited.end();
+
+	while (beg != end)
+	{
+		if (*beg == chan)
+			return (true);
+	}
+	return (false);
+}
+
+void	User::printInvited()
+{
+	Irc	&ircserv = Irc::getInstance();
+
+	std::vector<Channel *>::iterator it = _invited.begin();
+	std::vector<Channel *>::iterator end = _invited.end();
+
+	while (it != end)
+	{
+		ircserv.addReply(Reply(_sockFd, RPL_INVITELIST(ircserv.getName(), _nickname, (*it)->getName())));
+		it++;
+	}
+	ircserv.addReply(Reply(_sockFd, RPL_ENDOFINVITELIST(ircserv.getName(), _nickname)));
+}
+
+void	User::inviteOnChannel(Channel *chan)
+{
+
+	std::vector<Channel *>::iterator  beg = _invited.begin();
+	std::vector<Channel *>::iterator  end = _invited.end();
+
+	while (beg != end)
+	{
+		if (*beg == chan)
+			return ;
+	}
+	_invited.push_back(chan);
 }
 
 void	Client::setAuth(bool auth)
@@ -265,18 +306,20 @@ void	Client::extractCmds()
 
 
 User::User(Client *client):
-Client(*client),
-_chans(),
-_isOper(false),
-_isInvis(false)
+	Client(*client),
+	_chans(),
+	_invited(),
+	_isOper(false),
+	_isInvis(false)
 {
 	this->_registered = true;
 }
 
 User::User():
-_chans(),
-_isOper(false),
-_isInvis(false)
+	_chans(),
+	_invited(),
+	_isOper(false),
+	_isInvis(false)
 {
 }
 

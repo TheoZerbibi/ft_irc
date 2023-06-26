@@ -7,6 +7,7 @@ _users(),
 _topic(),
 _name(name),
 _key(key),
+_type('='),
 _topicIsOpOnly(topicIsOpOnly),
 _isInvit(false),
 _maxUser(maxUser)
@@ -23,6 +24,12 @@ std::string const &Channel::getName() const
 	return (this->_name);
 }
 
+
+char		const &Channel::getType()
+{
+	return (this->_type);
+}
+
 User	*Channel::getOper(std::string nick)
 {
 	std::map<std::string, User *>::iterator  beg = this->_operator.begin();
@@ -32,8 +39,35 @@ User	*Channel::getOper(std::string nick)
 	{
 		if (beg->first == "@" + nick)
 			return (beg->second);
+		++beg;
 	}
 	return (NULL);
+}
+
+std::string	Channel::getUsersNick()
+{
+	std::string 				nick_str = "";
+	std::map<std::string, User *>::iterator	beg =	_operator.begin();
+	std::map<std::string, User *>::iterator	end =	_operator.end();
+
+	while (beg != end)
+	{
+		if (!nick_str.empty())
+			nick_str += " ";
+		nick_str += beg->first;
+		++beg;
+	}
+	beg = _users.begin();
+	end = _users.end();
+	while (beg != end)
+	{
+		if (!nick_str.empty())
+			nick_str += " ";
+		nick_str += beg->first;
+		++beg;
+
+	}
+	return (nick_str);
 }
 
 User	*Channel::getUser(std::string nick)
@@ -43,8 +77,9 @@ User	*Channel::getUser(std::string nick)
 
 	while (beg != end)
 	{
-		if (beg->first == "@" + nick)
+		if (beg->first == nick)
 			return (beg->second);
+		beg++;
 	}
 	return (NULL);
 }
@@ -73,6 +108,7 @@ bool		const &Channel::isInvit() const
 {
 	return (this->_isInvit);
 }
+
 
 //Setter
 void		Channel::addUser(User *user)
@@ -118,7 +154,6 @@ void		Channel::removeOper(std::string nick)
 {
 	std::map<std::string, User *>::iterator  found = _operator.find('@' + nick);
 	std::map<std::string, User *>::iterator  end = _operator.end();
-	
 	if (found != end)
 	{
 		_operator.erase(found);
@@ -135,7 +170,7 @@ void		Channel::removeUser(std::string nick)
 {
 	std::map<std::string, User *>::iterator  found = _users.find(nick);
 	std::map<std::string, User *>::iterator  end = _users.end();
-	
+
 	if (found != end)
 	{
 		_users.erase(found);
@@ -149,6 +184,7 @@ void		Channel::setOper(std::string nick, bool value)
 	if (value)
 	{
 		user = this->getUser(nick);
+		std::cout << "found User = " << user << std::endl;
 		if (user)
 		{
 			removeUser(user);
@@ -158,6 +194,7 @@ void		Channel::setOper(std::string nick, bool value)
 	else
 	{
 		user = this->getOper(nick);
+		std::cout << "found Oper = " << user << std::endl;
 		if (user)
 		{
 			removeOper(user);

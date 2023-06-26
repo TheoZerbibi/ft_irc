@@ -1,13 +1,18 @@
 #!/bin/bash
 
-#./proxy/simple-tcp-proxy 1025 | tee output &
+./proxy/simple-tcp-proxy 1025 | tee output_pipe | tee output_file &
 PID=$?
 
 function exit_properly()
 {
-	if [ -e pipo ]
+	if [ -e input ]
 	then
-		rm -f pipo
+		rm -f input_pipe
+	fi
+
+	if [ -e output ] 
+	then
+		rm -f output_pipe
 	fi
 
 	kill -9 $1
@@ -19,14 +24,14 @@ function autopong()
 	while true
 	do
 		read -r line
-		echo "line = $line"
 		if [[ $line == "PING "* ]]
 		then
+			echo "PING DETECTED"
 			ping_code="${line#PING }"
 			response="PONG $ping_code"
-			echo "$response" > pipo
+			echo "$response" > input_pipe
 		fi
-	done < output
+	done < output_pipe
 }
 
 
@@ -34,23 +39,28 @@ trap "exit_properly $PID" SIGINT
 
 trap -p SIGINT
 
-if [ ! -e pipo ]
+if [ ! -e input_pipe ]
 then
-	mkfifo pipo
+	mkfifo input_pipe
+fi
+
+if [ ! -e output_pipe ]
+then
+	mkfifo output_pipe
 fi
 
 sleep 1
 
 
-nc localhost 1024 < pipo & #> /dev/null &
+nc localhost 1025 < input_pipe &> /dev/null &
 
-#autopong &
+autopong &
 
 echo "nbr of argument $#"
 
 if [ $# -gt 0 ]
 then
-	cat "$1" - > pipo
+	cat "$1" - > input_pipe
 else
-	cat > pipo
+	cat > input_pipe
 fi

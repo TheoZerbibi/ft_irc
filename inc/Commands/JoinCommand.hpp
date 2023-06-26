@@ -19,9 +19,8 @@ class JoinCommand : public Command
 	private:
 		std::string _name;
 
+		void	rplJoin(int fds, User *user, Channel *chan);
 		std::map<std::string, std::string>	parseArg(std::vector<std::string> &args);
-
-
 		std::map<std::string , std::string>	_parseCommand(int fds, Client *client, std::string str);
 		void								_joinChannel(int fds, Client *client, std::map<std::string , std::string> channels);
 		bool								_chanIsValid(const std::string &name);

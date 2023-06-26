@@ -6,6 +6,10 @@
 # include "Channel.hpp"
 # include <sstream>
 
+# define MODES "oklit"
+# define MODES_WARG "okl"
+
+
 #define RPL_UMODEIS(server, user, modes) (":" + server + " 221 "+ user + " :+" + modes)
 #define RPL_CHANNELMODIS(server, user, channel, modes, modsarg) (":" + server + " 324 " + user + " " + channel + " " + modes + " " + modsarg)
 
