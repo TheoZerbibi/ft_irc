@@ -1,7 +1,7 @@
 #include "QuitCommand.hpp"
 
 QuitCommand::QuitCommand(void) :
-_name("AWAY")
+_name("QUIT")
 {
 	std::cout << "┣⮕ QuitCommand." << std::endl;
 }

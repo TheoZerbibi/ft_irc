@@ -13,7 +13,7 @@ UserCommand::~UserCommand(void)
 void UserCommand::execute(int fds, Client *client)
 {
 	std::string	cmd = client->getCmds().front();
-	std::vector<std::string> arguments = splitArguments(cmd);
+	std::vector<std::string> arguments = this->splitArguments(cmd);
 	Irc	&ircserv = Irc::getInstance();
 
 	if (client->isRegistered())
