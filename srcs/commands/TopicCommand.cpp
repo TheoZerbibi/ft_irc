@@ -11,7 +11,7 @@ TopicCommand::~TopicCommand(void)
 
 void TopicCommand::execute(int fds, Client *client)
 {
-	(void) fds;
-	(void) client;
-	std::cout << "[" << this->_name << "] : TopicCommand executed !" << std::endl;
+	(void)fds;
+	std::string			cmd = client->getCmds().front();
+	std::vector<std::string>	args;
 }

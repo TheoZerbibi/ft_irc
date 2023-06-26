@@ -19,26 +19,26 @@ class	Channel
 		std::string	const &getKey() const;
 		int		const &getLimit() const;
 		bool		const &topicIsRestricted() const;
+		bool		const &isInvis() const;
 
 		//setter
 		void		addUser(User *user);
 		void		addOper(User *user);
-		void		setTopic(std::string topic);
-		void		setKey(std::string key);
+		void		removeUser(User *user);
+		void		removeUser(std::string nick);
+		void		removeOper(User *user);
+		void		removeOper(std::string nick);
 
-		int		setMode(int mode, int modemod, User *user, std::vector<std::string> &value);
+		void		setTopic(std::string topic);
+
+		void		setKey(std::string key);
+		void		setMaxUser(int value);
+		void		setOper(std::string nick, bool value);
+		void		setTopicMode(bool value);
+		void		setInvis(bool value);
 	private:
 		std::map<std::string, User *>	_operator;
 		std::map<std::string, User *>	_users;
-
-
-		int				setKey(int mod, User *user, std::string	*value);
-		int				setMaxUser(int mod, User *user, std::string *value);
-		int				setOper(int mod, User *ser, std::string *value);
-		int				setTopicMode(int mod, User *user);
-		int				setInvis(int mod, User *user);
-
-
 
 		std::string			_topic;
 		std::string			_name;
