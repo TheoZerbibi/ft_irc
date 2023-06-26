@@ -4,7 +4,7 @@
 
 # include "User.hpp"
 
-# define RPL_PONG(token) ("PONG :" + token + "\r\n")
+# define RPL_PONG(userId, token) (userId + " PONG :" + token + "\r\n")
 
 class PingCommand : public Command
 {

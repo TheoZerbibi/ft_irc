@@ -9,6 +9,7 @@
 
 # define MODES "oklit"
 
+# define user_id(serv, nick, user) (":" + nick + "!" + user + "@" + serv)
 # define ERR_NEEDMOREPARAMS(serv, nickname, command) (":" + serv + " 461 " + nickname + " " + command + " :Not enough parameters.\r\n")
 
 # define ERR_ALREADYREGISTERED(serv, nickname) (":" + serv + " 462 " + nickname + " :You may not reregister.\r\n")

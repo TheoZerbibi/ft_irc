@@ -17,9 +17,13 @@ void PingCommand::execute(int fds, Client *client)
 	std::stringstream 			ss;
 	Irc							&ircserv =	Irc::getInstance();
 
+	std::string const			serverName = ircserv.getName();
+	std::string const			nick = client->getNick();
+	std::string const			user = client->getUser();
+
 	for (std::vector<std::string>::iterator it = tokenList.begin(); it != tokenList.end(); ++it)
 		ss << *it << " ";
 
-	ircserv.addReply(Reply(fds, RPL_PONG(ss.str())));
+	ircserv.addReply(Reply(fds, RPL_PONG(user_id(serverName, nick, user), ss.str())));
 	std::cout << "PingCommand::execute(" << fds << ", " << ss.str() << ")" << std::endl;
 }
