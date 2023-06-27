@@ -37,40 +37,6 @@ int	Irc::main_loop()
 	return (0);
 }
 
-//	int	Irc::main_loop()
-//	{
-//		int				ret;
-//		int				fdMax;
-//		timeval				ttd;
-//	
-//		ttd = (timeval){2, 0};
-//		while (1)
-//		{
-//			fdMax = this->computeFdMax();
-//	
-//			this->fds[READ] = this->fds[MASTER];
-//			ret = select(fdMax, &(this->fds[READ]), NULL, NULL, &ttd);
-//			if (ret == -1)
-//			{
-//				std::cerr << "Select error : ";
-//				throw  SyscallError();
-//			}
-//			else if (ret)
-//				this->manage_incoming_connection();
-//			this->manageCommand();
-//			this->mergeReplies();
-//			this->fds[SEND] = this->fds[MASTER];
-//			ret = select(fdMax, NULL, &(this->fds[SEND]), NULL, &ttd);
-//			if (ret == -1)
-//			{
-//				std::cerr << "Select error : ";
-//				throw  SyscallError();
-//			}
-//			else if (ret)
-//				this->sendReplies();
-//		}
-//		return (0);
-//	}
 
 int	main(int ac, char **av)
 {

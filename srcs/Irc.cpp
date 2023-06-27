@@ -319,22 +319,11 @@ Channel	*Irc::getChannel(std::string name)
 	return (this->_channels[name]);
 }
 
-void	Irc::removeChannel(std::string name)
+void	Irc::removeChannel(Channel *channel)
 {
-	if (this->channelExists(name))
-		return ;
-	std::map<std::string, Channel *>::iterator it = _channels.begin();
-	std::map<std::string, Channel *>::iterator ite = _channels.end();
-
-	while (it != ite)
-	{
-		if (it->first == name)
-		{
-			delete it->second;
-			_channels.erase(it);
-			return ;
-		}
-		it++;
+	if (this->channelExists(channel->getName())) {
+		_channels.erase(channel->getName());
+		delete channel;
 	}
 }
 

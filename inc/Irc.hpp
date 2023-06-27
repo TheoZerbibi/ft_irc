@@ -64,7 +64,7 @@ class	Irc{
 		Channel					*addChannel(std::string name);
 		void					addUserToChannel(User *user, Channel *chan);
 		bool					channelExists(std::string name);
-		void					removeChannel(std::string name);
+		void					removeChannel(Channel *channel);
 
 		//Client Manager
 		void			promoteClient(Client *client);

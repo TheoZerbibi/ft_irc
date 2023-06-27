@@ -2,6 +2,9 @@
 #include "ft_irc.hpp"
 #include "User.hpp"
 
+#define RPL_PART(server, userID, channel, reason) (":" + server + " " + userID + " PART " + channel + " " + reason + "\r\n")
+# define RPL_PRIVMSG(server, userID, target, message) (":" + userID + "@" + server + " PRIVMSG " + target + " " + message + "\r\n")
+
 class User;
 
 class	Channel
@@ -27,10 +30,10 @@ class	Channel
 		//setter
 		void		addUser(User *user);
 		void		addOper(User *user);
-		void		removeUser(User *user);
-		void		removeUser(std::string nick);
-		void		removeOper(User *user);
-		void		removeOper(std::string nick);
+		void		removeUser(User *user, std::string reason = ".");
+		void		removeUser(std::string nick, std::string reason = ".");
+		void		removeOper(User *user, std::string reason = ".");
+		void		removeOper(std::string nick, std::string reason = ".");
 
 		void		setTopic(std::string topic);
 
@@ -39,6 +42,8 @@ class	Channel
 		void		setOper(std::string nick, bool value);
 		void		setTopicMode(bool value);
 		void		setInvit(bool value);
+
+		void		sendToChannel(User *user, std::string msg);
 
 	private:
 		std::map<std::string, User *>	_operator;
@@ -50,5 +55,5 @@ class	Channel
 		char				_type;
 		bool				_topicIsOpOnly;
 		bool				_isInvit;
-		int				_maxUser;
+		int					_maxUser;
 };

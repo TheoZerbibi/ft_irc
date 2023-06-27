@@ -86,6 +86,7 @@ class User : public Client{
 		void								addChannel(Channel *chan);
 		void								joinChannel(std::string channame, std::string key);
 		void								quitChannel(Channel *chan);
+		void								quitAllChannel();
 		std::vector<Channel *>::iterator	getChannel(Channel *chan);
 		void								inviteOnChannel(Channel *chan);
 

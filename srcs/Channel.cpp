@@ -187,13 +187,13 @@ void		Channel::setInvit(bool value)
 	this->_isInvit = value;
 }
 
-void		Channel::removeOper(User *user)
+void		Channel::removeOper(User *user, std::string reason)
 {
 	std::string nick = user->getNick();
-	this->removeOper(nick);
+	this->removeOper(nick, reason);
 }
 
-void		Channel::removeOper(std::string nick)
+void		Channel::removeOper(std::string nick, std::string reason)
 {
 	std::map<std::string, User *>::iterator	found = _operator.find('@' + nick);
 	std::map<std::string, User *>::iterator	end = _operator.end();
@@ -201,29 +201,38 @@ void		Channel::removeOper(std::string nick)
 	if (found != end)
 	{
 		_operator.erase(found);
-		if (_operator.size() == 0 && _users.size() == 0)
-			ircserv.removeChannel(this->_name);
-		else if (_operator.size() == 0) {
+		if (_operator.size() == 0 && _users.size() == 0) {
+			ircserv.removeChannel(this);
+			return ;
+		}
+		if (_operator.size() == 0) {
 			std::map<std::string, User *>::iterator	found = _users.begin();
+			std::cout << "Op User = " << found->second->getNick() << std::endl;
 			this->addOper(found->second);
 		}
+		std::cout << found->second->getSockfd() << std::endl;
+		ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(ircserv.getName(), user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
+		this->sendToChannel(found->second, RPL_PART(ircserv.getName(), user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
 	}
 }
 
-void		Channel::removeUser(User *user)
+void		Channel::removeUser(User *user, std::string reason)
 {
 	std::string	nick = user->getNick();
-	this->removeUser(nick);
+	this->removeUser(nick, reason);
 }
 
-void		Channel::removeUser(std::string nick)
+void		Channel::removeUser(std::string nick, std::string reason)
 {
-	std::map<std::string, User *>::iterator  found = _users.find(nick);
-	std::map<std::string, User *>::iterator  end = _users.end();
+	std::map<std::string, User *>::iterator	found = _users.find(nick);
+	std::map<std::string, User *>::iterator	end = _users.end();
+	Irc										&ircserv = Irc::getInstance();
 
 	if (found != end)
 	{
 		_users.erase(found);
+		ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(ircserv.getName(), user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
+		this->sendToChannel(found->second, RPL_PART(ircserv.getName(), user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
 	} else
 		this->removeOper(nick);
 }
@@ -257,4 +266,25 @@ void		Channel::setOper(std::string nick, bool value)
 void		Channel::setTopicMode(bool value)
 {
 	this->_topicIsOpOnly = value;
+}
+
+
+void
+	Channel::sendToChannel(User *user, std::string msg) {
+	std::map<std::string, User *>	userList;
+	Irc								&ircserv = Irc::getInstance();
+
+	userList.insert(this->_users.begin(), this->_users.end());
+	userList.insert(this->_operator.begin(), this->_operator.end());
+
+	std::map<std::string, User *>::iterator beg = userList.begin();
+	std::map<std::string, User *>::iterator end = userList.end();
+
+	while (beg != end)
+	{
+		if (beg->second != user)
+			 ircserv.addReply(Reply(beg->second->getSockfd(), msg));
+			// ircserv.addReply(Reply(beg->second->getSocket(), RPL_PRIVMSG(ircserv.getName(), user_id(ircserv.getName(), user->getNick(), user->getUser()), this->_name, msg)));
+		beg++;
+	}
 }

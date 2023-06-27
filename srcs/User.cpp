@@ -258,19 +258,21 @@ void	User::joinChannel(std::string chanName, std::string key)
 
 void	User::quitChannel(Channel *chan)
 {
-	chan->removeOper(this);
 	chan->removeUser(this);
 }
 
+void	User::quitAllChannel()
+{
+	std::vector<Channel *>::iterator beg = _chans.begin();
+	std::vector<Channel *>::iterator end = _chans.end();
 
-//	void	User::joinChannelsByNames(std::vector<std::string>::iterator beg_chans, std::vector<std::string>::iterator end_chans)
-//	{
-//		while (beg_chans != end_chans)
-//		{
-//			this->joinChannel(*beg_chans, "");
-//			beg_chans++;
-//		}
-//	}
+	while (beg != end)
+	{
+		this->quitChannel(*beg);
+		beg++;
+	}
+}
+
 
 std::deque<std::string> &Client::getCmds()
 {

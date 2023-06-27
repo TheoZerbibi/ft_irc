@@ -118,19 +118,18 @@ std::map<std::string, std::string>	JoinCommand::parseArg(std::vector<std::string
 
 void JoinCommand::execute(int fds, Client *client)
 {
-	Irc					&ircserv =	Irc::getInstance();
-	std::string				cmd =	client->getCmds().front();
-	std::vector<std::string>		args = splitArguments(cmd);
+	Irc									&ircserv =	Irc::getInstance();
+	std::string							cmd =	client->getCmds().front();
+	std::vector<std::string>			args = splitArguments(cmd);
 	std::map<std::string, std::string>	channels;
+	User								*user = ircserv.getUserByNick(client->getNick());
 
 	if (args.empty())
 	{
 		return (ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name))));
 	}
 	else if (args.at(0) == "0")
-	{
-		std::cout << "Leave all channel for " << client->getNick() << std::endl;
-	} 
+		user->quitAllChannel();
 	else
 	{
 		try {
