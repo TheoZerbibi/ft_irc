@@ -44,32 +44,29 @@ std::map<std::string , std::string>
 			keys.push_back("x");
 	}
 	for (size_t i = 0; i < channelName.size(); i++)
-	{
 		channels[channelName[i]] = keys[i];
-	}
 
 	return (channels);
 }
 
-void	JoinCommand::rplJoin(int fds, User *user, Channel *chan)
+void
+	JoinCommand::rplJoin(int fds, User *user, Channel *chan)
 {
 	Irc &ircserv = Irc::getInstance();
 
 	ircserv.addReply(Reply(fds, RPL_JOIN(ircserv.getName(), user->getNick(), chan->getName())));
 	ircserv.addReply(Reply(fds, RPL_TOPIC(ircserv.getName(), user->getNick(), user->getUser(), chan->getTopic())));
-	 ircserv.addReply(Reply(fds, RPL_NAMREPLY(ircserv.getName(), user->getNick(), chan->getName(), chan->getType(), chan->getUsersNick())));
-	 ircserv.addReply(Reply(fds, RPL_ENDOFNAMES(ircserv.getName(), user->getNick(), chan->getName())));
+	ircserv.addReply(Reply(fds, RPL_NAMREPLY(ircserv.getName(), user->getNick(), chan->getName(), chan->getType(), chan->getUsersNick())));
+	ircserv.addReply(Reply(fds, RPL_ENDOFNAMES(ircserv.getName(), user->getNick(), chan->getName())));
 
 }
 
-	void
-JoinCommand::_joinChannel(int fds, Client *client, std::map<std::string , std::string> channels)
+void
+	JoinCommand::_joinChannel(int fds, Client *client, std::map<std::string , std::string> channels)
 {
 	Irc			&ircserv =	Irc::getInstance();
 	User		*user = ircserv.getUserByNick(client->getNick());
 
-	(void)fds;
-	(void)client;
 	if (user == NULL)
 		return ;
 	for (std::map<std::string , std::string>::iterator it = channels.begin(); it != channels.end(); it++)
@@ -81,6 +78,8 @@ JoinCommand::_joinChannel(int fds, Client *client, std::map<std::string , std::s
 			std::cout << "Channel" << channel->getName() << " exists" << std::endl;
 			if (channel->isInvit() && !user->isInvited(channel))
 				return (ircserv.addReply(Reply(fds, ERR_INVITEONLYCHAN(ircserv.getName(), client->getNick(), channel->getName()))));
+			if (channel->getKey() != "x" && channel->getKey() != it->second)
+				return (ircserv.addReply(Reply(fds, ERR_BADCHANNELKEY(ircserv.getName(), client->getNick(), channel->getName()))));
 			user->addChannel(channel);
 			channel->addUser(user);
 			rplJoin(fds, user, channel);
