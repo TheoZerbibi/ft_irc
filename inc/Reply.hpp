@@ -6,7 +6,7 @@
 
 # define RPL_TOPICWHOTIME(serv, user, channel, nick, setat) (":" + serv +  + " 333 " + user + " " + channel + " " + nick + " " + setat)
 
-# define RPL_NAMREPLY(serv, user, symbol, channel, names) (":" + serv + " 353 " + symbol + " " + channel + " :" + names)
+# define RPL_NAMREPLY(server, client, symbol, channel, memberList) (":" + server + " 353 " + client + " " + symbol + " " + channel + " :" + memberList + "\r\n")
 
 #define RPL_UMODEIS(server, user, modes) (":" + server + " 221 "+ user + " :+" + modes)
 

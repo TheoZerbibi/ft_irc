@@ -109,6 +109,61 @@ bool		const &Channel::isInvit() const
 	return (this->_isInvit);
 }
 
+Client const
+	*Channel::clientExist(Client *client) const
+{
+	std::map<std::string, User *>::const_iterator  beg = this->_users.begin();
+	std::map<std::string, User *>::const_iterator  end = this->_users.end();
+
+	while (beg != end)
+	{
+		if (beg->second == client)
+			return (beg->second);
+		beg++;
+	}
+
+	beg = this->_operator.begin();
+	end = this->_operator.end();
+	while (beg != end)
+	{
+		if (beg->second == client)
+			return (beg->second);
+		beg++;
+	}
+	return (NULL);
+}
+
+std::string const
+	Channel::getMemberList() const
+{
+	std::string 							memberList;
+	std::string								nick;
+	std::map<std::string, User *>::const_iterator it;
+
+	for (it = this->_users.begin(); it != this->_users.end(); it++)
+	{
+		nick.clear();
+		nick = it->second->getNick();
+		if (it->second->isInvis())
+			continue;
+
+		memberList += nick;
+		memberList += " ";
+	}
+
+	for (it = this->_operator.begin(); it != this->_operator.end(); it++)
+	{
+		nick.clear();
+		nick = it->second->getNick();
+		if (it->second->isInvis())
+			continue;
+
+		memberList += "@" + nick;
+		memberList += " ";
+	}
+	return (memberList);
+}
+
 
 //Setter
 void		Channel::addUser(User *user)

@@ -56,7 +56,7 @@ void
 
 	ircserv.addReply(Reply(fds, RPL_JOIN(ircserv.getName(), user->getNick(), chan->getName())));
 	ircserv.addReply(Reply(fds, RPL_TOPIC(ircserv.getName(), user->getNick(), user->getUser(), chan->getTopic())));
-	ircserv.addReply(Reply(fds, RPL_NAMREPLY(ircserv.getName(), user->getNick(), chan->getName(), chan->getType(), chan->getUsersNick())));
+	ircserv.addReply(Reply(fds, RPL_NAMREPLY(ircserv.getName(), user->getNick(), "=", chan->getName(), chan->getMemberList())));
 	ircserv.addReply(Reply(fds, RPL_ENDOFNAMES(ircserv.getName(), user->getNick(), chan->getName())));
 
 }
@@ -78,7 +78,7 @@ void
 			std::cout << "Channel" << channel->getName() << " exists" << std::endl;
 			if (channel->isInvit() && !user->isInvited(channel))
 				return (ircserv.addReply(Reply(fds, ERR_INVITEONLYCHAN(ircserv.getName(), client->getNick(), channel->getName()))));
-			if (channel->getKey() != "x" && channel->getKey() != it->second)
+			if (!channel->getKey().empty() && channel->getKey() != it->second)
 				return (ircserv.addReply(Reply(fds, ERR_BADCHANNELKEY(ircserv.getName(), client->getNick(), channel->getName()))));
 			user->addChannel(channel);
 			channel->addUser(user);

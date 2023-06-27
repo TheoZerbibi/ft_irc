@@ -18,6 +18,8 @@ class	Channel
 		std::string	getUsersNick();
 		std::string	const &getTopic() const ;
 		std::string	const &getKey() const;
+		std::string const getMemberList() const;
+		Client		const *clientExist(Client *client) const;
 		int		const &getLimit() const;
 		char		const &getType();
 		bool		const &topicIsRestricted() const;
