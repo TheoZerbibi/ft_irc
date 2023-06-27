@@ -1,6 +1,8 @@
 #ifndef QUITCOMMAND_HPP
 # define QUITCOMMAND_HPP
+
 # include "Command.hpp"
+# include "User.hpp"
 
 class QuitCommand : public Command
 {

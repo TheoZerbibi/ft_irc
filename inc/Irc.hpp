@@ -38,8 +38,8 @@ class	Irc{
 		void			printAi() const;
 
 		//Setter
-		void			addUser(int const &sfd);
 		void			addClient(int const &sfd);
+		void			removeClient(int const &sfd);
 
 		//Getter
 		const	int		&getSocket() const;

@@ -142,6 +142,20 @@ void	Irc::addClient(int const &sfd)
 	_clients.insert(std::make_pair(sfd, client));
 }
 
+void	Irc::removeClient(int const &sfd)
+{
+	std::map<int, Client *>::iterator it = _clients.find(sfd);
+
+	if (it != _clients.end())
+	{
+		if (it->second->isRegistered()) {
+			User	*user = dynamic_cast<User *>(it->second);
+			user->quitAllChannel();
+		}
+		_clients.erase(it);
+	}
+}
+
 void	Irc::promoteClient(Client *client)
 {
 	std::string nick = client->getNick();

@@ -9,9 +9,15 @@ _name("QUIT")
 QuitCommand::~QuitCommand(void)
 {}
 
+// Actuellement, si tu rejoint un chan et que tu /quit, ca segfault
+
 void QuitCommand::execute(int fds, Client *client)
 {
-	(void) fds;
-	(void) client;
-	std::cout << "[" << this->_name << "] : QuitCommand executed !" << std::endl;
+	Irc		&ircserv = Irc::getInstance();
+
+	if (client) {
+		ircserv.removeClient(fds);
+		delete client;
+	}
+	std::cout << "QuitCommand::execute(" << fds << ")" << std::endl;
 }

@@ -48,6 +48,7 @@ _realname()
 
 Client::~Client()
 {
+	std::cout << "Delete " << this->_sockFd << std::endl;
 }
 
 // Setter
@@ -327,6 +328,8 @@ User::User():
 
 User::~User()
 {
+	this->quitAllChannel();
+	std::cout << "Delete " << this->_username << std::endl;
 }
 
 //	const int	&User::getFd() const

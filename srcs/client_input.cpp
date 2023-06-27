@@ -84,7 +84,7 @@ int Irc::manageCommand()
 
 	while (beg != end)
 	{
-		if (beg->second->getCmds().size() > 0)
+		if (beg->second && beg->second->getCmds().size() > 0)
 		{
 			std::string cmd = beg->second->getCmds().front();
 			cmd = getCommand(cmd);
@@ -98,10 +98,16 @@ int Irc::manageCommand()
 				beg->second->getCmds().pop_front();
 				continue ;
 			}
-			if (commandList.find(cmd) != commandList.end())
+			if (commandList.find(cmd) != commandList.end()) {
 				commandList[cmd]->execute(beg->first, beg->second);
+				if (cmd == "QUIT") {
+					std::cout << "QUITCOMMAND" << std::endl;
+					beg++;
+					continue;
+				}
+			}
 			else
-				std::cout << "Command " << cmd << " found" << std::endl;
+				std::cout << "Command " << cmd << " not found" << std::endl;
 			beg->second->getCmds().pop_front();
 		}
 		beg++;

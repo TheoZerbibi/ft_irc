@@ -189,8 +189,7 @@ void		Channel::setInvit(bool value)
 
 void		Channel::removeOper(User *user, std::string reason)
 {
-	std::string nick = user->getNick();
-	this->removeOper(nick, reason);
+	this->removeOper(user->getNick(), reason);
 }
 
 void		Channel::removeOper(std::string nick, std::string reason)
@@ -218,8 +217,7 @@ void		Channel::removeOper(std::string nick, std::string reason)
 
 void		Channel::removeUser(User *user, std::string reason)
 {
-	std::string	nick = user->getNick();
-	this->removeUser(nick, reason);
+	this->removeUser(user->getNick(), reason);
 }
 
 void		Channel::removeUser(std::string nick, std::string reason)
