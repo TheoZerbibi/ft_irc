@@ -50,18 +50,6 @@ std::map<std::string , std::string>
 }
 
 void
-	JoinCommand::rplJoin(int fds, User *user, Channel *chan)
-{
-	Irc &ircserv = Irc::getInstance();
-
-	ircserv.addReply(Reply(fds, RPL_JOIN(ircserv.getName(), user->getNick(), chan->getName())));
-	ircserv.addReply(Reply(fds, RPL_TOPIC(ircserv.getName(), user->getNick(), user->getUser(), chan->getTopic())));
-	ircserv.addReply(Reply(fds, RPL_NAMREPLY(ircserv.getName(), user->getNick(), "=", chan->getName(), chan->getMemberList())));
-	ircserv.addReply(Reply(fds, RPL_ENDOFNAMES(ircserv.getName(), user->getNick(), chan->getName())));
-
-}
-
-void
 	JoinCommand::_joinChannel(int fds, Client *client, std::map<std::string , std::string> channels)
 {
 	Irc			&ircserv =	Irc::getInstance();
@@ -155,39 +143,13 @@ void JoinCommand::execute(int fds, Client *client)
 	}
 }
 
-//	void
-//		JoinCommand::execute(int fds, Client *client)
-//	{
-//		std::string	cmd =	client->getCmds().front();
-//		std::string	arg =	cmd.substr(cmd.find(" ") + 1);
-//		Irc			&ircserv =	Irc::getInstance();
-//		
-//		if (arg == cmd)
-//			arg.clear();
-//		if (!arg.empty() && arg[0] == '0')
-//			std::cout << "Leave all channel for " << client->getNick() << std::endl;
-//		else if (arg.empty())
-//		{
-//			ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name)));
-//			return ;
-//		} else {
-//			try {
-//				std::map<std::string , std::string> channels = this->_parseCommand(fds, client, arg);
-//				if (!channels.empty())
-//					this->_joinChannel(fds, client, channels);
-//			} catch (std::exception &e) {
-//				return ;
-//			}
-//		}
-//	}
 
 /*
  ** #foo -> Public chan - Anyone can join.
  ** &foo -> Private chan - Only invited users can join.
  */
-
-	bool
-JoinCommand::_chanIsValid(const std::string &name)
+bool
+	JoinCommand::_chanIsValid(const std::string &name)
 {
 	if (name.empty())
 		return (false);
@@ -206,4 +168,16 @@ bool JoinCommand::_passwordIsValid(std::string &password) {
 	if (password.size() > 50 || password.size() < 3)
 		return (false);
 	return (true);
+}
+
+void
+	JoinCommand::rplJoin(int fds, User *user, Channel *chan)
+{
+	Irc &ircserv = Irc::getInstance();
+
+	ircserv.addReply(Reply(fds, RPL_JOIN(ircserv.getName(), user->getNick(), chan->getName())));
+	ircserv.addReply(Reply(fds, RPL_TOPIC(ircserv.getName(), user->getNick(), user->getUser(), chan->getTopic())));
+	ircserv.addReply(Reply(fds, RPL_NAMREPLY(ircserv.getName(), user->getNick(), chan->getType(), chan->getName(), chan->getMemberList())));
+	ircserv.addReply(Reply(fds, RPL_ENDOFNAMES(ircserv.getName(), user->getNick(), chan->getName())));
+
 }

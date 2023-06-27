@@ -16,6 +16,7 @@ _maxUser(maxUser)
 
 Channel::~Channel()
 {
+	std::cout << "Delete " << this->_name << " channel." << std::endl;
 }
 
 //Getter
@@ -25,15 +26,15 @@ std::string const &Channel::getName() const
 }
 
 
-char		const &Channel::getType()
+char		const &Channel::getType() const
 {
 	return (this->_type);
 }
 
 User	*Channel::getOper(std::string nick)
 {
-	std::map<std::string, User *>::iterator  beg = this->_operator.begin();
-	std::map<std::string, User *>::iterator  end = this->_operator.end();
+	std::map<std::string, User *>::iterator	beg = this->_operator.begin();
+	std::map<std::string, User *>::iterator	end = this->_operator.end();
 
 	while (beg != end)
 	{
@@ -44,11 +45,12 @@ User	*Channel::getOper(std::string nick)
 	return (NULL);
 }
 
-std::string	Channel::getUsersNick()
+std::string const
+	Channel::getUsersNick() const
 {
 	std::string 				nick_str = "";
-	std::map<std::string, User *>::iterator	beg =	_operator.begin();
-	std::map<std::string, User *>::iterator	end =	_operator.end();
+	std::map<std::string, User *>::const_iterator	beg =	_operator.begin();
+	std::map<std::string, User *>::const_iterator	end =	_operator.end();
 
 	while (beg != end)
 	{
@@ -72,8 +74,18 @@ std::string	Channel::getUsersNick()
 
 User	*Channel::getUser(std::string nick)
 {
-	std::map<std::string, User *>::iterator  beg = this->_users.begin();
-	std::map<std::string, User *>::iterator  end = this->_users.end();
+	std::map<std::string, User *>::const_iterator	beg = this->_users.begin();
+	std::map<std::string, User *>::const_iterator	end = this->_users.end();
+
+	while (beg != end)
+	{
+		if (beg->first == nick)
+			return (beg->second);
+		beg++;
+	}
+
+	beg = this->_operator.begin();
+	end = this->_operator.end();
 
 	while (beg != end)
 	{
@@ -107,30 +119,6 @@ std::string	const &Channel::getTopic() const
 bool		const &Channel::isInvit() const
 {
 	return (this->_isInvit);
-}
-
-Client const
-	*Channel::clientExist(Client *client) const
-{
-	std::map<std::string, User *>::const_iterator  beg = this->_users.begin();
-	std::map<std::string, User *>::const_iterator  end = this->_users.end();
-
-	while (beg != end)
-	{
-		if (beg->second == client)
-			return (beg->second);
-		beg++;
-	}
-
-	beg = this->_operator.begin();
-	end = this->_operator.end();
-	while (beg != end)
-	{
-		if (beg->second == client)
-			return (beg->second);
-		beg++;
-	}
-	return (NULL);
 }
 
 std::string const
@@ -207,11 +195,18 @@ void		Channel::removeOper(User *user)
 
 void		Channel::removeOper(std::string nick)
 {
-	std::map<std::string, User *>::iterator  found = _operator.find('@' + nick);
-	std::map<std::string, User *>::iterator  end = _operator.end();
+	std::map<std::string, User *>::iterator	found = _operator.find('@' + nick);
+	std::map<std::string, User *>::iterator	end = _operator.end();
+	Irc										&ircserv = Irc::getInstance();
 	if (found != end)
 	{
 		_operator.erase(found);
+		if (_operator.size() == 0 && _users.size() == 0)
+			ircserv.removeChannel(this->_name);
+		else if (_operator.size() == 0) {
+			std::map<std::string, User *>::iterator	found = _users.begin();
+			this->addOper(found->second);
+		}
 	}
 }
 
@@ -229,7 +224,8 @@ void		Channel::removeUser(std::string nick)
 	if (found != end)
 	{
 		_users.erase(found);
-	}
+	} else
+		this->removeOper(nick);
 }
 
 void		Channel::setOper(std::string nick, bool value)

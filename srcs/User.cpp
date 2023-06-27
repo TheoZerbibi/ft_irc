@@ -141,7 +141,7 @@ bool	User::isChannelOper(Channel *chan) const
 	return (false);
 }
 
-bool	User::isChannelUser(Channel *chan) const
+bool	User::_isChannelUser(Channel *chan) const
 {
 	if (chan->getUser(this->_nickname))
 		return (true);

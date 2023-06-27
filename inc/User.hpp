@@ -83,11 +83,11 @@ class User : public Client{
 
 
 		// Channel management
-		void					addChannel(Channel *chan);
-		void					joinChannel(std::string channame, std::string key);
-		void					quitChannel(Channel *chan);
+		void								addChannel(Channel *chan);
+		void								joinChannel(std::string channame, std::string key);
+		void								quitChannel(Channel *chan);
 		std::vector<Channel *>::iterator	getChannel(Channel *chan);
-		void	inviteOnChannel(Channel *chan);
+		void								inviteOnChannel(Channel *chan);
 
 		//Utils
 		void	printInvited();
@@ -102,7 +102,7 @@ class User : public Client{
 		std::vector<Channel *>	_invited;
 		bool			_isOper;
 		bool			_isInvis;
-		bool			isChannelUser(Channel *chan) const;
+		bool			_isChannelUser(Channel *chan) const;
 
 };
 
