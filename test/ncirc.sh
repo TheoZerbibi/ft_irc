@@ -58,9 +58,11 @@ autopong &
 
 echo "nbr of argument $#"
 
-if [ $# -gt 0 ]
-then
-	cat "$1" - > input_pipe
-else
-	cat > input_pipe
-fi
+cat Input/registration - Input/testJoin - > input_pipe
+
+#if [ $# -gt 0 ]
+#then
+#	cat "$1" - > input_pipe
+#else
+#	cat > input_pipe
+#fi

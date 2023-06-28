@@ -9,6 +9,7 @@
 //# include "Reply.hpp"
 
 # define user_id(serv, nick, user) (":" + nick + "!" + user + "@" + serv)
+# define user_ids(serv, nick, user) (nick + "!" + user + "@" + serv)
 
 #define REMOVING 0
 #define ADDING 1

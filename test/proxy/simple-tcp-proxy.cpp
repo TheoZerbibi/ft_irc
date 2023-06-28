@@ -272,6 +272,7 @@ int main(int argc, char *argv[]){
 
     localaddr = strdup("127.0.0.1");
     localport = atoi(argv[1]);
+   // remoteaddr = strdup("127.0.0.1");
     remoteaddr = strdup("chat.freenode.net");
 //    remoteaddr = strdup("irc.undernet.org");
 

@@ -9,46 +9,6 @@ _name("JOIN")
 JoinCommand::~JoinCommand(void)
 {}
 
-std::map<std::string , std::string>
-	JoinCommand::_parseCommand(int fds, Client *client, std::string str) {
-	std::map<std::string , std::string>	channels;
-	std::vector<std::string>			splitArgs;
-	std::vector<std::string>			channelName;
-	std::vector<std::string>			keys;
-	Irc									&ircserv =	Irc::getInstance();
-
-	splitArgs = this->splitStr(str, ' ');
-	std::vector<std::string>::iterator it = splitArgs.begin();
-
-	channelName = this->splitStr(*it, ',');
-	for (size_t i = 0; i < channelName.size(); i++)
-	{
-		if (!this->_chanIsValid(channelName[i])) {
-			ircserv.addReply(Reply(fds, ERR_BADCHANMASK(ircserv.getName(), client->getNick(), channelName[i])));
-			throw (std::exception());
-		}
-	}
-	if (it != splitArgs.end())
-	{
-		it++;
-		keys = this->splitStr(*it, ',');
-		for (size_t i = 0; i < keys.size(); i++)
-		{
-			if (!this->_passwordIsValid(keys[i])) {
-				ircserv.addReply(Reply(fds, ERR_BADCHANNELKEY(ircserv.getName(), client->getNick(), channelName[i])));
-				throw (std::exception());
-			}
-		}
-	} else {
-		for (size_t i = 0; i < channelName.size(); i++)
-			keys.push_back("x");
-	}
-	for (size_t i = 0; i < channelName.size(); i++)
-		channels[channelName[i]] = keys[i];
-
-	return (channels);
-}
-
 void
 	JoinCommand::_joinChannel(int fds, Client *client, std::map<std::string , std::string> channels)
 {
@@ -180,3 +140,4 @@ void
 	ircserv.addReply(Reply(fds, RPL_ENDOFNAMES(ircserv.getName(), user->getNick(), chan->getName())));
 
 }
+

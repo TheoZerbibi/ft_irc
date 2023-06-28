@@ -119,6 +119,7 @@ class	Irc{
 		void		setupFds();
 		fd_set		fds[4];
 
+
 		void		_removeAllChannel();
 		void		_removeAllClient();
 		void		_removeAllCommands();

@@ -3,7 +3,7 @@
 
 #define	DELIM "\r\n"
 
-# define RPL_WELCOME(server, userID) (":" + server + " 001 " + " :Welcome to the Internet Relay Network" + userID + "\r\n")
+# define RPL_WELCOME(server, user, userID) (":" + server + " 001 " + user + " :Welcome to the Internet Relay Network " + userID + "\r\n")
 # define RPL_YOURHOST(server,nickname) (":" + server + " 002 " + nickname + " :Your host is " + server + " (localhost)\r\n")
 # define RPL_INFO(server,nickname) (":" + server + " 003 " + nickname + " :This server was created by iguidado & thzeribi.\r\n")
 # define RPL_INVITELIST(server, user, channel) (":" + server + " 336 " + user + " " + channel)
@@ -80,15 +80,14 @@ class User : public Client{
 		bool	isInvited(Channel *chan);
 
 
-
-
 		// Channel management
-		void								addChannel(Channel *chan);
-		void								joinChannel(std::string channame, std::string key);
-		void								quitChannel(Channel *chan);
-		void								quitAllChannel();
+		void					addChannel(Channel *chan);
+		void					removeChannel(Channel *chan);
+		void					joinChannel(std::string channame, std::string key);
+		void					quitChannel(Channel *chan);
+		void					quitAllChannel();
 		std::vector<Channel *>::iterator	getChannel(Channel *chan);
-		void								inviteOnChannel(Channel *chan);
+		void					inviteOnChannel(Channel *chan);
 
 		//Utils
 		void	printInvited();
@@ -97,6 +96,7 @@ class User : public Client{
 
 		void	setInvis(bool status);
 		void	setOper(bool status);
+		void	printInfo();
 	private:
 		User();
 		std::vector<Channel *>	_chans;
@@ -104,6 +104,9 @@ class User : public Client{
 		bool			_isOper;
 		bool			_isInvis;
 		bool			_isChannelUser(Channel *chan) const;
+
+		//printer
+		void	printChannels();
 
 };
 

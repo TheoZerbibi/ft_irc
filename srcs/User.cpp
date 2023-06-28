@@ -48,8 +48,22 @@ _realname()
 
 Client::~Client()
 {
-	std::cout << "Delete " << this->_sockFd << std::endl;
 }
+
+User::User():
+	_chans(),
+	_invited(),
+	_isOper(false),
+	_isInvis(false)
+{
+}
+
+User::~User()
+{
+	std::cout << "||-->" << this->_nickname << " is leaving the server" << std::endl;
+	this->quitAllChannel();
+}
+
 
 // Setter
 void	Client::setNick(std::string nick)
@@ -71,7 +85,6 @@ void	Client::setRealname(std::string realname)
 {
 	this->_realname = realname;
 }
-
 
 // Getter
 std::vector<Channel *>::iterator	User::getChannel(Channel *chan)
@@ -179,7 +192,6 @@ void	User::printInvited()
 
 void	User::inviteOnChannel(Channel *chan)
 {
-
 	std::vector<Channel *>::iterator  beg = _invited.begin();
 	std::vector<Channel *>::iterator  end = _invited.end();
 
@@ -218,7 +230,7 @@ bool Client::recvData()
 	{
 		if (nbyte < 0)
 		{
-			std::cout << "Error with recv" << std::endl;
+			std::cerr << "Error with recv" << std::endl;
 			//Error from recv, maybe print something
 		}
 		close(this->_sockFd);
@@ -231,12 +243,6 @@ bool Client::recvData()
 	std::cout << "Buffer = \'" << this->_buff << "\'" << std::endl;
 	return (SUCCESS);
 }
-
-//	void	User::joinChannel(std::string channame, std::string key)
-//	{
-//	
-//	}
-
 
 void	User::addChannel(Channel *chan)
 {
@@ -257,20 +263,54 @@ void	User::joinChannel(std::string chanName, std::string key)
 	chan->addUser(this);
 }
 
+void	User::removeChannel(Channel *chan)
+{
+	std::vector<Channel *>::iterator	beg = _chans.begin();
+	std::vector<Channel *>::iterator	end = _chans.end();
+
+	while (beg != end)
+	{
+		if (*beg == chan)
+		{
+			delete	chan;
+			return ((void)this->_chans.erase(beg));
+		}
+		beg++;
+	}
+}
+
 void	User::quitChannel(Channel *chan)
 {
-	chan->removeUser(this);
+	Irc			&ircserv = Irc::getInstance();
+	std::vector<Channel *>::iterator	beg = _chans.begin();
+	std::vector<Channel *>::iterator	end = _chans.end();
+
+	std::cout << "||-->" << this->_nickname << " Quiting channel : " << chan->getName() <<  std::endl;
+	while (beg != end && *beg != chan )
+		beg++;
+	if (*beg == chan)
+		this->_chans.erase(beg);
+	std::cout << "||--> Try removing user : " << _nickname <<  std::endl;
+	chan->removeUser(this->_nickname);
+	if (chan->isEmpty())
+	{
+		std::cout << "||--> Removing channel : " << chan->getName() << std::endl;
+		return (ircserv.removeChannel(chan));
+	}
+	std::cout << "||--> Checking if oper pos is vacant" << std::endl;
+	if (chan->noOper())
+	{
+		return (chan->fillOperPos());
+	}
 }
 
 void	User::quitAllChannel()
 {
-	std::vector<Channel *>::iterator beg = _chans.begin();
-	std::vector<Channel *>::iterator end = _chans.end();
 
-	while (beg != end)
+	while (!_chans.empty())
 	{
-		this->quitChannel(*beg);
-		beg++;
+		_chans.front()->printUserList();
+		this->quitChannel(_chans.front());
 	}
 }
 
@@ -318,20 +358,31 @@ User::User(Client *client):
 	this->_registered = true;
 }
 
-User::User():
-	_chans(),
-	_invited(),
-	_isOper(false),
-	_isInvis(false)
+//Printer
+
+
+void	User::printInfo()
 {
+	std::cout << "-------UserInfo-------" << std::endl;
+	std::cout << "nick: " << _nickname << std::endl;
+	printChannels();
+	std::cout << "----------------------" << std::endl;
 }
 
-User::~User()
-{
-	this->quitAllChannel();
-	std::cout << "Delete " << this->_username << std::endl;
-}
 
+void	User::printChannels()
+{
+	std::vector<Channel *>::iterator	beg = _chans.begin();
+	std::vector<Channel *>::iterator	end = _chans.end();
+
+	std::cout << "Channels :: ";
+	while (beg != end)
+	{
+		std::cout << (*beg)->getName() << " ";
+		beg++;
+	}
+	std::cout << std::endl;
+}
 //	const int	&User::getFd() const
 //	{
 //		return (this->_fd);

@@ -22,11 +22,11 @@ Irc::~Irc()
 {
 	close(this->_sockfd);
 	freeaddrinfo(this->_net);
-	
-	this->_removeAllChannel();
+
+
+//	this->_removeAllChannel();
 	this->_removeAllClient();
 	this->_removeAllCommands();
-
 	std::cout << "Exiting" << std::endl;
 }
 
@@ -152,7 +152,6 @@ void	Irc::removeClient(int const &sfd)
 			User	*user = dynamic_cast<User *>(it->second);
 			user->quitAllChannel();
 		}
-		_clients.erase(it);
 	}
 }
 
@@ -166,10 +165,10 @@ void	Irc::promoteClient(Client *client)
 	bool	    isAuth = client->isAuth();
 
 	if (nick != "*" && !user.empty()
-		&& !host.empty() && !real.empty() && isAuth) {
+			&& !host.empty() && !real.empty() && isAuth) {
 		Irc	&ircserv = Irc::getInstance();
 
-		ircserv.addReply(Reply(fd, RPL_WELCOME(ircserv.getName(), user_id(nick, user, host))));
+		ircserv.addReply(Reply(fd, RPL_WELCOME(ircserv.getName(), nick, user_ids(nick, user, host))));
 		ircserv.addReply(Reply(fd, RPL_YOURHOST(ircserv.getName(), nick)));
 		ircserv.addReply(Reply(fd, RPL_INFO(ircserv.getName(), nick)));
 
@@ -275,7 +274,6 @@ int	Irc::sendReplies(void)
 
 	int				i  = 0;
 
-	// std::cout << "<<-- Sending Replies" << std::endl;
 	while (cpy_beg + i != cpy_end)
 	{
 		if (FD_ISSET((cpy_beg + i)->getClientFd(), &(this->fds[SEND])))
@@ -293,16 +291,18 @@ int	Irc::sendReplies(void)
 void	Irc::_removeAllClient() {
 	std::map<int, Client *>::iterator beg = this->_clients.begin();
 	std::map<int, Client *>::iterator end = this->_clients.end();
+	Client			*client;
 
+	std::cout << "|--> QUITTING process" << std::endl;
 	while (beg != end)
 	{
-		delete beg->second;
-		beg++;
+		client = beg->second;
+		_clients.erase(beg++);
+		delete client;
 	}
 }
 
 // Channel Management
-
 std::map<std::string, Channel *>	&Irc::getChannelList() {
 	return (this->_channels);
 }
@@ -335,10 +335,12 @@ Channel	*Irc::getChannel(std::string name)
 
 void	Irc::removeChannel(Channel *channel)
 {
-	if (this->channelExists(channel->getName())) {
+
+//	if (this->channelExists(channel->getName())) 
+//	{
 		_channels.erase(channel->getName());
 		delete channel;
-	}
+//	}
 }
 
 void	Irc::addUserToChannel(User *user, Channel *chan)
@@ -353,6 +355,6 @@ void Irc::_removeAllChannel() {
 	while (beg != end)
 	{
 		delete beg->second;
-		beg++;
+		_channels.erase(beg++);
 	}
 }

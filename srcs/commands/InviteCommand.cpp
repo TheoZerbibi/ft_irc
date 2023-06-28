@@ -18,7 +18,6 @@ void InviteCommand::execute(int fds, Client *client)
 	User					*target;
 	Channel					*chan;
 
-
 	if (args.size() < 2)
 		return (dynamic_cast<User *>(client)->printInvited());
 	target = ircserv.getUserByNick(args.at(0));

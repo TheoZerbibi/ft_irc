@@ -16,7 +16,6 @@ _maxUser(maxUser)
 
 Channel::~Channel()
 {
-	std::cout << "Delete " << this->_name << " channel." << std::endl;
 }
 
 //Getter
@@ -24,7 +23,6 @@ std::string const &Channel::getName() const
 {
 	return (this->_name);
 }
-
 
 char		const &Channel::getType() const
 {
@@ -67,7 +65,6 @@ std::string const
 			nick_str += " ";
 		nick_str += beg->first;
 		++beg;
-
 	}
 	return (nick_str);
 }
@@ -76,7 +73,6 @@ User	*Channel::getUser(std::string nick)
 {
 	std::map<std::string, User *>::const_iterator	beg = this->_users.begin();
 	std::map<std::string, User *>::const_iterator	end = this->_users.end();
-
 	while (beg != end)
 	{
 		if (beg->first == nick)
@@ -86,7 +82,6 @@ User	*Channel::getUser(std::string nick)
 
 	beg = this->_operator.begin();
 	end = this->_operator.end();
-
 	while (beg != end)
 	{
 		if (beg->first == nick)
@@ -124,8 +119,8 @@ bool		const &Channel::isInvit() const
 std::string const
 	Channel::getMemberList() const
 {
-	std::string 							memberList;
-	std::string								nick;
+	std::string 		memberList;
+	std::string		nick;
 	std::map<std::string, User *>::const_iterator it;
 
 	for (it = this->_users.begin(); it != this->_users.end(); it++)
@@ -152,6 +147,21 @@ std::string const
 	return (memberList);
 }
 
+bool		Channel::isEmpty() const
+{
+	std::cout << "CHECKING CHANNEL EMPTYNESS" << std::endl;
+	if (_operator.empty() && _users.empty())
+		return (true);
+	return (false);
+}
+
+bool		Channel::noOper() const
+{
+	if (_operator.empty())
+		return (true);
+	return (false);
+}
+
 
 //Setter
 void		Channel::addUser(User *user)
@@ -164,7 +174,6 @@ void		Channel::addOper(User *user)
 {
 	std::pair<std::string, User *> user_entry = std::make_pair<std::string, User*>("@" + user->getNick(), user);
 	this->_operator.insert(user_entry);
-	user->addChannel(this);
 }
 
 void		Channel::setTopic(std::string topic)
@@ -196,23 +205,20 @@ void		Channel::removeOper(std::string nick, std::string reason)
 {
 	std::map<std::string, User *>::iterator	found = _operator.find('@' + nick);
 	std::map<std::string, User *>::iterator	end = _operator.end();
-	Irc										&ircserv = Irc::getInstance();
+	Irc			&ircserv = Irc::getInstance();
+
 	if (found != end)
 	{
-		_operator.erase(found);
-		if (_operator.size() == 0 && _users.size() == 0) {
-			ircserv.removeChannel(this);
-			return ;
-		}
-		if (_operator.size() == 0) {
-			std::map<std::string, User *>::iterator	found = _users.begin();
-			std::cout << "Op User = " << found->second->getNick() << std::endl;
-			this->addOper(found->second);
-		}
-		std::cout << found->second->getSockfd() << std::endl;
 		ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(ircserv.getName(), user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
 		this->sendToChannel(found->second, RPL_PART(ircserv.getName(), user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
+		_operator.erase(found);
 	}
+}
+
+void		Channel::fillOperPos()
+{
+	std::cout << "PROMOTING :" << _users.at(0)->getNick() << " at Oper position" << std::endl;
+	this->setOper(_users.at(0)->getNick(), ADDING);
 }
 
 void		Channel::removeUser(User *user, std::string reason)
@@ -224,15 +230,33 @@ void		Channel::removeUser(std::string nick, std::string reason)
 {
 	std::map<std::string, User *>::iterator	found = _users.find(nick);
 	std::map<std::string, User *>::iterator	end = _users.end();
-	Irc										&ircserv = Irc::getInstance();
+	Irc				&ircserv = Irc::getInstance();
 
+
+	std::cout << "||--> deciding user status : " << nick << std::endl;
 	if (found != end)
 	{
+		std::cout << "||-->removing user : " << nick << std::endl;
 		_users.erase(found);
+
 		ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(ircserv.getName(), user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
+
 		this->sendToChannel(found->second, RPL_PART(ircserv.getName(), user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
 	} else
-		this->removeOper(nick);
+	{
+		found = _operator.find('@' + nick);
+		end = _operator.end();
+		std::cout << "||--> Removing oper : " << nick << std::endl;
+
+		if (found != end)
+		{
+			ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(ircserv.getName(), user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
+			this->sendToChannel(found->second, RPL_PART(ircserv.getName(), user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
+			_operator.erase(found);
+			std::cout << "||--> Removed oper entry : " << nick << std::endl;
+		}
+		//		this->removeOper(nick);
+	}
 }
 
 void		Channel::setOper(std::string nick, bool value)
@@ -242,7 +266,6 @@ void		Channel::setOper(std::string nick, bool value)
 	if (value)
 	{
 		user = this->getUser(nick);
-		std::cout << "found User = " << user << std::endl;
 		if (user)
 		{
 			removeUser(user);
@@ -252,7 +275,6 @@ void		Channel::setOper(std::string nick, bool value)
 	else
 	{
 		user = this->getOper(nick);
-		std::cout << "found Oper = " << user << std::endl;
 		if (user)
 		{
 			removeOper(user);
@@ -268,7 +290,7 @@ void		Channel::setTopicMode(bool value)
 
 
 void
-	Channel::sendToChannel(User *user, std::string msg) {
+Channel::sendToChannel(User *user, std::string msg) {
 	std::map<std::string, User *>	userList;
 	Irc								&ircserv = Irc::getInstance();
 
@@ -281,8 +303,19 @@ void
 	while (beg != end)
 	{
 		if (beg->second != user)
-			 ircserv.addReply(Reply(beg->second->getSockfd(), msg));
-			// ircserv.addReply(Reply(beg->second->getSocket(), RPL_PRIVMSG(ircserv.getName(), user_id(ircserv.getName(), user->getNick(), user->getUser()), this->_name, msg)));
+			ircserv.addReply(Reply(beg->second->getSockfd(), msg));
+		// ircserv.addReply(Reply(beg->second->getSocket(), RPL_PRIVMSG(ircserv.getName(), user_id(ircserv.getName(), user->getNick(), user->getUser()), this->_name, msg)));
 		beg++;
+	}
+}
+
+
+void		Channel::printUserList()
+{
+	std::map<std::string, User *>::iterator	beg =	_users.begin();
+	std::map<std::string, User *>::iterator	end =	_users.end();
+	while (beg != end)
+	{
+		beg->second->printInfo();
 	}
 }

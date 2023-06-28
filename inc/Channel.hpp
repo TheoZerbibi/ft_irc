@@ -26,6 +26,8 @@ class	Channel
 		char		const	&getType()				const;
 		bool		const	&topicIsRestricted()	const;
 		bool		const	&isInvit()				const;
+		bool					isEmpty() const;
+		bool					noOper() const;
 
 		//setter
 		void		addUser(User *user);
@@ -34,6 +36,8 @@ class	Channel
 		void		removeUser(std::string nick, std::string reason = ".");
 		void		removeOper(User *user, std::string reason = ".");
 		void		removeOper(std::string nick, std::string reason = ".");
+
+		void		fillOperPos();
 
 		void		setTopic(std::string topic);
 
@@ -44,6 +48,9 @@ class	Channel
 		void		setInvit(bool value);
 
 		void		sendToChannel(User *user, std::string msg);
+
+		//Printer
+		void		printUserList();
 
 	private:
 		std::map<std::string, User *>	_operator;

@@ -37,7 +37,6 @@ int	Irc::main_loop()
 	return (0);
 }
 
-
 int	main(int ac, char **av)
 {
 	(void)av;
