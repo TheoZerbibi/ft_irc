@@ -24,7 +24,7 @@ Irc::~Irc()
 	freeaddrinfo(this->_net);
 
 
-//	this->_removeAllChannel();
+	this->_removeAllChannel();
 	this->_removeAllClient();
 	this->_removeAllCommands();
 	std::cout << "Exiting" << std::endl;

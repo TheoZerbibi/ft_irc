@@ -168,6 +168,7 @@ void		Channel::addUser(User *user)
 {
 	std::pair<std::string, User *> user_entry = std::make_pair<std::string, User*>(user->getNick(), user);
 	this->_users.insert(user_entry);
+	this->printUserList();
 }
 
 void		Channel::addOper(User *user)
@@ -312,8 +313,13 @@ Channel::sendToChannel(User *user, std::string msg) {
 
 void		Channel::printUserList()
 {
-	std::map<std::string, User *>::iterator	beg =	_users.begin();
-	std::map<std::string, User *>::iterator	end =	_users.end();
+	std::map<std::string, User *>	userList;
+	std::cout << "LIst all user" << std::endl;
+	userList.insert(this->_users.begin(), this->_users.end());
+	userList.insert(this->_operator.begin(), this->_operator.end());
+
+	std::map<std::string, User *>::iterator beg = userList.begin();
+	std::map<std::string, User *>::iterator end = userList.end();
 	while (beg != end)
 	{
 		beg->second->printInfo();

@@ -61,7 +61,6 @@ User::User():
 User::~User()
 {
 	std::cout << "||-->" << this->_nickname << " is leaving the server" << std::endl;
-	this->quitAllChannel();
 }
 
 

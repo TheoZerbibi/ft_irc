@@ -15,7 +15,10 @@ void QuitCommand::execute(int fds, Client *client)
 {
 	Irc		&ircserv = Irc::getInstance();
 
-	if (client) {
+	if (client->isRegistered()) {
+		User		*user = dynamic_cast<User *>(client);
+
+		user->quitAllChannel();
 		ircserv.removeClient(fds);
 		delete client;
 	}
