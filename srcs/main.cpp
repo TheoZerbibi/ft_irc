@@ -1,5 +1,20 @@
 #include "ft_irc.hpp"
 
+/*
+** TODO:
+**   - PRIVMSG
+**     - Msg system
+**   - PART
+**   - KICK
+**   - Server Ping
+**   - Main args
+**   - INVITE - Send msg to user invited
+** BUGFIX:
+**   - Fix Segfault multi user in chan, one user /quit
+**   - Fix sendMessage method in channel
+**
+*/
+
 int	Irc::setup_fds()
 {
 	for (int i = 1; i < 4; i++)
