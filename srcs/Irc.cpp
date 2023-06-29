@@ -145,8 +145,9 @@ void	Irc::addClient(int const &sfd)
 void	Irc::removeClient(int const &sfd)
 {
 	std::map<int, Client *>::iterator it = _clients.find(sfd);
+	std::map<int, Client *>::iterator end = _clients.end(sfd);
 
-	if (it != _clients.end())
+	if (it != end)
 	{
 		if (it->second->isRegistered()) {
 			User	*user = dynamic_cast<User *>(it->second);
