@@ -309,7 +309,7 @@ void	User::quitAllChannel()
 
 	while (!_chans.empty())
 	{
-		_chans.front()->printUserList();
+//		_chans.front()->printUserList();
 		this->quitChannel(_chans.front());
 	}
 }
