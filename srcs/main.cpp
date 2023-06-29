@@ -12,6 +12,7 @@
 ** BUGFIX:
 **   - Fix Segfault multi user in chan, one user /quit
 **   - Fix sendMessage method in channel
+**   - Fix display in channel when user leave
 **
 */
 
