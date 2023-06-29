@@ -13,7 +13,71 @@ void PrivMsgCommand::execute(int fds, Client *client)
 {
 	(void) fds;
 	(void) client;
+	std::string			cmd = client->getCmds().front();
+	std::vector<std::string>	args = splitArguments(cmd);
+	Irc				&ircserv = Irc::getInstance();
+	std::vector<std::string>	targets;
+
+	if (args.size() < 2)
+		return (ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name))));
+	targets = splitStr(args.at(0), ',');
+	removeDuplicate(targets);
+
+	sendAllMsg(dynamic_cast<User *>(client), targets, args.at(1));
 	std::cout << "[" << this->_name << "] : PrivMsgCommand executed !" << std::endl;
 }
 
+void	PrivMsgCommand::sendMsg(User *user, std::string target, std::string msg)
+{
+	Irc				&ircserv = Irc::getInstance();
+	Channel				*chan;
+	User				*user_target;
 
+	if (target.at(0) == '#')
+	{
+		if (!(chan = ircserv.getChannel(target)))
+			return (ircserv.addReply(Reply(user->getSockfd(), ERR_NOSUCHCHANNEL(ircserv.getName(), user->getNick(), target))));
+		chan->sendToChannel(user, user_id(ircserv.getName(), user->getNick(), user->getUser()) + " PRIVMSG " + target + " :" + msg);
+	}
+	else
+	{
+		if (!(user_target = ircserv.getUserByNick(target)))
+			return (ircserv.addReply(Reply(user->getSockfd(), ERR_NOSUCHNICK(ircserv.getName(), target))));
+		return (ircserv.addReply(Reply(user_target->getSockfd(), user_ids(ircserv.getName(), user->getNick(), user->getUser()) + " PRIVMSG " + target + " :" + msg)));
+	}
+}
+
+void	PrivMsgCommand::sendAllMsg(User *user, std::vector<std::string> targets, std::string msg)
+{
+	std::vector<std::string>::iterator	beg = targets.begin();
+	std::vector<std::string>::iterator	end = targets.end();
+
+	while (beg != end)
+	{
+		sendMsg(user, *beg, msg);
+		beg++;
+	}
+}
+
+
+void	PrivMsgCommand::removeDuplicate(std::vector<std::string> &entry)
+{
+	std::vector<std::string>::iterator	beg = entry.begin();
+	std::vector<std::string>::iterator	end = entry.end();
+	std::vector<std::string>::iterator	it;
+
+	while (beg != end)
+	{
+		it = beg + 1;
+		while (it != end)
+		{
+			if (*beg == *it)
+			{
+				entry.erase(it++);
+			}
+			else
+				it++;
+		}
+		beg++;
+	}
+}

@@ -145,7 +145,7 @@ void	Irc::addClient(int const &sfd)
 void	Irc::removeClient(int const &sfd)
 {
 	std::map<int, Client *>::iterator it = _clients.find(sfd);
-	std::map<int, Client *>::iterator end = _clients.end(sfd);
+	std::map<int, Client *>::iterator end = _clients.end();
 
 	if (it != end)
 	{
@@ -169,7 +169,7 @@ void	Irc::promoteClient(Client *client)
 			&& !host.empty() && !real.empty() && isAuth) {
 		Irc	&ircserv = Irc::getInstance();
 
-		ircserv.addReply(Reply(fd, RPL_WELCOME(ircserv.getName(), nick, user_ids(nick, user, host))));
+		ircserv.addReply(Reply(fd, RPL_WELCOME(ircserv.getName(), nick, user_ids(host, nick, user))));
 		ircserv.addReply(Reply(fd, RPL_YOURHOST(ircserv.getName(), nick)));
 		ircserv.addReply(Reply(fd, RPL_INFO(ircserv.getName(), nick)));
 

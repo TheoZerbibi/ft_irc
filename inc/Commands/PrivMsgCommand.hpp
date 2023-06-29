@@ -7,6 +7,9 @@
 class PrivMsgCommand : public Command
 {
 private:
+	void	removeDuplicate(std::vector<std::string> &entry);
+	void	sendAllMsg(User *user, std::vector<std::string> targets, std::string msg);
+	void	sendMsg(User *user, std::string target, std::string msg);
 	std::string _name;
 public:
 	PrivMsgCommand();
