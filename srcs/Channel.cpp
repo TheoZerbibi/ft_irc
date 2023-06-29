@@ -317,5 +317,6 @@ void		Channel::printUserList()
 	while (beg != end)
 	{
 		beg->second->printInfo();
+		beg++;
 	}
 }
