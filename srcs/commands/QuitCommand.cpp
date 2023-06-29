@@ -17,6 +17,7 @@ void QuitCommand::execute(int fds, Client *client)
 
 	if (client) {
 		ircserv.removeClient(fds);
+		// client->quitAllChannel();
 		delete client;
 	}
 	std::cout << "QuitCommand::execute(" << fds << ")" << std::endl;
