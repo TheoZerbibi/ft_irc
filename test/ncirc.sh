@@ -1,16 +1,16 @@
 #!/bin/bash
 
-./proxy/simple-tcp-proxy 1025 | tee output_pipe | tee output_file &
+./proxy/myproxy 1025 | tee output_pipe | tee output_file &
 PID=$?
 
 function exit_properly()
 {
-	if [ -e input ]
+	if [ -e input_pipe ]
 	then
 		rm -f input_pipe
 	fi
 
-	if [ -e output ] 
+	if [ -e output_pipe ] 
 	then
 		rm -f output_pipe
 	fi
@@ -52,13 +52,13 @@ fi
 sleep 1
 
 
-nc localhost 1025 < input_pipe &> /dev/null &
+nc -C localhost 1025 < input_pipe &> /dev/null &
 
 autopong &
 
 echo "nbr of argument $#"
 
-cat Input/registration - Input/testJoin - > input_pipe
+cat Input/registration - Input/join - > input_pipe
 
 #if [ $# -gt 0 ]
 #then
