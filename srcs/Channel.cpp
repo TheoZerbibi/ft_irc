@@ -210,8 +210,8 @@ void		Channel::removeOper(std::string nick, std::string reason)
 
 	if (found != end)
 	{
-		ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(ircserv.getName(), user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
-		this->sendToChannel(found->second, RPL_PART(ircserv.getName(), user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
+		ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
+		this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
 		_operator.erase(found);
 	}
 }
@@ -240,9 +240,9 @@ void		Channel::removeUser(std::string nick, std::string reason)
 		std::cout << "||-->removing user : " << nick << std::endl;
 		_users.erase(found);
 
-		ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(ircserv.getName(), user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
+		ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
 
-		this->sendToChannel(found->second, RPL_PART(ircserv.getName(), user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
+		this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
 	} else
 	{
 		found = _operator.find('@' + nick);
@@ -251,8 +251,8 @@ void		Channel::removeUser(std::string nick, std::string reason)
 
 		if (found != end)
 		{
-			ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(ircserv.getName(), user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
-			this->sendToChannel(found->second, RPL_PART(ircserv.getName(), user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
+			ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
+			this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
 			_operator.erase(found);
 			std::cout << "||--> Removed oper entry : " << nick << std::endl;
 		}

@@ -2,7 +2,7 @@
 #include "ft_irc.hpp"
 #include "User.hpp"
 
-#define RPL_PART(server, userID, channel, reason) (":" + server + " " + userID + " PART " + channel + " " + reason + "\r\n")
+#define RPL_PART(userID, channel, reason) (userID + " PART " + channel + " :" + reason + "\r\n")
 
 class User;
 

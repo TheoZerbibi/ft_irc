@@ -305,11 +305,13 @@ void	User::quitChannel(Channel *chan)
 
 void	User::quitAllChannel()
 {
+	std::vector<Channel *>::iterator	beg = _chans.begin();
+	std::vector<Channel *>::iterator	end = _chans.end();
 
-	while (!_chans.empty())
+	while (beg != end)
 	{
-//		_chans.front()->printUserList();
-		this->quitChannel(_chans.front());
+		this->quitChannel(*beg);
+		beg++;
 	}
 }
 
