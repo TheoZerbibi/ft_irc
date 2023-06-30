@@ -3,7 +3,6 @@
 #include "User.hpp"
 
 #define RPL_PART(server, userID, channel, reason) (":" + server + " " + userID + " PART " + channel + " " + reason + "\r\n")
-# define RPL_PRIVMSG(server, userID, target, message) (":" + userID + "@" + server + " PRIVMSG " + target + " " + message + "\r\n")
 
 class User;
 

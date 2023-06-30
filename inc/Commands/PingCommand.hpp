@@ -3,7 +3,6 @@
 # include "Command.hpp"
 
 # include "User.hpp"
-
 # define RPL_PONG(userId, token) (userId + " PONG :" + token + "\r\n")
 
 class PingCommand : public Command

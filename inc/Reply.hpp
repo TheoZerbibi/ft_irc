@@ -17,6 +17,7 @@
 # define RPL_TOPIC(serv, nick, chan, topic) (":" + serv + " 332 " + nick + " " + chan + " :" + topic)
 
 # define RPL_INVITING(server, client, nick, channel) (":" + server + " 341 " + client + " " + nick + " " + channel)
+# define RPL_PRIVMSG(userID, target, msg) (userID + " PRIVMSG " + target + " :" + msg + "\r\n")
 
 
 

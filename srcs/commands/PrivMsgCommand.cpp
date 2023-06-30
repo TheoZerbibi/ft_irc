@@ -37,13 +37,13 @@ void	PrivMsgCommand::sendMsg(User *user, std::string target, std::string msg)
 	{
 		if (!(chan = ircserv.getChannel(target)))
 			return (ircserv.addReply(Reply(user->getSockfd(), ERR_NOSUCHCHANNEL(ircserv.getName(), user->getNick(), target))));
-		chan->sendToChannel(user, user_id(ircserv.getName(), user->getNick(), user->getUser()) + " PRIVMSG " + target + " :" + msg);
+		chan->sendToChannel(user, RPL_PRIVMSG(user_id(ircserv.getName(), user->getNick(), user->getUser()), target, msg));
 	}
 	else
 	{
 		if (!(user_target = ircserv.getUserByNick(target)))
 			return (ircserv.addReply(Reply(user->getSockfd(), ERR_NOSUCHNICK(ircserv.getName(), target))));
-		return (ircserv.addReply(Reply(user_target->getSockfd(), user_ids(ircserv.getName(), user->getNick(), user->getUser()) + " PRIVMSG " + target + " :" + msg)));
+		ircserv.addReply(Reply(user_target->getSockfd(), RPL_PRIVMSG(user_id(ircserv.getName(), user->getNick(), user->getUser()), target, msg)));
 	}
 }
 
