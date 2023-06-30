@@ -34,7 +34,7 @@ void
 		}
 		else
 		{
-			std::cout << "Channel" << it->first << " doesn't exists" << std::endl;
+			std::cout << "JOIN : Creating channel " << it->first << std::endl;
 			Channel *channel = ircserv.addChannel(it->first);
 			if (channel == NULL) {
 				ircserv.addReply(Reply(fds, ERR_BADCHANMASK(ircserv.getName(), client->getNick(), it->first)));
@@ -134,10 +134,10 @@ void
 {
 	Irc &ircserv = Irc::getInstance();
 
-	ircserv.addReply(Reply(fds, RPL_JOIN(ircserv.getName(), user->getNick(), chan->getName())));
-	ircserv.addReply(Reply(fds, RPL_TOPIC(ircserv.getName(), user->getNick(), user->getUser(), chan->getTopic())));
+	chan->sendToChannel(user, RPL_JOIN(user_id(ircserv.getName(), user->getNick(), user->getUser()), user->getNick(), chan->getName()));
+	if (!chan->getTopic().empty())
+		ircserv.addReply(Reply(fds, RPL_TOPIC(ircserv.getName(), user->getNick(), user->getUser(), chan->getTopic())));
 	ircserv.addReply(Reply(fds, RPL_NAMREPLY(ircserv.getName(), user->getNick(), chan->getType(), chan->getName(), chan->getMemberList())));
 	ircserv.addReply(Reply(fds, RPL_ENDOFNAMES(ircserv.getName(), user->getNick(), chan->getName())));
-
 }
 

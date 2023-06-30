@@ -241,22 +241,22 @@ void		Channel::removeUser(std::string nick, std::string reason)
 		_users.erase(found);
 
 		ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
-
 		this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
-	} else
+	}
+       	else
 	{
-		found = _operator.find('@' + nick);
-		end = _operator.end();
-		std::cout << "||--> Removing oper : " << nick << std::endl;
-
-		if (found != end)
-		{
-			ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
-			this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
-			_operator.erase(found);
-			std::cout << "||--> Removed oper entry : " << nick << std::endl;
-		}
-		//		this->removeOper(nick);
+//		found = _operator.find('@' + nick);
+//		end = _operator.end();
+//		std::cout << "||--> Removing oper : " << nick << std::endl;
+//	
+//		if (found != end)
+//		{
+//			ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
+//			this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
+//			_operator.erase(found);
+//			std::cout << "||--> Removed oper entry : " << nick << std::endl;
+//		}
+		this->removeOper(nick);
 	}
 }
 
@@ -293,7 +293,7 @@ void		Channel::setTopicMode(bool value)
 void
 Channel::sendToChannel(User *user, std::string msg) {
 	std::map<std::string, User *>	userList;
-	Irc								&ircserv = Irc::getInstance();
+	Irc				&ircserv = Irc::getInstance();
 
 	userList.insert(this->_users.begin(), this->_users.end());
 	userList.insert(this->_operator.begin(), this->_operator.end());
@@ -305,7 +305,6 @@ Channel::sendToChannel(User *user, std::string msg) {
 	{
 		if (beg->second != user)
 			ircserv.addReply(Reply(beg->second->getSockfd(), msg));
-		// ircserv.addReply(Reply(beg->second->getSocket(), RPL_PRIVMSG(ircserv.getName(), user_id(ircserv.getName(), user->getNick(), user->getUser()), this->_name, msg)));
 		beg++;
 	}
 }

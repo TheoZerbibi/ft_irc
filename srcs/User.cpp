@@ -60,6 +60,7 @@ User::User():
 
 User::~User()
 {
+	this->quitAllChannel();
 	std::cout << "||-->" << this->_nickname << " is leaving the server" << std::endl;
 }
 
@@ -239,7 +240,7 @@ bool Client::recvData()
 	this->extractCmds();
 	std::cout << "=== Cmd list ==" << std::endl;
 	this->printCmds();
-	std::cout << "Buffer = \'" << this->_buff << "\'" << std::endl;
+//	std::cout << "Buffer = \'" << this->_buff << "\'" << std::endl;
 	return (SUCCESS);
 }
 

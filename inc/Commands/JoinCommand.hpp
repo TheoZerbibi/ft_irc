@@ -5,7 +5,7 @@
 # include "User.hpp"
 # include "Channel.hpp"
 
-#define RPL_JOIN(server, userID, channel) (":" + server + " " + userID + " JOIN :" +  channel + "\r\n")
+#define RPL_JOIN(userid, nick, channel) (userid + " " + nick + " JOIN :" +  channel + "\r\n")
 #define ERR_BANNEDFROMCHAN(server, client, channel) (":" + server + " 474 " + client + " " + channel + " :Cannot join channel (+b)\r\n")
 #define ERR_BADCHANMASK(server, client, channel) (":" + server + " 476 " + client + " " + channel + " :Bad Channel Mask\r\n")
 # define ERR_BADCHANNELKEY(server, client, channel) (":" + server + " 475 " + client + " " + channel + " :Cannot join channel (+k)\r\n")

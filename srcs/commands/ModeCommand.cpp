@@ -151,7 +151,7 @@ void ModeCommand::execute(int fds, Client *client)
 	else	
 	{
 		std::cout << "MODE: User operation (to be implemented soon)" << std::endl;
-		//		executeUserMode(fds, dynamic_cast<User *>(client), args);
+		executeUserMode(fds, dynamic_cast<User *>(client), args);
 	}
 	std::cout << "[" << this->_name << "] : ModeCommand executed !" << std::endl;
 }
@@ -205,21 +205,19 @@ int			ModeCommand::checkMode(char mode, bool modmode, User *user, Channel *chan,
 }
 
 
-//	void	ModeCommand::printUserMode(int fds, User *user, std::string nickname)
-//	{
-//		Irc				&ircserv = Irc::getInstance();
-//		std::string			modes = "";
-//	
-//		if (nickname != user->getNick())
-//		{
-//			return (ircserv.addReply(Reply(fds, ERR_USERSDONTMATCHVIEW(ircserv.getName(), nickname))));
-//		}
-//		if (user->isInvis())
-//			modes += "i";
-//		if (user->isOper())
-//			modes += "o";
-//		ircserv.addReply(Reply(fds, RPL_UMODEIS(ircserv.getName(), nickname, modes)));
-//	}
+void	ModeCommand::printUserMode(int fds, User *user, std::string nickname)
+{
+	Irc				&ircserv = Irc::getInstance();
+	std::string			modes = "";
+
+	if (nickname != user->getNick())
+		return (ircserv.addReply(Reply(fds, ERR_USERSDONTMATCHVIEW(ircserv.getName(), nickname))));
+	if (user->isInvis())
+		modes += "i";
+	if (user->isOper())
+		modes += "o";
+	ircserv.addReply(Reply(fds, RPL_UMODEIS(ircserv.getName(), nickname, modes)));
+}
 
 //	void	applyUserMode(int fds, User *user, Client *target, std::string &modstr, std::vector<std::string> *modvalue)
 //	{
@@ -250,25 +248,27 @@ int			ModeCommand::checkMode(char mode, bool modmode, User *user, Channel *chan,
 //		}
 //	}
 
-//	void ModeCommand::executeUserMode(int fds, User *user, std::vector<std::string> &args)
-//	{
-//		Irc 	&ircserv= Irc::getInstance();
-//	
-//		const User		*target = ircserv.getUserByNick(args.at(0));
-//		std::string		modestr;
-//	
-//		if (!target)
-//			return (ircserv.addReply(Reply(fds, ERR_NOSUCHNICK(ircserv.getName(), user->getNick()))));
-//		args.erase(args.begin());
-//		if (args.size() == 0)
-//			return (printUserMode(fds, user, target->getNick()));
-//		if (target != user)
-//			return (ircserv.addReply(Reply(fds, ERR_USERSDONTMATCH(ircserv.getName(), user->getNick()))));
-//		args.erase(args.begin());
-//		modestr = args.at(0);
-//		std::cout << "modestr = " << modestr << std::endl;
-//		args.erase(args.begin());
-//	}
+void	ModeCommand::executeUserMode(int fds, User *user, std::vector<std::string> &args)
+{
+	Irc 	&ircserv= Irc::getInstance();
+
+	const User		*target = ircserv.getUserByNick(args.at(0));
+	std::string		modestr;
+
+	if (!target)
+		return (ircserv.addReply(Reply(fds, ERR_NOSUCHNICK(ircserv.getName(), user->getNick()))));
+	args.erase(args.begin());
+	if (args.size() == 0)
+	{
+		return (printUserMode(fds, user, target->getNick()));
+	}
+	if (target != user)
+		return (ircserv.addReply(Reply(fds, ERR_USERSDONTMATCH(ircserv.getName(), user->getNick()))));
+//	args.erase(args.begin());
+//	modestr = args.at(0);
+//	std::cout << "modestr = " << modestr << std::endl;
+//	args.erase(args.begin());
+}
 
 //	void ModeCommand::changeUserMode(int fds, User *user, Client *target, std::vector<std::string> &args)
 //	{

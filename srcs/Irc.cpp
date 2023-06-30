@@ -125,7 +125,6 @@ User		*Irc::getUserByNick(std::string const nick) const
 	{
 		if (beg->second->isRegistered())
 		{
-			std::cout << "MODE : found a user named " << beg->second->getNick() << "|| searching for nick = " << nick << std::endl;
 			if (beg->second->getNick() == nick)
 				return (dynamic_cast<User *>(beg->second));
 		}
