@@ -10,6 +10,12 @@ _name("PING")
 PingCommand::~PingCommand(void)
 {}
 
+bool
+	PingCommand::cantExecute(Client *client)
+{
+	return (client->isRegistered());
+}
+
 void PingCommand::execute(int fds, Client *client)
 {
 	std::string	cmd =			client->getCmds().front();

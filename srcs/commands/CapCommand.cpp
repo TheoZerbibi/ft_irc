@@ -9,6 +9,13 @@ _name("CAP")
 CapCommand::~CapCommand(void)
 {}
 
+bool
+	CapCommand::cantExecute(Client *client)
+{
+	(void) client;
+	return (true);
+}
+
 void CapCommand::execute(int fds, Client *client)
 {
 	(void) fds;

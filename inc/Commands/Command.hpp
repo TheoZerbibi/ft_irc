@@ -28,7 +28,8 @@ class Command
 
 		Command();
 		virtual ~Command();
-		virtual void execute(int fds, Client *client) = 0;
+		virtual void	execute(int fds, Client *client) = 0;
+		virtual bool	cantExecute(Client *client);
 
 		std::vector<std::string> splitStr(const std::string &cmd, const char sep);
 		std::vector<std::string> splitArguments(const std::string &cmd);

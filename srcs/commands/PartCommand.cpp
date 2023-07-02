@@ -9,6 +9,12 @@ _name("PART")
 PartCommand::~PartCommand(void)
 {}
 
+bool
+	PartCommand::cantExecute(Client *client)
+{
+	return (client->isRegistered());
+}
+
 void PartCommand::execute(int fds, Client *client)
 {
 	(void) fds;

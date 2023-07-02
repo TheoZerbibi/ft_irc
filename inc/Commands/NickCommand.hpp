@@ -15,6 +15,7 @@ public:
 	NickCommand();
 	virtual ~NickCommand();
 	void execute(int fds, Client *client);
+	bool cantExecute(Client *client);
 };
 
 #endif

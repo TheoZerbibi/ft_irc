@@ -9,6 +9,12 @@ _name("KICK")
 KickCommand::~KickCommand(void)
 {}
 
+bool
+	KickCommand::cantExecute(Client *client)
+{
+	return (client->isRegistered());
+}
+
 void KickCommand::execute(int fds, Client *client)
 {
 	(void) fds;

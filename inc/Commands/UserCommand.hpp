@@ -12,6 +12,7 @@ class UserCommand : public Command
 		UserCommand();
 		virtual ~UserCommand();
 		void execute(int fds, Client *client);
+		bool cantExecute(Client *client);
 };
 
 #endif

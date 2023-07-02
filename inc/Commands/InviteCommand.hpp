@@ -12,6 +12,7 @@ class InviteCommand : public Command
 		InviteCommand();
 		virtual ~InviteCommand();
 		void execute(int fds, Client *client);
+		bool cantExecute(Client *client);
 };
 
 #endif

@@ -9,8 +9,13 @@ _name("TOPIC")
 TopicCommand::~TopicCommand(void)
 {}
 
-//void TopicCommand::executeTopic(int fds, User *client, Channel *chan)
+bool
+	TopicCommand::cantExecute(Client *client)
+{
+	return (client->isRegistered());
+}
 
+//void TopicCommand::executeTopic(int fds, User *client, Channel *chan)
 void TopicCommand::execute(int fds, Client *client)
 {
 	std::string			cmd = client->getCmds().front();

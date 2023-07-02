@@ -15,6 +15,7 @@ public:
 	PrivMsgCommand();
 	virtual ~PrivMsgCommand();
 	void execute(int fds, Client *client);
+	bool cantExecute(Client *client);
 };
 
 #endif

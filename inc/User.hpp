@@ -84,10 +84,11 @@ class User : public Client{
 		void					addChannel(Channel *chan);
 		void					removeChannel(Channel *chan);
 		void					joinChannel(std::string channame, std::string key);
-		void					quitChannel(Channel *chan);
-		void					quitAllChannel();
+		void					quitChannel(Channel *chan, std::string const &msg);
+		void					quitAllChannel(std::string const &msg = "Leaving.");
 		std::vector<Channel *>::iterator	getChannel(Channel *chan);
 		void					inviteOnChannel(Channel *chan);
+		void					removeInvite(Channel *chan);
 
 		//Utils
 		void	printInvited();

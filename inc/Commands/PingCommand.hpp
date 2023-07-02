@@ -13,6 +13,7 @@ public:
 	PingCommand();
 	virtual ~PingCommand();
 	void execute(int fds, Client *client);
+	bool cantExecute(Client *client);
 };
 
 #endif

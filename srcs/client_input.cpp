@@ -100,10 +100,14 @@ int Irc::manageCommand()
 				continue ;
 			}
 			if (commandList.find(cmd) != commandList.end()) {
+				if (!commandList[cmd]->cantExecute(beg->second)) {
+					beg->second->getCmds().pop_front();
+					continue ;
+				}
 				commandList[cmd]->execute(beg->first, beg->second);
 				if (cmd == "QUIT") {
 					std::cout << "QUITCOMMAND" << std::endl;
-					_clients.erase(beg++);
+					beg++;
 					continue;
 				}
 			}

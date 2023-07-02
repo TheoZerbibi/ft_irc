@@ -9,6 +9,18 @@ _name("PASS")
 PassCommand::~PassCommand(void)
 {}
 
+
+bool
+	PassCommand::cantExecute(Client *client)
+{
+	Irc	 &ircserv = Irc::getInstance();
+
+	if (client->isRegistered()) {
+		ircserv.addReply(Reply(client->getSockfd(), ERR_ALREADYREGISTERED(ircserv.getName(), client->getNick())));
+		return (false);
+	}
+	return (true);
+}
 void PassCommand::execute(int fds, Client *client)
 {
 	std::string			cmd = client->getCmds().front();

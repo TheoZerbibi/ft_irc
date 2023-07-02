@@ -39,7 +39,7 @@ class	Irc{
 
 		//Setter
 		void			addClient(int const &sfd);
-		void			removeClient(int const &sfd);
+		void			removeClient(int const &sfd, std::string const &msg = ".");
 
 		//Getter
 		const	int		&getSocket() const;

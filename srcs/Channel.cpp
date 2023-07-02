@@ -204,22 +204,31 @@ void		Channel::removeOper(User *user, std::string reason)
 
 void		Channel::removeOper(std::string nick, std::string reason)
 {
-	std::map<std::string, User *>::iterator	found = _operator.find('@' + nick);
-	std::map<std::string, User *>::iterator	end = _operator.end();
-	Irc			&ircserv = Irc::getInstance();
+	Irc												&ircserv = Irc::getInstance();
+	std::map<std::string, User *>::iterator	found =	_operator.find('@' + nick);
+	std::map<std::string, User *>::iterator	end =	_operator.end();
 
 	if (found != end)
 	{
+
 		ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
 		this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
+
 		_operator.erase(found);
+	
+		if (this->_operator.empty() && this->_users.empty()) {
+			std::cout << "REMOVING CHANNEL : " << this->_name << std::endl;
+			ircserv.removeChannel(this);
+		}
+		else if (this->_operator.empty())
+			this->fillOperPos();
 	}
 }
 
 void		Channel::fillOperPos()
 {
-	std::cout << "PROMOTING :" << _users.at(0)->getNick() << " at Oper position" << std::endl;
-	this->setOper(_users.at(0)->getNick(), ADDING);
+	std::cout << "PROMOTING :" << this->_users.begin()->first << " at Oper position" << std::endl;
+	this->setOper(this->_users.begin()->first, ADDING);
 }
 
 void		Channel::removeUser(User *user, std::string reason)
@@ -229,35 +238,21 @@ void		Channel::removeUser(User *user, std::string reason)
 
 void		Channel::removeUser(std::string nick, std::string reason)
 {
+	Irc										&ircserv = Irc::getInstance();
 	std::map<std::string, User *>::iterator	found = _users.find(nick);
 	std::map<std::string, User *>::iterator	end = _users.end();
-	Irc				&ircserv = Irc::getInstance();
 
 
 	std::cout << "||--> deciding user status : " << nick << std::endl;
 	if (found != end)
 	{
 		std::cout << "||-->removing user : " << nick << std::endl;
-		_users.erase(found);
 
 		ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
 		this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
-	}
-       	else
-	{
-//		found = _operator.find('@' + nick);
-//		end = _operator.end();
-//		std::cout << "||--> Removing oper : " << nick << std::endl;
-//	
-//		if (found != end)
-//		{
-//			ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
-//			this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
-//			_operator.erase(found);
-//			std::cout << "||--> Removed oper entry : " << nick << std::endl;
-//		}
+		_users.erase(found);
+	} else
 		this->removeOper(nick);
-	}
 }
 
 void		Channel::setOper(std::string nick, bool value)
@@ -301,6 +296,7 @@ Channel::sendToChannel(User *user, std::string msg) {
 	std::map<std::string, User *>::iterator beg = userList.begin();
 	std::map<std::string, User *>::iterator end = userList.end();
 
+	this->printUserList();
 	while (beg != end)
 	{
 		if (beg->second != user)
@@ -310,10 +306,11 @@ Channel::sendToChannel(User *user, std::string msg) {
 }
 
 
-void		Channel::printUserList()
+void
+	Channel::printUserList(void)
 {
 	std::map<std::string, User *>	userList;
-	std::cout << "LIst all user" << std::endl;
+	std::cout << "List all user" << std::endl;
 	userList.insert(this->_users.begin(), this->_users.end());
 	userList.insert(this->_operator.begin(), this->_operator.end());
 

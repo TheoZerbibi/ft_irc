@@ -54,6 +54,7 @@ class ModeCommand : public Command
 		ModeCommand();
 		virtual ~ModeCommand();
 		virtual void execute(int fds, Client *client);
+		bool cantExecute(Client *client);
 };
 
 

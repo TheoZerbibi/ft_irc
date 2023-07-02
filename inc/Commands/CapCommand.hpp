@@ -10,6 +10,7 @@ public:
 	CapCommand();
 	virtual ~CapCommand();
 	void execute(int fds, Client *client);
+	bool cantExecute(Client *client);
 };
 
 #endif

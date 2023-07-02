@@ -9,6 +9,12 @@ _name("INVITE")
 InviteCommand::~InviteCommand(void)
 {}
 
+bool
+	InviteCommand::cantExecute(Client *client)
+{
+	return (client->isRegistered());
+}
+
 void InviteCommand::execute(int fds, Client *client)
 {
 	Irc					&ircserv =	Irc::getInstance();

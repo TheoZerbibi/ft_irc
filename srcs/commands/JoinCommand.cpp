@@ -28,6 +28,7 @@ void
 				return (ircserv.addReply(Reply(fds, ERR_INVITEONLYCHAN(ircserv.getName(), client->getNick(), channel->getName()))));
 			if (!channel->getKey().empty() && channel->getKey() != it->second)
 				return (ircserv.addReply(Reply(fds, ERR_BADCHANNELKEY(ircserv.getName(), client->getNick(), channel->getName()))));
+			user->removeInvite(channel);
 			user->addChannel(channel);
 			channel->addUser(user);
 			rplJoin(fds, user, channel);
@@ -74,6 +75,12 @@ std::map<std::string, std::string>	JoinCommand::parseArg(std::vector<std::string
 		chans_beg++;
 	}
 	return (channels);
+}
+
+bool
+	JoinCommand::cantExecute(Client *client)
+{
+	return (client->isRegistered());
 }
 
 void JoinCommand::execute(int fds, Client *client)
@@ -134,10 +141,10 @@ void
 {
 	Irc &ircserv = Irc::getInstance();
 
-	chan->sendToChannel(user, RPL_JOIN(user_id(ircserv.getName(), user->getNick(), user->getUser()), user->getNick(), chan->getName()));
+	chan->sendToChannel(user, RPL_JOIN(user_id(ircserv.getName(), user->getNick(), user->getUser()), chan->getName()));
 	if (!chan->getTopic().empty())
 		ircserv.addReply(Reply(fds, RPL_TOPIC(ircserv.getName(), user->getNick(), user->getUser(), chan->getTopic())));
 	ircserv.addReply(Reply(fds, RPL_NAMREPLY(ircserv.getName(), user->getNick(), chan->getType(), chan->getName(), chan->getMemberList())));
-	ircserv.addReply(Reply(fds, RPL_ENDOFNAMES(ircserv.getName(), user->getNick(), chan->getName())));
+	ircserv.addReply(Reply(fds, RPL_ENDOFNAMES(ircserv.getName(), user->getNick())));
 }
 

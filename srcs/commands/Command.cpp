@@ -14,6 +14,13 @@ void Command::execute(int fds, Client *client)
 	std::cout << this->_name << std::endl;
 }
 
+bool
+	Command::cantExecute(Client *client)
+{
+	(void) client;
+	return (true);
+}
+
 std::vector<std::string> Command::splitStr(const std::string &cmd, const char sep)
 {
 	std::vector<std::string> tokens;

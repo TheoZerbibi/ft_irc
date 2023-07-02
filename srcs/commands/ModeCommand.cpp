@@ -9,6 +9,12 @@ _name("MODE")
 ModeCommand::~ModeCommand(void)
 {}
 
+bool
+	ModeCommand::cantExecute(Client *client)
+{
+	return (client->isRegistered());
+}
+
 void	ModeCommand::printChannelMode(int fds, User *user, Channel *chan)
 {
 	Irc				&ircserv = Irc::getInstance();

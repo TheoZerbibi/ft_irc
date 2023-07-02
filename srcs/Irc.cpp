@@ -141,7 +141,7 @@ void	Irc::addClient(int const &sfd)
 	_clients.insert(std::make_pair(sfd, client));
 }
 
-void	Irc::removeClient(int const &sfd)
+void	Irc::removeClient(int const &sfd, std::string const &msg)
 {
 	std::map<int, Client *>::iterator it = _clients.find(sfd);
 	std::map<int, Client *>::iterator end = _clients.end();
@@ -150,8 +150,10 @@ void	Irc::removeClient(int const &sfd)
 	{
 		if (it->second->isRegistered()) {
 			User	*user = dynamic_cast<User *>(it->second);
-			user->quitAllChannel();
+			user->quitAllChannel(msg);
 		}
+		delete it->second;
+		_clients.erase(it);
 	}
 }
 

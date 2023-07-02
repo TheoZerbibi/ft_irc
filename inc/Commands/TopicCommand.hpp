@@ -12,6 +12,7 @@ class TopicCommand : public Command
 		TopicCommand();
 		virtual ~TopicCommand();
 		void execute(int fds, Client *client);
+		bool cantExecute(Client *client);
 };
 
 #endif

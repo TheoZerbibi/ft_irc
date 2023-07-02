@@ -9,6 +9,13 @@ _name("PRIVMSG")
 PrivMsgCommand::~PrivMsgCommand(void)
 {}
 
+
+bool
+	PrivMsgCommand::cantExecute(Client *client)
+{
+	return (client->isRegistered());
+}
+
 void PrivMsgCommand::execute(int fds, Client *client)
 {
 	(void) fds;
@@ -23,7 +30,7 @@ void PrivMsgCommand::execute(int fds, Client *client)
 	targets = splitStr(args.at(0), ',');
 	removeDuplicate(targets);
 
-	sendAllMsg(dynamic_cast<User *>(client), targets, args.at(1));
+	this->sendAllMsg(dynamic_cast<User *>(client), targets, args.at(1));
 	std::cout << "[" << this->_name << "] : PrivMsgCommand executed !" << std::endl;
 }
 
@@ -54,7 +61,7 @@ void	PrivMsgCommand::sendAllMsg(User *user, std::vector<std::string> targets, st
 
 	while (beg != end)
 	{
-		sendMsg(user, *beg, msg);
+		this->sendMsg(user, *beg, msg);
 		beg++;
 	}
 }

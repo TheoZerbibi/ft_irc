@@ -21,7 +21,7 @@
 
 
 
-#define RPL_ENDOFNAMES(server, user, channel)  (":" + server + " 366 " + user + ":End of /NAMES list")
+#define RPL_ENDOFNAMES(server, user)  (":" + server + " 366 " + user + " :End of /NAMES list" + "\r\n")
 
 #define ERR_NOSUCHNICK(server, user) (":" + server + " 401 " + user + " :No such user")
 

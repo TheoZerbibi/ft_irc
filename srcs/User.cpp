@@ -60,7 +60,6 @@ User::User():
 
 User::~User()
 {
-	this->quitAllChannel();
 	std::cout << "||-->" << this->_nickname << " is leaving the server" << std::endl;
 }
 
@@ -175,6 +174,13 @@ bool	User::isInvited(Channel *chan)
 	return (false);
 }
 
+void
+	User::removeInvite(Channel *chan)
+{
+	if (isInvited(chan))
+		this->_invited.erase(getChannel(chan));
+}
+
 void	User::printInvited()
 {
 	Irc	&ircserv = Irc::getInstance();
@@ -279,39 +285,47 @@ void	User::removeChannel(Channel *chan)
 	}
 }
 
-void	User::quitChannel(Channel *chan)
+void	User::quitChannel(Channel *chan, std::string const &msg)
 {
-	Irc			&ircserv = Irc::getInstance();
-	std::vector<Channel *>::iterator	beg = _chans.begin();
-	std::vector<Channel *>::iterator	end = _chans.end();
-
 	std::cout << "||-->" << this->_nickname << " Quiting channel : " << chan->getName() <<  std::endl;
-	while (beg != end && *beg != chan )
-		beg++;
-	if (*beg == chan)
-		this->_chans.erase(beg);
-	std::cout << "||--> Try removing user : " << _nickname <<  std::endl;
-	chan->removeUser(this->_nickname);
-	if (chan->isEmpty())
-	{
-		std::cout << "||--> Removing channel : " << chan->getName() << std::endl;
-		return (ircserv.removeChannel(chan));
-	}
-	std::cout << "||--> Checking if oper pos is vacant" << std::endl;
-	if (chan->noOper())
-	{
-		return (chan->fillOperPos());
-	}
+	chan->removeUser(this->_nickname, msg);
+	this->removeInvite(chan);
+	this->_chans.erase(getChannel(chan));
 }
 
-void	User::quitAllChannel()
+// void	User::quitChannel(Channel *chan, std::string const &msg)
+// {
+// 	Irc			&ircserv = Irc::getInstance();
+// 	std::vector<Channel *>::iterator	beg = _chans.begin();
+// 	std::vector<Channel *>::iterator	end = _chans.end();
+
+// 	std::cout << "||-->" << this->_nickname << " Quiting channel : " << chan->getName() <<  std::endl;
+// 	while (beg != end && *beg != chan )
+// 		beg++;
+// 	if (*beg == chan)
+// 		this->_chans.erase(beg);
+// 	std::cout << "||--> Try removing user : " << _nickname <<  std::endl;
+// 	chan->removeUser(this->_nickname, msg);
+// 	if (chan->isEmpty())
+// 	{
+// 		std::cout << "||--> Removing channel : " << chan->getName() << std::endl;
+// 		return (ircserv.removeChannel(chan));
+// 	}
+// 	std::cout << "||--> Checking if oper pos is vacant" << std::endl;
+// 	if (chan->noOper())
+// 	{
+// 		return (chan->fillOperPos());
+// 	}
+// }
+
+void	User::quitAllChannel(std::string const &msg)
 {
 	std::vector<Channel *>::iterator	beg = _chans.begin();
 	std::vector<Channel *>::iterator	end = _chans.end();
 
 	while (beg != end)
 	{
-		this->quitChannel(*beg);
+		this->quitChannel(*beg, msg);
 		beg++;
 	}
 }

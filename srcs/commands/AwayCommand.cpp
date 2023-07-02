@@ -9,6 +9,12 @@ _name("AWAY")
 AwayCommand::~AwayCommand(void)
 {}
 
+bool
+	AwayCommand::cantExecute(Client *client)
+{
+	return (client->isRegistered());
+}
+
 void AwayCommand::execute(int fds, Client *client)
 {
 	(void) fds;

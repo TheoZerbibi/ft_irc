@@ -9,6 +9,13 @@ _name("NICK")
 NickCommand::~NickCommand(void)
 {}
 
+bool
+	NickCommand::cantExecute(Client *client)
+{
+	(void)client;
+	return (true);
+}
+
 void NickCommand::execute(int fds, Client *client)
 {
 	std::string	cmd = client->getCmds().front();

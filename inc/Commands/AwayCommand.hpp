@@ -10,8 +10,9 @@ private:
 	std::string _name;
 public:
 	AwayCommand();
-	virtual ~AwayCommand();
-	void execute(int fds, Client *client);
+	virtual	~AwayCommand();
+	void	execute(int fds, Client *client);
+	bool	cantExecute(Client *client);
 };
 
 #endif

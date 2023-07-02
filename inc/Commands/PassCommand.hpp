@@ -14,6 +14,7 @@ public:
 	PassCommand();
 	virtual ~PassCommand();
 	void execute(int fds, Client *client);
+	bool cantExecute(Client *client);
 };
 
 #endif

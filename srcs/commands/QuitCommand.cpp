@@ -9,18 +9,21 @@ _name("QUIT")
 QuitCommand::~QuitCommand(void)
 {}
 
-// Actuellement, si tu rejoint un chan et que tu /quit, ca segfault
+bool
+	QuitCommand::cantExecute(Client *client)
+{
+	return (client->isRegistered());
+}
 
+// Actuellement, si tu rejoint un chan et que tu /quit, ca segfault
 void QuitCommand::execute(int fds, Client *client)
 {
 	Irc		&ircserv = Irc::getInstance();
+	std::string	cmd = client->getCmds().front();
+	std::vector<std::string>	args = splitArguments(cmd);
+	
+	std::cout << "ARGS : " << args.size() << std::endl;
 
-	if (client->isRegistered()) {
-		User		*user = dynamic_cast<User *>(client);
-
-		user->quitAllChannel();
-		ircserv.removeClient(fds);
-		delete client;
-	}
+	ircserv.removeClient(fds);
 	std::cout << "QuitCommand::execute(" << fds << ")" << std::endl;
 }

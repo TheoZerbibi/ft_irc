@@ -12,6 +12,7 @@ public:
 	KickCommand();
 	virtual ~KickCommand();
 	void execute(int fds, Client *client);
+	bool cantExecute(Client *client);
 };
 
 

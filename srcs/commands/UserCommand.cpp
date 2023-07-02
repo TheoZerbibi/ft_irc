@@ -10,15 +10,25 @@ _name("USER")
 UserCommand::~UserCommand(void)
 {}
 
+bool
+	UserCommand::cantExecute(Client *client)
+{
+	Irc	 &ircserv = Irc::getInstance();
+
+	if (client->isRegistered()) {
+		ircserv.addReply(Reply(client->getSockfd(), ERR_ALREADYREGISTERED(ircserv.getName(), client->getNick())));
+		return (false);
+	}
+	return (true);
+}
+
 void UserCommand::execute(int fds, Client *client)
 {
 	std::string	cmd = client->getCmds().front();
 	std::vector<std::string> arguments = this->splitArguments(cmd);
 	Irc	&ircserv = Irc::getInstance();
 
-	if (client->isRegistered())
-		ircserv.addReply(Reply(fds, ERR_ALREADYREGISTERED(ircserv.getName(), client->getNick())));
-	else if (arguments.size() != 4)
+	if (arguments.size() != 4)
 		ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name)));
 	else {
 		client->setUser(arguments[0]);
