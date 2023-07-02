@@ -52,10 +52,6 @@ void	ModeCommand::printChannelMode(int fds, User *user, Channel *chan)
 
 void	ModeCommand::appChannelMode(char mode, int modmode, Channel *chan, std::string *arg)
 {
-	(void)mode;
-	(void)modmode;
-	(void)chan;
-	(void)arg;
 	std::cout << "MODE : Applying mode" << std::endl;
 	if (mode == 'i')
 		chan->setInvit(modmode);
@@ -98,7 +94,9 @@ void	ModeCommand::applyChannelMode(User *user, Channel *chan, std::string &modst
 {
 	std::string::iterator	beg = modstr.begin();
 	std::string::iterator	end = modstr.end();
-	int			modmode = ADDING;
+	int						modmode = ADDING;
+	int						needParam = false;
+	Irc						&ircserv = Irc::getInstance();
 
 	while (beg != end)
 	{
@@ -106,13 +104,18 @@ void	ModeCommand::applyChannelMode(User *user, Channel *chan, std::string &modst
 			modmode = (*beg == '+' ? ADDING : REMOVING);
 		else if (checkMode(*beg, modmode, user, chan, arg))
 		{
-			if (needArg(*beg, modmode))
+			needParam = needArg(*beg, modmode);
+			if (needParam)
 			{
 				this->appChannelMode(*beg, modmode, chan, &arg.at(0));
 				arg.erase(arg.begin());
 			}
 			else
 				this->appChannelMode(*beg, modmode, chan, NULL);
+		if (!needParam)
+			ircserv.addReply(Reply(user->getSockfd(), RPL_MODE(user_id(ircserv.getName(), user->getNick(), user->getUser()), chan->getName(), (modmode == ADDING ? '+' : '-') + *beg)));
+		else
+			ircserv.addReply(Reply(user->getSockfd(), RPL_MODEWITHARG(user_id(ircserv.getName(), user->getNick(), user->getUser()), chan->getName(), (modmode == ADDING ? '+' : '-') + *beg, arg.at(0))));
 		}
 		++beg;
 	}

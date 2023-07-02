@@ -23,7 +23,7 @@
 # define ERR_USERSDONTMATCH(server, user) (":" + server + " 502 " + user + " :Cant change mode for other users\r\n")
 
 # define RPL_MODE(userID, channel, mode) (userID + " MODE " + channel + " " + mode + "\r\n")
-# define RPL_MODEWITHARG(channel, mode, param) (userID + " MODE " + channel + " " + mode + " " + param + "\r\n")
+# define RPL_MODEWITHARG(userID, channel, mode, param) (userID + " MODE " + channel + " " + mode + " " + param + "\r\n")
 
 //#define ERR_INVALIDMODEPARAM(server, user,)
 

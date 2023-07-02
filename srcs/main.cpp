@@ -2,18 +2,14 @@
 
 /*
 ** TODO:
-**   - PRIVMSG
-**     - Msg system
 **   - PART
 **   - KICK
 **   - Server Ping
 **   - Main args
-**   - INVITE - Send msg to user invited
 ** BUGFIX:
-**   - Fix Segfault multi user in chan, one user /quit
-**   - Fix sendMessage method in channel
-**   - Fix display in channel when user leave
-**   - Fix when player in chan is not on channel window, the message doesn't appear
+**   - Fix Mode +i, user not invited can join
+**   - Fix /invite dont send message in chan + to user invited
+**   - User dont invited can join and send message in channel
 **
 */
 
