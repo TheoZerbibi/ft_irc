@@ -32,7 +32,9 @@ void NickCommand::execute(int fds, Client *client)
 		ircserv.addReply(Reply(fds, ERR_NICKNAMEINUSE(ircserv.getName(), client->getNick(), nick)));
 		return ;
 	}
+	ircserv.addReply(Reply(fds, RPL_NICK(user_id(ircserv.getName(), client->getNick(), client->getUser()), nick)));
 	client->setNick(nick);
 	std::cout << "NickCommand::execute(" << fds << ", " << client->getNick() << ")" << std::endl;
-	ircserv.promoteClient(client);
+	if (!client->isRegistered())
+		ircserv.promoteClient(client);
 }

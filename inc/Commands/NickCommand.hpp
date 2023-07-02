@@ -5,6 +5,7 @@
 # include "User.hpp"
 
 # define ERR_NICKNAMEINUSE(serv, client, nickname) (":" + serv + " 433 " + client + " " + nickname + " ::Nickname is already in use")
+# define RPL_NICK(userID, nick) (userID + " NICK " +  nick + "\r\n")
 
 
 class NickCommand : public Command

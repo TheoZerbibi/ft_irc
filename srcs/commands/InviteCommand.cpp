@@ -39,5 +39,6 @@ void InviteCommand::execute(int fds, Client *client)
 		return (ircserv.addReply(Reply(fds, ERR_USERONCHANNEL(ircserv.getName(), user->getNick(), args.at(1)))));
 	target->inviteOnChannel(chan);
 	ircserv.addReply(Reply(fds, RPL_INVITING(ircserv.getName(), user->getNick(), args.at(0), args.at(1))));
+	ircserv.addReply(Reply(target->getSockfd(), RPL_INVITE(user_id(ircserv.getName(), client->getNick(), client->getUser()), target->getNick(), chan->getName())));
 	std::cout << "[" << this->_name << "] : InviteCommand executed !" << std::endl;
 }
