@@ -17,8 +17,6 @@ bool
 
 void PartCommand::execute(int fds, Client *client)
 {
-	(void) fds;
-	(void) client;
 	Irc					&ircserv = Irc::getInstance();
 	std::string				cmd =	client->getCmds().front();
 	std::vector<std::string>		args = splitArguments(cmd);

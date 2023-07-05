@@ -4,12 +4,11 @@
 ** TODO:
 **   - PART
 **   - KICK
-**   - Server Ping
 **   - Main args
 ** BUGFIX:
 **   - Fix Mode +i, user not invited can join
-**   - Fix /invite dont send message in chan + to user invited
-**   - User dont invited can join and send message in channel
+**   - Fix /invite dont send message in chan + to invited user
+**   - User not invited can join and send message in channel
 **
 */
 
