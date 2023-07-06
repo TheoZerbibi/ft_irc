@@ -2,13 +2,12 @@
 
 /*
 ** TODO:
-**   - PART
 **   - KICK
 **   - Main args
 ** BUGFIX:
 **   - Fix Mode +i, user not invited can join
 **   - Fix /invite dont send message in chan + to invited user
-**   - User not invited can join and send message in channel
+**   - User not invited can join
 **
 */
 
