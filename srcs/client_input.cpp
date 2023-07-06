@@ -25,14 +25,10 @@ int	Irc::receive_client_data(Client *user)
 		fd = user->getSockfd();
 		if (FD_ISSET(fd, &fds[READ]))
 		{
-//			if (user->isRegistered())
-//				Ctype = "User";
-//			std::cout << Ctype;
 			std::cout << "--- > New message from fd : " << fd <<  std::endl;
 			if (user->recvData() <= 0)
 			{
 				FD_CLR(fd, &fds[MASTER]);
-				// Need to remove client from client list
 				return (0);
 			}
 		}

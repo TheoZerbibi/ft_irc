@@ -218,28 +218,38 @@ void	Irc::addReply(Reply reply)
 	this->_replies.push_back(reply);
 }
 
-void	Irc::mergeReplies()
+Reply	Irc::mergeReply()
 {
 	std::vector<Reply>::iterator	beg = _replies.begin();
-	std::vector<Reply>::iterator	end = _replies.begin();
-	std::vector<Reply>::iterator	crawler;
+	Reply	rpl = *beg;
+	beg = _replies.erase(beg);
+	std::vector<Reply>::iterator	end = _replies.end();
 
 	while (beg != end)
 	{
-		crawler = beg + 1;
-		std::cout << "merged \'" << beg->getMessage() << " + " << crawler->getMessage() << std::endl;
-		while (crawler != end)
+		if (rpl.getClientFd() != beg->getClientFd())
+			beg++;
+		else
 		{
-			if (beg->getClientFd() == crawler->getClientFd())
-			{
-				beg->setMessage(beg->getMessage() + crawler->getMessage());
-				crawler = _replies.erase(crawler);
-			}
-			else
-				crawler++;
+			rpl += *beg;
+			beg = _replies.erase(beg);
+			end = _replies.end();
 		}
-		++beg;
 	}
+	return (rpl);
+}
+
+void	Irc::mergeReplies()
+{
+	std::vector<Reply>	newRpls;
+	Reply			rpl;
+
+	while (!_replies.empty())
+	{
+		rpl = mergeReply();
+		newRpls.push_back(rpl);
+	}
+	_replies = newRpls;
 }
 //	
 //	// erase return next element after the erased one
@@ -338,11 +348,11 @@ Channel	*Irc::getChannel(std::string name)
 void	Irc::removeChannel(Channel *channel)
 {
 
-//	if (this->channelExists(channel->getName())) 
-//	{
-		_channels.erase(channel->getName());
-		delete channel;
-//	}
+	//	if (this->channelExists(channel->getName())) 
+	//	{
+	_channels.erase(channel->getName());
+	delete channel;
+	//	}
 }
 
 void	Irc::addUserToChannel(User *user, Channel *chan)

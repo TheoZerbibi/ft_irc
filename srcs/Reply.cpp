@@ -43,3 +43,16 @@ int	Reply::send()
 	}
 	return (0);
 }
+
+Reply	&Reply::operator=(Reply const &rhs)
+{
+	this->_clientFd = rhs.getClientFd();
+	this->_message = rhs.getMessage();
+	return (*this);
+}
+
+Reply	&Reply::operator+=(Reply const &rhs)
+{
+	this->_message += rhs.getMessage();
+	return (*this);
+}

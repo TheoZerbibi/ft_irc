@@ -47,7 +47,7 @@
 class Reply
 {
 	public:
-		Reply(int clientFd, std::string message);
+		Reply(int clientFd = 0, std::string message = "");
 		~Reply(void);
 
 		int			getClientFd(void) const;
@@ -56,6 +56,8 @@ class Reply
 
 		void			setMessage(std::string mess);
 
+		Reply	&operator=(Reply const &rhs);
+		Reply	&operator+=(Reply const &rhs);
 	private:
 		std::string		_message;
 		int			_clientFd;

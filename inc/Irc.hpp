@@ -106,6 +106,7 @@ class	Irc{
 		// Send data
 		std::vector<Reply>	_replies;
 		void			mergeReplies();
+		Reply			mergeReply();
 		int			sendReplies();
 
 		// Setup Server interface
