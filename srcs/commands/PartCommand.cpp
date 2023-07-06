@@ -22,6 +22,7 @@ void PartCommand::execute(int fds, Client *client)
 	std::vector<std::string>		args = splitArguments(cmd);
 	User					*user = ircserv.getUserByNick(client->getNick());
 	std::map<std::string, std::string>	channels;
+	(void)fds;
 
 
 	user->quitAllChannel();
