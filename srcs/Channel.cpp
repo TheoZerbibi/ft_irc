@@ -210,7 +210,6 @@ void		Channel::removeOper(std::string nick, std::string reason)
 
 	if (found != end)
 	{
-
 		ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
 		this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
 
@@ -252,7 +251,7 @@ void		Channel::removeUser(std::string nick, std::string reason)
 		this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
 		_users.erase(found);
 	} else
-		this->removeOper(nick);
+		this->removeOper(nick, reason);
 }
 
 void		Channel::setOper(std::string nick, bool value)
@@ -264,7 +263,7 @@ void		Channel::setOper(std::string nick, bool value)
 		user = this->getUser(nick);
 		if (user)
 		{
-			removeUser(user);
+			this->_users.erase(nick);
 			addOper(user);
 		}
 	}
@@ -273,7 +272,7 @@ void		Channel::setOper(std::string nick, bool value)
 		user = this->getOper(nick);
 		if (user)
 		{
-			removeOper(user);
+			this->_operator.erase(nick);
 			addUser(user);
 		}
 	}

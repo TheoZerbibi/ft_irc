@@ -20,6 +20,11 @@ void
 	for (std::map<std::string , std::string>::iterator it = channels.begin(); it != channels.end(); it++)
 	{
 		std::cout << "Joining " << it->first << " with key " << it->second << std::endl;
+		if (!this->_chanIsValid(it->first))
+		{
+			ircserv.addReply(Reply(fds, ERR_BADCHANMASK(ircserv.getName(), client->getNick(), it->first)));
+			return ;
+		}
 		if (ircserv.channelExists(it->first))
 		{
 			Channel *channel = ircserv.getChannel(it->first);
@@ -50,7 +55,7 @@ void
 	}
 }
 
-std::map<std::string, std::string>	JoinCommand::parseArg(std::vector<std::string> &args)
+std::map<std::string, std::string>	JoinCommand::_parseArg(std::vector<std::string> &args)
 {
 	std::map<std::string, std::string>	channels;
 	std::vector<std::string>		chans = splitStr(args.at(0), ',');
@@ -100,7 +105,7 @@ void JoinCommand::execute(int fds, Client *client)
 	else
 	{
 		try {
-			channels = parseArg(args);
+			channels = _parseArg(args);
 			if (!channels.empty())
 				this->_joinChannel(fds, client, channels);
 		} catch (std::exception &e) {
