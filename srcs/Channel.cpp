@@ -284,6 +284,16 @@ void		Channel::setTopicMode(bool value)
 }
 
 
+void	Channel::sendToEveryone(User *user, std::string msg)
+{
+	Irc				&ircserv = Irc::getInstance();
+
+	sendToChannel(user, msg);
+
+	ircserv.addReply(Reply(user->getSockfd(), msg));
+}
+
+
 void
 Channel::sendToChannel(User *user, std::string msg) {
 	std::map<std::string, User *>	userList;

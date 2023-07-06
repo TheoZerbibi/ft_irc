@@ -47,6 +47,7 @@ class	Channel
 		void		setInvit(bool value);
 
 		void		sendToChannel(User *user, std::string msg);
+		void		sendToEveryone(User *user, std::string msg);
 
 		//Printer
 		void		printUserList();

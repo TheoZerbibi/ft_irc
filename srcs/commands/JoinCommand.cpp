@@ -146,7 +146,7 @@ void
 {
 	Irc &ircserv = Irc::getInstance();
 
-	chan->sendToChannel(user, RPL_JOIN(user_id(ircserv.getName(), user->getNick(), user->getUser()), chan->getName()));
+	chan->sendToEveryone(user, RPL_JOIN(user_id(ircserv.getName(), user->getNick(), user->getUser()), chan->getName()));
 	if (!chan->getTopic().empty())
 		ircserv.addReply(Reply(fds, RPL_TOPIC(ircserv.getName(), user->getNick(), user->getUser(), chan->getTopic())));
 	ircserv.addReply(Reply(fds, RPL_NAMREPLY(ircserv.getName(), user->getNick(), chan->getType(), chan->getName(), chan->getMemberList())));
