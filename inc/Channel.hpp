@@ -31,10 +31,10 @@ class	Channel
 		//setter
 		void		addUser(User *user);
 		void		addOper(User *user);
-		void		removeUser(User *user, std::string reason = ".");
-		void		removeUser(std::string nick, std::string reason = ".");
-		void		removeOper(User *user, std::string reason = ".");
-		void		removeOper(std::string nick, std::string reason = ".");
+		void		removeUser(User *user, std::string reason);
+		void		removeUser(std::string nick, std::string reason);
+		void		removeOper(User *user, std::string reason);
+		void		removeOper(std::string nick, std::string reason);
 
 		void		fillOperPos();
 

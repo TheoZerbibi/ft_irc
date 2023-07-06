@@ -20,7 +20,7 @@ class JoinCommand : public Command
 		std::string _name;
 
 		void	rplJoin(int fds, User *user, Channel *chan);
-		std::map<std::string, std::string>	parseArg(std::vector<std::string> &args);
+		std::map<std::string, std::string>	_parseArg(std::vector<std::string> &args);
 		void								_joinChannel(int fds, Client *client, std::map<std::string , std::string> channels);
 		bool								_chanIsValid(const std::string &name);
 		bool								_passwordIsValid(std::string &password);
