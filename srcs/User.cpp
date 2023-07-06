@@ -177,8 +177,14 @@ bool	User::isInvited(Channel *chan)
 void
 	User::removeInvite(Channel *chan)
 {
+	std::vector<Channel *>::iterator	it;
+
 	if (isInvited(chan))
-		this->_invited.erase(getChannel(chan));
+	{
+		std::cout << "JOIN : user is invited" << std::endl;
+		it = getChannel(chan);
+		this->_invited.erase(it);
+	}
 }
 
 void	User::printInvited()
@@ -288,8 +294,8 @@ void	User::removeChannel(Channel *chan)
 void	User::quitChannel(Channel *chan, std::string const &msg)
 {
 	std::cout << "||-->" << this->_nickname << " Quiting channel : " << chan->getName() << "with msg : " << msg << std::endl;
+//	this->removeInvite(chan);
 	chan->removeUser(this->_nickname, msg);
-	this->removeInvite(chan);
 	this->_chans.erase(getChannel(chan));
 }
 

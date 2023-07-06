@@ -33,7 +33,9 @@ void
 				return (ircserv.addReply(Reply(fds, ERR_INVITEONLYCHAN(ircserv.getName(), client->getNick(), channel->getName()))));
 			if (!channel->getKey().empty() && channel->getKey() != it->second)
 				return (ircserv.addReply(Reply(fds, ERR_BADCHANNELKEY(ircserv.getName(), client->getNick(), channel->getName()))));
+			std::cout << "JOIN :Removing " << user->getNick() << " From invite list of " << channel->getName() << std::endl;
 			user->removeInvite(channel);
+			std::cout << "JOIN : end of desinviting" << std::endl;
 			user->addChannel(channel);
 			channel->addUser(user);
 			rplJoin(fds, user, channel);
