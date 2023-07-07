@@ -5,9 +5,8 @@
 **   - KICK
 **   - Main args
 ** BUGFIX:
-**   - Fix Mode +i, user not invited can join
-**   - Fix /invite dont send message in chan + to invited user
-**   - User not invited can join
+**   - Fix /invite dont send message in chan + segfault
+**   - Fix QuitCommand, add map for kill client after client_input
 **
 */
 
