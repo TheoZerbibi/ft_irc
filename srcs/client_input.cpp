@@ -103,8 +103,7 @@ int Irc::manageCommand()
 				commandList[cmd]->execute(beg->first, beg->second);
 				if (cmd == "QUIT") {
 					std::cout << "QUITCOMMAND" << std::endl;
-					beg++;
-					continue;
+					break;
 				}
 			}
 			else

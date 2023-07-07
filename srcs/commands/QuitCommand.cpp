@@ -15,7 +15,6 @@ bool
 	return (client->isRegistered());
 }
 
-// Actuellement, si tu rejoint un chan et que tu /quit, ca segfault
 void QuitCommand::execute(int fds, Client *client)
 {
 	Irc		&ircserv = Irc::getInstance();
