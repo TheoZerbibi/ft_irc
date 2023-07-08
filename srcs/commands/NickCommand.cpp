@@ -24,12 +24,17 @@ void NickCommand::execute(int fds, Client *client)
 
 	if (nick.empty())
 	{
-		ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name)));
+		ircserv.addReply(Reply(fds, ERR_NONICKNAMEGIVEN(ircserv.getName(), client->getUser())));
 		return ;
 	}
 	if (ircserv.getUserByNick(nick))
 	{
-		ircserv.addReply(Reply(fds, ERR_NICKNAMEINUSE(ircserv.getName(), client->getNick(), nick)));
+		ircserv.addReply(Reply(fds, ERR_NICKNAMEINUSE(ircserv.getName(), client->getUser(), nick)));
+		return ;
+	}
+	if (nick.length() > 9 || nick.length() < 2)
+	{
+		ircserv.addReply(Reply(fds, ERR_ERRONEUSNICKNAME(ircserv.getName(), client->getUser(), nick)));
 		return ;
 	}
 	ircserv.addReply(Reply(fds, RPL_NICK(user_id(ircserv.getName(), client->getNick(), client->getUser()), nick)));

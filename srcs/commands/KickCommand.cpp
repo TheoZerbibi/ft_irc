@@ -9,6 +9,13 @@ _name("KICK")
 KickCommand::~KickCommand(void)
 {}
 
+/**
+** -> KICK #test1,#test2 to,tba :Adios Bahamas
+** -> KICK #test to :You should not stay !
+** -> KICK #test to,tba :Your friend is in another channel!
+** -> KICK #test to
+**/
+
 bool
 	KickCommand::cantExecute(Client *client)
 {

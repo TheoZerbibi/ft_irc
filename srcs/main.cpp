@@ -6,7 +6,7 @@
 **   - Main args
 ** BUGFIX:
 **   - Fix /invite dont send message in chan + segfault
-**   - Fix QuitCommand, add map for kill client after client_input
+**   - Rework QuitCommand, add map for kill client after client_input
 **
 */
 
