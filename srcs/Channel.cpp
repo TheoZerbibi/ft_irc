@@ -256,7 +256,8 @@ void		Channel::removeUser(std::string nick, std::string reason)
 
 void		Channel::setOper(std::string nick, bool value)
 {
-	User *user;
+	User	*user;
+	Irc		&ircserv = Irc::getInstance();
 
 	if (value)
 	{
@@ -265,6 +266,7 @@ void		Channel::setOper(std::string nick, bool value)
 		{
 			this->_users.erase(nick);
 			addOper(user);
+			this->sendToEveryone(user, RPL_MODEWITHARG(user_id(ircserv.getName(), user->getNick(), user->getUser()), this->_name, "+o", user->getNick()));
 		}
 	}
 	else
@@ -274,6 +276,7 @@ void		Channel::setOper(std::string nick, bool value)
 		{
 			this->_operator.erase(nick);
 			addUser(user);
+			this->sendToEveryone(user, RPL_MODEWITHARG(user_id(ircserv.getName(), user->getNick(), user->getUser()), this->_name, "-o", user->getNick()));
 		}
 	}
 }
@@ -295,7 +298,7 @@ void	Channel::sendToEveryone(User *user, std::string msg)
 
 
 void
-Channel::sendToChannel(User *user, std::string msg) {
+	Channel::sendToChannel(User *user, std::string msg) {
 	std::map<std::string, User *>	userList;
 	Irc				&ircserv = Irc::getInstance();
 
@@ -313,7 +316,6 @@ Channel::sendToChannel(User *user, std::string msg) {
 		beg++;
 	}
 }
-
 
 void
 	Channel::printUserList(void)

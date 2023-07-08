@@ -20,9 +20,8 @@ void QuitCommand::execute(int fds, Client *client)
 	Irc		&ircserv = Irc::getInstance();
 	std::string	cmd = client->getCmds().front();
 	std::vector<std::string>	args = splitArguments(cmd);
-	
-	std::cout << "ARGS : " << args.size() << std::endl;
 
-	ircserv.removeClient(fds);
+	ircserv.removeClient(fds, args[0]);
+
 	std::cout << "QuitCommand::execute(" << fds << ")" << std::endl;
 }
