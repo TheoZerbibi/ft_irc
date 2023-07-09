@@ -60,9 +60,9 @@ void
 std::map<std::string, std::string>	JoinCommand::_parseArg(std::vector<std::string> &args)
 {
 	std::map<std::string, std::string>	channels;
-	std::vector<std::string>		chans = splitStr(args.at(0), ',');
 	std::pair<std::string, std::string>	chans_pair;
-	std::vector<std::string>		key;
+	std::vector<std::string>			chans = splitStr(args.at(0), ',');
+	std::vector<std::string>			key;
 	args.erase(args.begin());
 	if (!args.empty())
 		key = splitStr(args.at(0), ',');
@@ -98,6 +98,8 @@ void JoinCommand::execute(int fds, Client *client)
 	std::map<std::string, std::string>	channels;
 	User								*user = ircserv.getUserByNick(client->getNick());
 
+	if (!user)
+		return ;
 	if (args.empty())
 	{
 		return (ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name))));
@@ -114,6 +116,7 @@ void JoinCommand::execute(int fds, Client *client)
 			return ;
 		}
 	}
+	std::cout << "JoinCommand::execute(" << fds << ", " << client->getNick() << ")" << std::endl;
 }
 
 

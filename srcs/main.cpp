@@ -1,8 +1,9 @@
 #include "ft_irc.hpp"
 
 /*
+**
 ** TODO:
-**   - KICK
+**   - KICK - Implment kickUser in Channel class
 **   - Main args
 ** BUGFIX:
 **   - Fix /invite dont send message in chan + segfault

@@ -73,9 +73,6 @@ void PartCommand::execute(int fds, Client *client)
 	if (args.empty())
 		return (ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name))));
 	else {
-		std::cout << "CMD : " << cmd << std::endl;
-		std::cout << "ARG[0] : " << args[0] << std::endl;
-		std::cout << "ARG[1] : " << args[1] << std::endl;
 		if (args.size() >= 2)
 			msg = args[1];
 		try {
