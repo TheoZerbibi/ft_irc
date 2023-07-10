@@ -249,14 +249,36 @@ void		Channel::removeUser(std::string nick, std::string reason)
 
 		ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
 		this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
-		_users.erase(found);
+		this->_users.erase(found);
 	} else
 		this->removeOper(nick, reason);
 }
 
+void
+	Channel::kickUser(User *executor, User *target, std::string reason)
+{
+	Irc			&ircserv =	Irc::getInstance();
+	if (!this->getOper(executor->getNick()))
+	{
+		ircserv.addReply(Reply(executor->getSockfd(), ERR_CHANOPRIVSNEEDED(ircserv.getName(), executor->getNick(), this->_name)));
+		return ;
+	}
+	if (!target->isOnChannel(this) || !executor->isOnChannel(this))
+	{
+		ircserv.addReply(Reply(executor->getSockfd(), ERR_NOTONCHANNEL(ircserv.getName(), executor->getNick(), this->_name)));
+		return ;
+	}
+	if (this->getOper(target->getNick())) return ;
+	this->_users.erase(target->getNick());
+	target->removeChannel(this);
+	this->printUserList();
+	this->sendToEveryone(target, RPL_KICK(user_id(ircserv.getName(), executor->getNick(), executor->getUser()), this->_name, target->getNick(), reason));
+}
+
 void		Channel::setOper(std::string nick, bool value)
 {
-	User *user;
+	User	*user;
+	Irc		&ircserv = Irc::getInstance();
 
 	if (value)
 	{
@@ -265,6 +287,7 @@ void		Channel::setOper(std::string nick, bool value)
 		{
 			this->_users.erase(nick);
 			addOper(user);
+			this->sendToEveryone(user, RPL_MODEWITHARG(user_id(ircserv.getName(), user->getNick(), user->getUser()), this->_name, "+o", user->getNick()));
 		}
 	}
 	else
@@ -274,6 +297,7 @@ void		Channel::setOper(std::string nick, bool value)
 		{
 			this->_operator.erase(nick);
 			addUser(user);
+			this->sendToEveryone(user, RPL_MODEWITHARG(user_id(ircserv.getName(), user->getNick(), user->getUser()), this->_name, "-o", user->getNick()));
 		}
 	}
 }
@@ -295,7 +319,7 @@ void	Channel::sendToEveryone(User *user, std::string msg)
 
 
 void
-Channel::sendToChannel(User *user, std::string msg) {
+	Channel::sendToChannel(User *user, std::string msg) {
 	std::map<std::string, User *>	userList;
 	Irc				&ircserv = Irc::getInstance();
 
@@ -313,7 +337,6 @@ Channel::sendToChannel(User *user, std::string msg) {
 		beg++;
 	}
 }
-
 
 void
 	Channel::printUserList(void)

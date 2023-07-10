@@ -6,8 +6,8 @@
 # define RPL_WELCOME(server, user, userID) (":" + server + " 001 " + user + " :Welcome to the Internet Relay Network " + userID + "\r\n")
 # define RPL_YOURHOST(server,nickname) (":" + server + " 002 " + nickname + " :Your host is " + server + " (localhost)\r\n")
 # define RPL_INFO(server,nickname) (":" + server + " 003 " + nickname + " :This server was created by iguidado & thzeribi.\r\n")
-# define RPL_INVITELIST(server, user, channel) (":" + server + " 336 " + user + " " + channel)
-# define RPL_ENDOFINVITELIST(server, client) (":" + server + " 337 " + client + " :End of /INVITE list")
+# define RPL_INVITELIST(server, user, channel) (":" + server + " 336 " + user + " " + channel + "\n\r")
+# define RPL_ENDOFINVITELIST(server, client) (":" + server + " 337 " + client + " :End of /INVITE list\n\r")
 
 class Irc;
 class Channel;

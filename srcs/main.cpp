@@ -1,13 +1,13 @@
 #include "ft_irc.hpp"
 
 /*
+**
 ** TODO:
-**   - KICK
+**   - KICK - Implment kickUser in Channel class
 **   - Main args
 ** BUGFIX:
-**   - Fix Mode +i, user not invited can join
-**   - Fix /invite dont send message in chan + to invited user
-**   - User not invited can join
+**   - Fix /invite dont send message in chan + segfault
+**   - Rework QuitCommand, add map for kill client after client_input
 **
 */
 
@@ -20,9 +20,9 @@ int	Irc::setup_fds()
 
 int	Irc::main_loop()
 {
-	int				ret;
-	int				fdMax;
-	timeval				ttd;
+	int		ret;
+	int		fdMax;
+	timeval	ttd;
 
 	ttd = (timeval){2, 0};
 	while (1)

@@ -23,7 +23,7 @@ class User;
 class Channel;
 class Reply;
 
-class	Irc{
+class	Irc {
 	Command *command;
 	public:
 		//Const & destr
@@ -39,7 +39,7 @@ class	Irc{
 
 		//Setter
 		void			addClient(int const &sfd);
-		void			removeClient(int const &sfd, std::string const &msg = ".");
+		void			removeClient(int const &sfd, std::string const &reason);
 
 		//Getter
 		const	int		&getSocket() const;
