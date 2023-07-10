@@ -294,7 +294,7 @@ void	User::removeChannel(Channel *chan)
 void	User::quitChannel(Channel *chan, std::string const &msg)
 {
 	std::cout << "||-->" << this->_nickname << " Quiting channel : " << chan->getName() << "with msg : " << msg << std::endl;
-//	this->removeInvite(chan);
+	this->removeInvite(chan);
 	chan->removeUser(this->_nickname, msg);
 	this->_chans.erase(getChannel(chan));
 }
