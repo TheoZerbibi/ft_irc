@@ -7,18 +7,19 @@ _name("Default")
 Command::~Command(void)
 {}
 
-void Command::execute(int fds, Client *client)
-{
-	(void) fds;
-	(void) client;
-	std::cout << this->_name << std::endl;
-}
 
 bool
 	Command::cantExecute(Client *client)
 {
 	(void) client;
 	return (true);
+}
+
+void Command::execute(int fds, Client *client)
+{
+	(void) fds;
+	(void) client;
+	std::cout << this->_name << std::endl;
 }
 
 std::vector<std::string> Command::splitStr(const std::string &cmd, const char sep)

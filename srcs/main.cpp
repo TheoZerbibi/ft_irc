@@ -20,9 +20,9 @@ int	Irc::setup_fds()
 
 int	Irc::main_loop()
 {
-	int				ret;
-	int				fdMax;
-	timeval				ttd;
+	int		ret;
+	int		fdMax;
+	timeval	ttd;
 
 	ttd = (timeval){2, 0};
 	while (1)

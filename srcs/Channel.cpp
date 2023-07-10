@@ -249,9 +249,30 @@ void		Channel::removeUser(std::string nick, std::string reason)
 
 		ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
 		this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
-		_users.erase(found);
+		this->_users.erase(found);
 	} else
 		this->removeOper(nick, reason);
+}
+
+void
+	Channel::kickUser(User *executor, User *target, std::string reason)
+{
+	Irc			&ircserv =	Irc::getInstance();
+	if (!this->getOper(executor->getNick()))
+	{
+		ircserv.addReply(Reply(executor->getSockfd(), ERR_CHANOPRIVSNEEDED(ircserv.getName(), executor->getNick(), this->_name)));
+		return ;
+	}
+	if (!target->isOnChannel(this) || !executor->isOnChannel(this))
+	{
+		ircserv.addReply(Reply(executor->getSockfd(), ERR_NOTONCHANNEL(ircserv.getName(), executor->getNick(), this->_name)));
+		return ;
+	}
+	if (this->getOper(target->getNick())) return ;
+	this->_users.erase(target->getNick());
+	target->removeChannel(this);
+	this->printUserList();
+	this->sendToEveryone(target, RPL_KICK(user_id(ircserv.getName(), executor->getNick(), executor->getUser()), this->_name, target->getNick(), reason));
 }
 
 void		Channel::setOper(std::string nick, bool value)

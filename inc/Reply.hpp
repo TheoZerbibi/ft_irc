@@ -14,6 +14,7 @@
 # define RPL_ENDOFNAMES(server, user)  (":" + server + " 366 " + user + " :End of /NAMES list" + "\r\n")
 # define RPL_QUIT(userID, reason) (userID + " QUIT :Quit: " + reason + "\r\n")
 # define RPL_PRIVMSG(userID, target, msg) (userID + " PRIVMSG " + target + " :" + msg + "\r\n")
+# define RPL_KICK(userID, channel, target, reason) (userID + " KICK " + channel + " " + target + " " + reason + "\r\n")
 
 # define ERR_NOSUCHCHANNEL(server, nickname, channel) (": " + server + " 403 " + nickname + " " + channel + " :No such channel\r\n")
 # define ERR_NOTONCHANNEL(server, nickname, channel) (": " + server + " 442 " + nickname + " " + channel + " :The user is not on this channel.\r\n")

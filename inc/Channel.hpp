@@ -36,6 +36,8 @@ class	Channel
 		void		removeOper(User *user, std::string reason);
 		void		removeOper(std::string nick, std::string reason);
 
+		void		kickUser(User *executor, User *target, std::string reason);
+
 		void		fillOperPos();
 
 		void		setTopic(std::string topic);

@@ -46,6 +46,7 @@ void	PrivMsgCommand::sendMsg(User *user, std::string target, std::string msg)
 			ircserv.addReply(Reply(user->getSockfd(), ERR_NOSUCHCHANNEL(ircserv.getName(), user->getNick(), target)));
 			return ;
 		}
+		std::cout << "isOn? " << user->isOnChannel(chan) << std::endl;
 		if (user->isOnChannel(chan))
 			chan->sendToChannel(user, RPL_PRIVMSG(user_id(ircserv.getName(), user->getNick(), user->getUser()), target, msg));
 		else

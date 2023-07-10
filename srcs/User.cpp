@@ -277,18 +277,7 @@ void	User::joinChannel(std::string chanName, std::string key)
 
 void	User::removeChannel(Channel *chan)
 {
-	std::vector<Channel *>::iterator	beg = _chans.begin();
-	std::vector<Channel *>::iterator	end = _chans.end();
-
-	while (beg != end)
-	{
-		if (*beg == chan)
-		{
-			delete	chan;
-			return ((void)this->_chans.erase(beg));
-		}
-		beg++;
-	}
+	this->_chans.erase(getChannel(chan));
 }
 
 void	User::quitChannel(Channel *chan, std::string const &msg)

@@ -28,18 +28,7 @@ void
 		Channel	*channel = it->first;
 		User	*target = it->second;
 		std::cout << "Kick " << target->getUser() << " from channel " << channel->getName() << " with reason : " << reason << std::endl;
-		if (!executorUser->isChannelOper(channel))
-		{
-			ircserv.addReply(Reply(executor->getSockfd(), ERR_CHANOPRIVSNEEDED(ircserv.getName(), executor->getNick(), channel->getName())));
-			return ;
-		}
-		if (!target->isOnChannel(channel))
-		{
-			ircserv.addReply(Reply(executor->getSockfd(), ERR_NOTONCHANNEL(ircserv.getName(), executor->getNick(), channel->getName())));
-			return ;
-		}
-		if (target->isChannelOper(channel)) return ;
-		// channel->kickUser(executorUser, target, reason);
+		channel->kickUser(executorUser, target, reason);
 	}
 }
 
@@ -117,10 +106,11 @@ void
 	if (args.empty())
 		return (ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name))));
 	else {
+		std::cout << "ARG : " << args.size() << std::endl;
 		std::cout << "ARG[0] : " << args[0] << std::endl;
 		std::cout << "ARG[1] : " << args[1] << std::endl;
 		std::cout << "ARG[2] : " << args[2] << std::endl;
-		if (args.size() >= 2)
+		if (!args.at(2).empty())
 			reason = args[2];
 		else
 			reason = "Kicked by the channel's operator";
