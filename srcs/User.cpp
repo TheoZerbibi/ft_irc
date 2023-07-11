@@ -233,7 +233,7 @@ bool const	&Client::isRegistered() const
 bool Client::recvData()
 {
 	int	nbyte;
-	char	buff[512];
+	char	buff[2048];
 
 	// Get data utile there is no more data to retrieve
 
