@@ -3,11 +3,13 @@
 /*
 **
 ** TODO:
-**   - KICK - Implment kickUser in Channel class
 **   - Main args
+**   - WHOCommand?
 ** BUGFIX:
+**   - Message when player join a channel
+**   - Mode
 **   - Fix /invite dont send message in chan + segfault
-**   - Rework QuitCommand, add map for kill client after client_input
+**   - Rework QuitCommand, add vector for kill client after client_input
 **
 */
 
