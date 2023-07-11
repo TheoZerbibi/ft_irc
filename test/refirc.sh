@@ -1,6 +1,7 @@
 #!/bin/bash
 
-NAME=ircserv
+./proxy/extern 1024 | tee output_pipe | tee output_file &
+PID=$?
 
 function exit_properly()
 {
@@ -15,7 +16,6 @@ function exit_properly()
 	fi
 
 	kill -9 $1
-	kill -9 $2
 	exit
 }
 
@@ -35,20 +35,9 @@ function autopong()
 }
 
 
+trap "exit_properly $PID" SIGINT
 
 trap -p SIGINT
-
-if [ ! -e ../${NAME} ]
-then
-	make -C ../
-fi
-
-../ircserv &> /dev/null &
-PID_SERV=$?
-./proxy/myproxy 1025 | tee output_pipe | tee output_file &
-PID_CLIENT=$?
-
-trap "exit_properly ${PID_SERV} ${PID_CLIENT}" SIGINT
 
 if [ ! -e input_pipe ]
 then
@@ -68,7 +57,7 @@ autopong &
 
 echo "nbr of argument $#"
 
-find Input -type f | xargs cat - > input_pipe
+cat Input/registration - Input/join - > input_pipe
 
 #if [ $# -gt 0 ]
 #then

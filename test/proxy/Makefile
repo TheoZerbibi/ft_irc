@@ -1,4 +1,5 @@
 PROG=simple-tcp-proxy
+#PROG=myproxy
 CFLAGS=-Wall
 CC=g++
 
