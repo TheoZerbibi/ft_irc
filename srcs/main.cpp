@@ -52,13 +52,20 @@ int	Irc::main_loop()
 
 int	main(int ac, char **av)
 {
-	(void)av;
-	(void)ac;
+	std::string	passwd = "";
+	std::string	port = "";
 
+	if (ac < 3)
+	{
+		std::cerr << "wrong input. Usage : ./ircserv <port> <password>" << std::endl;
+		return (-1);
+	}
+	port = std::string(av[1]);
+	passwd = std::string(av[2]);
 	std::signal(SIGINT, handleSigINT);
 	try
 	{
-		Irc	&ircserv = Irc::getInstance();
+		Irc	&ircserv = Irc::getInstance(port, passwd);
 
 		ircserv.printAi();
 		ircserv.main_loop();

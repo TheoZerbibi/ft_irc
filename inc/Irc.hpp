@@ -49,14 +49,17 @@ class	Irc {
 		std::map<int, Client *>	&getClients();
 		User	 		*getUserByNick(std::string const nick) const;
 
+
 		int	computeFdMax() const;
 		int	main_loop();
+
 
 		// Command manager
 		void					initCommand();
 		std::map<std::string, Command*>		getCommandList();
 		// Reply
 		void			addReply(Reply reply);
+
 
 		// Channel Manager
 		std::map<std::string, Channel *>	&getChannelList(void);
@@ -66,6 +69,7 @@ class	Irc {
 		bool					channelExists(std::string name);
 		void					removeChannel(Channel *channel);
 
+
 		//Client Manager
 		void			promoteClient(Client *client);
 
@@ -73,19 +77,24 @@ class	Irc {
 		// Const & destr
 		Irc(std::string port, std::string passwdm, std::string name);
 
+
 		// Private Copy and assignement to enforce singularity
 		Irc(const Irc &);
 		Irc &operator=(const Irc &);
+
 
 		// Client, User 
 		std::map<std::string, Channel *>	_channels;
 		std::map<int, Client *>				_clients;
 
+
 		// Client Management
 		int			setup_fds();
 
+
 		//Commands
 		std::map<std::string, Command*>	commandList;
+
 
 		// Server info
 		struct	addrinfo	*_net;

@@ -67,7 +67,10 @@ void	ModeCommand::appChannelMode(char mode, int modmode, Channel *chan, std::str
 		if (modmode == REMOVING)
 			chan->setKey("");
 		else
+		{
+			std::cout << "MODE +k : setting key to '" << *arg << "'" << std::endl;
 			chan->setKey(*arg);
+		}
 	}
 	else if (mode == 'l')
 	{
@@ -94,6 +97,7 @@ void	ModeCommand::applyChannelMode(User *user, Channel *chan, std::string &modst
 {
 	std::string::iterator	beg = modstr.begin();
 	std::string::iterator	end = modstr.end();
+	std::string		value;
 	int						modmode = ADDING;
 	int						needParam = false;
 	Irc						&ircserv = Irc::getInstance();
@@ -107,15 +111,25 @@ void	ModeCommand::applyChannelMode(User *user, Channel *chan, std::string &modst
 			needParam = needArg(*beg, modmode);
 			if (needParam)
 			{
+				std::cout << "MODE : this mode need argument :" << arg.at(0) << std::endl;
 				this->appChannelMode(*beg, modmode, chan, &arg.at(0));
+				value = arg.at(0);
 				arg.erase(arg.begin());
+				std::cout << "MODE : ended applying mode" << std::endl;
 			}
 			else
+			{
+				std::cout << "MODE : this mode don't need argument" << std::endl;
 				this->appChannelMode(*beg, modmode, chan, NULL);
-		if (!needParam)
-			ircserv.addReply(Reply(user->getSockfd(), RPL_MODE(user_id(ircserv.getName(), user->getNick(), user->getUser()), chan->getName(), (modmode == ADDING ? '+' : '-') + *beg)));
-		else
-			ircserv.addReply(Reply(user->getSockfd(), RPL_MODEWITHARG(user_id(ircserv.getName(), user->getNick(), user->getUser()), chan->getName(), (modmode == ADDING ? '+' : '-') + *beg, arg.at(0))));
+			}
+			if (needParam)
+			{
+				std::cout << "MODE : Adding Reply" << std::endl;
+				ircserv.addReply(Reply(user->getSockfd(), RPL_MODEWITHARG(user_id(ircserv.getName(), user->getNick(), user->getUser()), chan->getName(), (modmode == ADDING ? '+' : '-') + *beg, value)));
+				std::cout << "MODE : Ended Adding Reply" << std::endl;
+			}
+			else
+				ircserv.addReply(Reply(user->getSockfd(), RPL_MODE(user_id(ircserv.getName(), user->getNick(), user->getUser()), chan->getName(), (modmode == ADDING ? '+' : '-') + *beg)));
 		}
 		++beg;
 	}
@@ -273,10 +287,10 @@ void	ModeCommand::executeUserMode(int fds, User *user, std::vector<std::string> 
 	}
 	if (target != user)
 		return (ircserv.addReply(Reply(fds, ERR_USERSDONTMATCH(ircserv.getName(), user->getNick()))));
-//	args.erase(args.begin());
-//	modestr = args.at(0);
-//	std::cout << "modestr = " << modestr << std::endl;
-//	args.erase(args.begin());
+	//	args.erase(args.begin());
+	//	modestr = args.at(0);
+	//	std::cout << "modestr = " << modestr << std::endl;
+	//	args.erase(args.begin());
 }
 
 //	void ModeCommand::changeUserMode(int fds, User *user, Client *target, std::vector<std::string> &args)
