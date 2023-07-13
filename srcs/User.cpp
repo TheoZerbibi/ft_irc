@@ -177,13 +177,18 @@ bool	User::isInvited(Channel *chan)
 void
 	User::removeInvite(Channel *chan)
 {
-	std::vector<Channel *>::iterator	it;
+	std::vector<Channel *>::iterator	it = _invited.begin();
+	std::vector<Channel *>::iterator	end = _invited.end();
 
-	if (isInvited(chan))
+	while (it != end)
 	{
-		std::cout << "JOIN : user is invited" << std::endl;
-		it = getChannel(chan);
-		this->_invited.erase(it);
+		if (*it == chan)
+		{
+			std::cout << "JOIN : user is invited" << std::endl;
+			this->_invited.erase(it);
+			return ;
+		}
+		it++;
 	}
 }
 

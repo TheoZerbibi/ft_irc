@@ -9,7 +9,6 @@ my $channel = "#hello123";
 my $host = "localhost";
 my $port = 6667;
 
-
 sub register {
 	my ($data, $server, $witem) = @_;
 
@@ -29,7 +28,6 @@ sub event_connected {
 	register($server);
 	JOIN($server);
 }
-
 
 Irssi::command_bind register => \&event_connected;
 
