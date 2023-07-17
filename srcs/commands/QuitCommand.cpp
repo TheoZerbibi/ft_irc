@@ -17,8 +17,8 @@ bool
 
 void QuitCommand::execute(int fds, Client *client)
 {
-	Irc		&ircserv = Irc::getInstance();
-	std::string	cmd = client->getCmds().front();
+	Irc							&ircserv = Irc::getInstance();
+	std::string					cmd = client->getCmds().front();
 	std::vector<std::string>	args = splitArguments(cmd);
 
 	ircserv.addLeaveUser(client, args[0]);

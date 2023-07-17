@@ -24,8 +24,8 @@ void PingCommand::execute(int fds, Client *client)
 	Irc							&ircserv =	Irc::getInstance();
 
 	std::string const			serverName = ircserv.getName();
-	std::string const			nick = client->getNick();
-	std::string const			user = client->getUser();
+	std::string const			nick = client->getNickname();
+	std::string const			user = client->getUsername();
 
 	for (std::vector<std::string>::iterator it = tokenList.begin(); it != tokenList.end(); ++it)
 		ss << *it << " ";

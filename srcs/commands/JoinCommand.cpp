@@ -13,7 +13,7 @@ void
 	JoinCommand::_joinChannel(int fds, Client *client, std::map<std::string , std::string> channels)
 {
 	Irc			&ircserv =	Irc::getInstance();
-	User		*user = ircserv.getUserByNick(client->getNick());
+	User		*user = ircserv.getUserByNick(client->getNickname());
 
 	if (user == NULL)
 		return ;
@@ -22,7 +22,7 @@ void
 		std::cout << "Joining " << it->first << " with key " << it->second << std::endl;
 		if (!this->_chanIsValid(it->first))
 		{
-			ircserv.addReply(Reply(fds, ERR_BADCHANMASK(ircserv.getName(), client->getNick(), it->first)));
+			ircserv.addReply(Reply(fds, ERR_BADCHANMASK(ircserv.getName(), client->getNickname(), it->first)));
 			return ;
 		}
 		if (ircserv.channelExists(it->first))
@@ -30,10 +30,10 @@ void
 			Channel *channel = ircserv.getChannel(it->first);
 			std::cout << "Channel" << channel->getName() << " exists" << std::endl;
 			if (channel->isInvit() && !user->isInvited(channel))
-				return (ircserv.addReply(Reply(fds, ERR_INVITEONLYCHAN(ircserv.getName(), client->getNick(), channel->getName()))));
+				return (ircserv.addReply(Reply(fds, ERR_INVITEONLYCHAN(ircserv.getName(), client->getNickname(), channel->getName()))));
 			if (!channel->getKey().empty() && channel->getKey() != it->second)
-				return (ircserv.addReply(Reply(fds, ERR_BADCHANNELKEY(ircserv.getName(), client->getNick(), channel->getName()))));
-			std::cout << "JOIN :Removing " << user->getNick() << " From invite list of " << channel->getName() << std::endl;
+				return (ircserv.addReply(Reply(fds, ERR_BADCHANNELKEY(ircserv.getName(), client->getNickname(), channel->getName()))));
+			std::cout << "JOIN :Removing " << user->getNickname() << " From invite list of " << channel->getName() << std::endl;
 			user->removeInvite(channel);
 			std::cout << "JOIN : end of desinviting" << std::endl;
 			user->addChannel(channel);
@@ -45,7 +45,7 @@ void
 			std::cout << "JOIN : Creating channel " << it->first << std::endl;
 			Channel *channel = ircserv.addChannel(it->first);
 			if (channel == NULL) {
-				ircserv.addReply(Reply(fds, ERR_BADCHANMASK(ircserv.getName(), client->getNick(), it->first)));
+				ircserv.addReply(Reply(fds, ERR_BADCHANMASK(ircserv.getName(), client->getNickname(), it->first)));
 				return ;
 			}
 			if (it->second != "x")
@@ -96,13 +96,13 @@ void JoinCommand::execute(int fds, Client *client)
 	std::string							cmd =	client->getCmds().front();
 	std::vector<std::string>			args = splitArguments(cmd);
 	std::map<std::string, std::string>	channels;
-	User								*user = ircserv.getUserByNick(client->getNick());
+	User								*user = ircserv.getUserByNick(client->getNickname());
 
 	if (!user)
 		return ;
 	if (args.empty())
 	{
-		return (ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name))));
+		return (ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNickname(), this->_name))));
 	}
 	else if (args.at(0) == "0")
 		user->quitAllChannel();
@@ -116,7 +116,7 @@ void JoinCommand::execute(int fds, Client *client)
 			return ;
 		}
 	}
-	std::cout << "JoinCommand::execute(" << fds << ", " << client->getNick() << ")" << std::endl;
+	std::cout << "JoinCommand::execute(" << fds << ", " << client->getNickname() << ")" << std::endl;
 }
 
 
@@ -151,10 +151,10 @@ void
 {
 	Irc &ircserv = Irc::getInstance();
 
-	chan->sendToEveryone(user, RPL_JOIN(user_id(ircserv.getName(), user->getNick(), user->getUser()), chan->getName()));
+	chan->sendToEveryone(user, RPL_JOIN(user_id(ircserv.getName(), user->getNickname(), user->getUsername()), chan->getName()));
 	if (!chan->getTopic().empty())
-		ircserv.addReply(Reply(fds, RPL_TOPIC(ircserv.getName(), user->getNick(), user->getUser(), chan->getTopic())));
-	ircserv.addReply(Reply(fds, RPL_NAMREPLY(ircserv.getName(), user->getNick(), chan->getType(), chan->getName(), chan->getMemberList())));
-	ircserv.addReply(Reply(fds, RPL_ENDOFNAMES(ircserv.getName(), user->getNick())));
+		ircserv.addReply(Reply(fds, RPL_TOPIC(ircserv.getName(), user->getNickname(), user->getUsername(), chan->getTopic())));
+	ircserv.addReply(Reply(fds, RPL_NAMREPLY(ircserv.getName(), user->getNickname(), chan->getType(), chan->getName(), chan->getMemberList())));
+	ircserv.addReply(Reply(fds, RPL_ENDOFNAMES(ircserv.getName(), user->getNickname())));
 }
 

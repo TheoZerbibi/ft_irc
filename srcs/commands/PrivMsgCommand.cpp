@@ -26,7 +26,7 @@ void PrivMsgCommand::execute(int fds, Client *client)
 	std::vector<std::string>	targets;
 
 	if (args.size() < 2)
-		return (ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name))));
+		return (ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNickname(), this->_name))));
 	targets = splitStr(args.at(0), ',');
 	removeDuplicate(targets);
 
@@ -43,20 +43,22 @@ void	PrivMsgCommand::sendMsg(User *user, std::string target, std::string msg)
 	if (target.at(0) == '#')
 	{
 		if (!(chan = ircserv.getChannel(target))) {
-			ircserv.addReply(Reply(user->getSockfd(), ERR_NOSUCHCHANNEL(ircserv.getName(), user->getNick(), target)));
+			ircserv.addReply(Reply(user->getSockfd(), ERR_NOSUCHCHANNEL(ircserv.getName(), user->getNickname(), target)));
 			return ;
 		}
 		std::cout << "isOn? " << user->isOnChannel(chan) << std::endl;
 		if (user->isOnChannel(chan))
-			chan->sendToChannel(user, RPL_PRIVMSG(user_id(ircserv.getName(), user->getNick(), user->getUser()), target, msg));
+			chan->sendToChannel(user, RPL_PRIVMSG(user_id(ircserv.getName(), user->getNickname(), user->getUsername()), target, msg));
 		else
-			ircserv.addReply(Reply(user->getSockfd(), ERR_CANNOTSENDTOCHAN(ircserv.getName(), user->getNick(), target)));
+			ircserv.addReply(Reply(user->getSockfd(), ERR_CANNOTSENDTOCHAN(ircserv.getName(), user->getNickname(), target)));
 	}
 	else
 	{
 		if (!(user_target = ircserv.getUserByNick(target)))
 			return (ircserv.addReply(Reply(user->getSockfd(), ERR_NOSUCHNICK(ircserv.getName(), target))));
-		ircserv.addReply(Reply(user_target->getSockfd(), RPL_PRIVMSG(user_id(ircserv.getName(), user->getNick(), user->getUser()), target, msg)));
+		ircserv.addReply(Reply(user_target->getSockfd(), RPL_PRIVMSG(user_id(ircserv.getName(), user->getNickname(), user->getUsername()), target, msg)));
+		if (user_target->isAway())
+			ircserv.addReply(Reply(user->getSockfd(), RPL_AWAY(ircserv.getName(), user->getNickname(), user_target->getNickname(), user_target->getAwayMessage())));
 	}
 }
 

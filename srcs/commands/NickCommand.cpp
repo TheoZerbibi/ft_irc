@@ -24,22 +24,22 @@ void NickCommand::execute(int fds, Client *client)
 
 	if (nick.empty())
 	{
-		ircserv.addReply(Reply(fds, ERR_NONICKNAMEGIVEN(ircserv.getName(), client->getUser())));
+		ircserv.addReply(Reply(fds, ERR_NONICKNAMEGIVEN(ircserv.getName(), client->getUsername())));
 		return ;
 	}
 	if (ircserv.getUserByNick(nick))
 	{
-		ircserv.addReply(Reply(fds, ERR_NICKNAMEINUSE(ircserv.getName(), client->getUser(), nick)));
+		ircserv.addReply(Reply(fds, ERR_NICKNAMEINUSE(ircserv.getName(), client->getUsername(), nick)));
 		return ;
 	}
 	if (nick.length() > 9 || nick.length() < 2)
 	{
-		ircserv.addReply(Reply(fds, ERR_ERRONEUSNICKNAME(ircserv.getName(), client->getUser(), nick)));
+		ircserv.addReply(Reply(fds, ERR_ERRONEUSNICKNAME(ircserv.getName(), client->getUsername(), nick)));
 		return ;
 	}
-	ircserv.addReply(Reply(fds, RPL_NICK(user_id(ircserv.getName(), client->getNick(), client->getUser()), nick)));
+	ircserv.addReply(Reply(fds, RPL_NICK(user_id(ircserv.getName(), client->getNickname(), client->getUsername()), nick)));
 	client->setNick(nick);
-	std::cout << "NickCommand::execute(" << fds << ", " << client->getNick() << ")" << std::endl;
+	std::cout << "NickCommand::execute(" << fds << ", " << client->getNickname() << ")" << std::endl;
 	if (!client->isRegistered())
 		ircserv.promoteClient(client);
 }

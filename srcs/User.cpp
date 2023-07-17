@@ -1,12 +1,5 @@
 #include "User.hpp"
 
-//	User::User(int fd, const std::string& nick, const std::string& username, const std::string& hostname): _fd(fd), _nick(nick), _username(username), _hostname(hostname)
-//	{
-//	}
-//	
-//	User::User(int &fd): _fd(fd)
-//	{
-//	}
 
 Client::Client(int const &sfd):
 _buff(),
@@ -26,9 +19,9 @@ _cmds(),
 _sockFd(cpy->getSockfd()),
 _isAuth(cpy->isAuth()),
 _registered(cpy->isRegistered()),
-_nickname(cpy->getNick()),
+_nickname(cpy->getNickname()),
 _hostname(cpy->getHost()),
-_username(cpy->getUser()),
+_username(cpy->getUsername()),
 _realname(cpy->getRealname())
 {
 }
@@ -53,6 +46,7 @@ Client::~Client()
 User::User():
 	_chans(),
 	_invited(),
+	_awayMessage(),
 	_isOper(false),
 	_isInvis(false)
 {
@@ -107,12 +101,12 @@ bool			User::isOnChannel(Channel *chan)
 	return (true);
 }
 
-const std::string	&Client::getNick() const
+const std::string	&Client::getNickname() const
 {
 	return (this->_nickname);
 }
 
-const std::string	&Client::getUser() const
+const std::string	&Client::getUsername() const
 {
 	return (this->_username);
 }
@@ -342,6 +336,7 @@ User::User(Client *client):
 	Client(*client),
 	_chans(),
 	_invited(),
+	_awayMessage(),
 	_isOper(false),
 	_isInvis(false)
 {
@@ -373,22 +368,21 @@ void	User::printChannels()
 	}
 	std::cout << std::endl;
 }
-//	const int	&User::getFd() const
-//	{
-//		return (this->_fd);
-//	}
-//	
-//	const std::string& User::getNick() const
-//	{
-//		return (this->_nick);
-//	}
-//	
-//	const std::string& User::getUsername() const
-//	{
-//		return (this->_username);
-//	}
-//	
-//	const std::string& User::getHostname() const
-//	{
-//		return (this->_hostname);
-//	}
+
+const std::string
+	&User::getAwayMessage(void) const
+{
+	return (this->_awayMessage);
+}
+
+void
+	User::setAwayMessage(std::string const &awayMessage)
+{
+	this->_awayMessage = awayMessage;
+}
+
+bool
+	User::isAway(void) const
+{
+	return (!this->_awayMessage.empty());
+}

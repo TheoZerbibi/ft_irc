@@ -47,7 +47,7 @@ void	ModeCommand::printChannelMode(int fds, User *user, Channel *chan)
 	{
 		modestring += "i";
 	}
-	return (ircserv.addReply(Reply(fds, RPL_CHANNELMODIS(ircserv.getName(), user->getNick(), chan->getName(), "+" + modestring, mode_value))));
+	return (ircserv.addReply(Reply(fds, RPL_CHANNELMODIS(ircserv.getName(), user->getNickname(), chan->getName(), "+" + modestring, mode_value))));
 }
 
 void	ModeCommand::appChannelMode(char mode, int modmode, Channel *chan, std::string *arg)
@@ -87,7 +87,7 @@ int	ModeCommand::checkOperMode(int fds, User *user, std::string &target)
 
 	if (!ircserv.getUserByNick(target))
 	{
-		ircserv.addReply(Reply(fds, ERR_NOSUCHNICK(ircserv.getName(), user->getNick())));
+		ircserv.addReply(Reply(fds, ERR_NOSUCHNICK(ircserv.getName(), user->getNickname())));
 		return (0);
 	}
 	return (1);
@@ -125,18 +125,18 @@ void	ModeCommand::applyChannelMode(User *user, Channel *chan, std::string &modst
 			if (needParam)
 			{
 				std::cout << "MODE : Adding Reply" << std::endl;
-				ircserv.addReply(Reply(user->getSockfd(), RPL_MODEWITHARG(user_id(ircserv.getName(), user->getNick(), user->getUser()), chan->getName(), (modmode == ADDING ? '+' : '-') + *beg, value)));
+				ircserv.addReply(Reply(user->getSockfd(), RPL_MODEWITHARG(user_id(ircserv.getName(), user->getNickname(), user->getUsername()), chan->getName(), (modmode == ADDING ? '+' : '-') + *beg, value)));
 				std::cout << "MODE : Ended Adding Reply" << std::endl;
 			}
 			else
-				ircserv.addReply(Reply(user->getSockfd(), RPL_MODE(user_id(ircserv.getName(), user->getNick(), user->getUser()), chan->getName(), (modmode == ADDING ? '+' : '-') + *beg)));
+				ircserv.addReply(Reply(user->getSockfd(), RPL_MODE(user_id(ircserv.getName(), user->getNickname(), user->getUsername()), chan->getName(), (modmode == ADDING ? '+' : '-') + *beg)));
 		}
 		++beg;
 	}
 }
 
 //	if (!user->isChannelOper(chan))
-//		return (ircserv.addReply(Reply(fds, ERR_CHANOPRIVSNEEDED(ircserv.getName(), user->getNick(), chan->getName()))));
+//		return (ircserv.addReply(Reply(fds, ERR_CHANOPRIVSNEEDED(ircserv.getName(), user->getNickname(), chan->getName()))));
 //}
 
 void	ModeCommand::executeChannelMode(int fds, User *user, std::vector<std::string> &args)
@@ -146,7 +146,7 @@ void	ModeCommand::executeChannelMode(int fds, User *user, std::vector<std::strin
 	std::string			modstr;
 
 	if (!chan)
-		return (ircserv.addReply(Reply(fds, ERR_NOSUCHCHANNEL(ircserv.getName(), user->getNick(), args.at(0)))));
+		return (ircserv.addReply(Reply(fds, ERR_NOSUCHCHANNEL(ircserv.getName(), user->getNickname(), args.at(0)))));
 	std::cout << "MODE : Found the channel" << std::endl;
 	args.erase(args.begin());
 	if (args.size() == 0)
@@ -164,7 +164,7 @@ void ModeCommand::execute(int fds, Client *client)
 
 	std::cout << "MODE: Starting" << std::endl;
 	if (args.empty())
-		return (ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name))));
+		return (ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNickname(), this->_name))));
 	std::cout << "MODE: Enough param" << std::endl;
 	if (args.at(0)[0] == '#')
 	{
@@ -197,14 +197,14 @@ int			ModeCommand::checkMode(char mode, bool modmode, User *user, Channel *chan,
 	size_t			pos = modes.find(mode);
 
 
-	if (!chan->getOper(user->getNick()))
+	if (!chan->getOper(user->getNickname()))
 	{
-		ircserv.addReply(Reply(user->getSockfd(), ERR_CHANOPRIVSNEEDED(ircserv.getName(), user->getNick(), chan->getName())));
+		ircserv.addReply(Reply(user->getSockfd(), ERR_CHANOPRIVSNEEDED(ircserv.getName(), user->getNickname(), chan->getName())));
 		return (false);
 	}
 	if (pos == std::string::npos)
 	{
-		ircserv.addReply(Reply(user->getSockfd(), ERR_MODEUNKNOWN(ircserv.getName(), user->getNick(), mode)));
+		ircserv.addReply(Reply(user->getSockfd(), ERR_MODEUNKNOWN(ircserv.getName(), user->getNickname(), mode)));
 		return (false);
 	}
 	std::string		modes_warg = MODES_WARG;
@@ -212,14 +212,14 @@ int			ModeCommand::checkMode(char mode, bool modmode, User *user, Channel *chan,
 	{
 		if (args.empty())
 		{
-			ircserv.addReply(Reply(user->getSockfd(), ERR_NEEDMOREPARAMS(ircserv.getName(), user->getNick(), this->_name)));
+			ircserv.addReply(Reply(user->getSockfd(), ERR_NEEDMOREPARAMS(ircserv.getName(), user->getNickname(), this->_name)));
 			return (false);
 		}
 		if (mode == 'o')
 		{
 			if (!ircserv.getUserByNick(args.at(0)))
 			{
-				ircserv.addReply(Reply(user->getSockfd(), ERR_NOSUCHNICK(ircserv.getName(), user->getNick())));
+				ircserv.addReply(Reply(user->getSockfd(), ERR_NOSUCHNICK(ircserv.getName(), user->getNickname())));
 				return (false);
 			}
 		}
@@ -233,7 +233,7 @@ void	ModeCommand::printUserMode(int fds, User *user, std::string nickname)
 	Irc				&ircserv = Irc::getInstance();
 	std::string			modes = "";
 
-	if (nickname != user->getNick())
+	if (nickname != user->getNickname())
 		return (ircserv.addReply(Reply(fds, ERR_USERSDONTMATCHVIEW(ircserv.getName(), nickname))));
 	if (user->isInvis())
 		modes += "i";
@@ -265,7 +265,7 @@ void	ModeCommand::printUserMode(int fds, User *user, std::string nickname)
 //			}
 //			else
 //			{
-//			ircserv.addReply(Reply(fds, ERR_UMODEUNKNOWNFLAG(ircserv.getName(), user->getNick())));
+//			ircserv.addReply(Reply(fds, ERR_UMODEUNKNOWNFLAG(ircserv.getName(), user->getNickname())));
 //			}
 //			++beg;
 //		}
@@ -279,14 +279,14 @@ void	ModeCommand::executeUserMode(int fds, User *user, std::vector<std::string> 
 	std::string		modestr;
 
 	if (!target)
-		return (ircserv.addReply(Reply(fds, ERR_NOSUCHNICK(ircserv.getName(), user->getNick()))));
+		return (ircserv.addReply(Reply(fds, ERR_NOSUCHNICK(ircserv.getName(), user->getNickname()))));
 	args.erase(args.begin());
 	if (args.size() == 0)
 	{
-		return (printUserMode(fds, user, target->getNick()));
+		return (printUserMode(fds, user, target->getNickname()));
 	}
 	if (target != user)
-		return (ircserv.addReply(Reply(fds, ERR_USERSDONTMATCH(ircserv.getName(), user->getNick()))));
+		return (ircserv.addReply(Reply(fds, ERR_USERSDONTMATCH(ircserv.getName(), user->getNickname()))));
 	//	args.erase(args.begin());
 	//	modestr = args.at(0);
 	//	std::cout << "modestr = " << modestr << std::endl;
@@ -299,7 +299,7 @@ void	ModeCommand::executeUserMode(int fds, User *user, std::vector<std::string> 
 //	
 //		if (target != user)
 //		{
-//			return (ircserv.addReply(Reply(fds, ERR_USERSDONTMATCH(ircserv.getName(), user->getNick()))));
+//			return (ircserv.addReply(Reply(fds, ERR_USERSDONTMATCH(ircserv.getName(), user->getNickname()))));
 //		}
 //	}
 

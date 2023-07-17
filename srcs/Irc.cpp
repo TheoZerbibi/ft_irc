@@ -126,7 +126,7 @@ User		*Irc::getUserByNick(std::string const nick) const
 	{
 		if (beg->second->isRegistered())
 		{
-			if (beg->second->getNick() == nick)
+			if (beg->second->getNickname() == nick)
 				return (dynamic_cast<User *>(beg->second));
 		}
 		++beg;
@@ -153,7 +153,7 @@ void	Irc::removeClient(int const &sfd, std::string const &msg)
 			User	*user = dynamic_cast<User *>(it->second);
 			user->quitAllChannel(msg);
 		}
-		this->addReply(Reply(sfd, RPL_QUIT(user_id(this->getName(), it->second->getNick(), it->second->getUser()), msg)));
+		this->addReply(Reply(sfd, RPL_QUIT(user_id(this->getName(), it->second->getNickname(), it->second->getUsername()), msg)));
 		delete it->second;
 		_clients.erase(it);
 	}
@@ -161,8 +161,8 @@ void	Irc::removeClient(int const &sfd, std::string const &msg)
 
 void	Irc::promoteClient(Client *client)
 {
-	std::string nick = client->getNick();
-	std::string user = client->getUser();
+	std::string nick = client->getNickname();
+	std::string user = client->getUsername();
 	std::string host = client->getHost();
 	std::string real = client->getRealname();
 	int	    fd = client->getSockfd();

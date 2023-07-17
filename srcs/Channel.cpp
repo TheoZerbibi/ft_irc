@@ -43,32 +43,6 @@ User	*Channel::getOper(std::string nick)
 	return (NULL);
 }
 
-std::string const
-	Channel::getUsersNick() const
-{
-	std::string 				nick_str = "";
-	std::map<std::string, User *>::const_iterator	beg =	_operator.begin();
-	std::map<std::string, User *>::const_iterator	end =	_operator.end();
-
-	while (beg != end)
-	{
-		if (!nick_str.empty())
-			nick_str += " ";
-		nick_str += beg->first;
-		++beg;
-	}
-	beg = _users.begin();
-	end = _users.end();
-	while (beg != end)
-	{
-		if (!nick_str.empty())
-			nick_str += " ";
-		nick_str += beg->first;
-		++beg;
-	}
-	return (nick_str);
-}
-
 User	*Channel::getUser(std::string nick)
 {
 	std::map<std::string, User *>::const_iterator	beg = this->_users.begin();
@@ -126,7 +100,7 @@ std::string const
 	for (it = this->_users.begin(); it != this->_users.end(); it++)
 	{
 		nick.clear();
-		nick = it->second->getNick();
+		nick = it->second->getNickname();
 		if (it->second->isInvis())
 			continue;
 
@@ -137,7 +111,7 @@ std::string const
 	for (it = this->_operator.begin(); it != this->_operator.end(); it++)
 	{
 		nick.clear();
-		nick = it->second->getNick();
+		nick = it->second->getNickname();
 		if (it->second->isInvis())
 			continue;
 
@@ -166,14 +140,14 @@ bool		Channel::noOper() const
 //Setter
 void		Channel::addUser(User *user)
 {
-	std::pair<std::string, User *> user_entry = std::make_pair<std::string, User*>(user->getNick(), user);
+	std::pair<std::string, User *> user_entry = std::make_pair<std::string, User*>(user->getNickname(), user);
 	this->_users.insert(user_entry);
 	this->printUserList();
 }
 
 void		Channel::addOper(User *user)
 {
-	std::pair<std::string, User *> user_entry = std::make_pair<std::string, User*>("@" + user->getNick(), user);
+	std::pair<std::string, User *> user_entry = std::make_pair<std::string, User*>("@" + user->getNickname(), user);
 	this->_operator.insert(user_entry);
 }
 
@@ -199,7 +173,7 @@ void		Channel::setInvit(bool value)
 
 void		Channel::removeOper(User *user, std::string reason)
 {
-	this->removeOper(user->getNick(), reason);
+	this->removeOper(user->getNickname(), reason);
 }
 
 void		Channel::removeOper(std::string nick, std::string reason)
@@ -210,8 +184,8 @@ void		Channel::removeOper(std::string nick, std::string reason)
 
 	if (found != end)
 	{
-		ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
-		this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
+		ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUsername()), this->_name, reason)));
+		this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUsername()), this->_name, reason));
 
 		_operator.erase(found);
 	
@@ -232,7 +206,7 @@ void		Channel::fillOperPos()
 
 void		Channel::removeUser(User *user, std::string reason)
 {
-	this->removeUser(user->getNick(), reason);
+	this->removeUser(user->getNickname(), reason);
 }
 
 void		Channel::removeUser(std::string nick, std::string reason)
@@ -247,8 +221,8 @@ void		Channel::removeUser(std::string nick, std::string reason)
 	{
 		std::cout << "||-->removing user : " << nick << std::endl;
 
-		ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason)));
-		this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUser()), this->_name, reason));
+		ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUsername()), this->_name, reason)));
+		this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUsername()), this->_name, reason));
 		this->_users.erase(found);
 	} else
 		this->removeOper(nick, reason);
@@ -258,21 +232,21 @@ void
 	Channel::kickUser(User *executor, User *target, std::string reason)
 {
 	Irc			&ircserv =	Irc::getInstance();
-	if (!this->getOper(executor->getNick()))
+	if (!this->getOper(executor->getNickname()))
 	{
-		ircserv.addReply(Reply(executor->getSockfd(), ERR_CHANOPRIVSNEEDED(ircserv.getName(), executor->getNick(), this->_name)));
+		ircserv.addReply(Reply(executor->getSockfd(), ERR_CHANOPRIVSNEEDED(ircserv.getName(), executor->getNickname(), this->_name)));
 		return ;
 	}
 	if (!target->isOnChannel(this) || !executor->isOnChannel(this))
 	{
-		ircserv.addReply(Reply(executor->getSockfd(), ERR_NOTONCHANNEL(ircserv.getName(), executor->getNick(), this->_name)));
+		ircserv.addReply(Reply(executor->getSockfd(), ERR_NOTONCHANNEL(ircserv.getName(), executor->getNickname(), this->_name)));
 		return ;
 	}
-	if (this->getOper(target->getNick())) return ;
-	this->_users.erase(target->getNick());
+	if (this->getOper(target->getNickname())) return ;
+	this->_users.erase(target->getNickname());
 	target->removeChannel(this);
 	this->printUserList();
-	this->sendToEveryone(target, RPL_KICK(user_id(ircserv.getName(), executor->getNick(), executor->getUser()), this->_name, target->getNick(), reason));
+	this->sendToEveryone(target, RPL_KICK(user_id(ircserv.getName(), executor->getNickname(), executor->getUsername()), this->_name, target->getNickname(), reason));
 }
 
 void		Channel::setOper(std::string nick, bool value)
@@ -287,7 +261,7 @@ void		Channel::setOper(std::string nick, bool value)
 		{
 			this->_users.erase(nick);
 			addOper(user);
-			this->sendToEveryone(user, RPL_MODEWITHARG(user_id(ircserv.getName(), user->getNick(), user->getUser()), this->_name, "+o", user->getNick()));
+			this->sendToEveryone(user, RPL_MODEWITHARG(user_id(ircserv.getName(), user->getNickname(), user->getUsername()), this->_name, "+o", user->getNickname()));
 		}
 	}
 	else
@@ -297,7 +271,7 @@ void		Channel::setOper(std::string nick, bool value)
 		{
 			this->_operator.erase(nick);
 			addUser(user);
-			this->sendToEveryone(user, RPL_MODEWITHARG(user_id(ircserv.getName(), user->getNick(), user->getUser()), this->_name, "-o", user->getNick()));
+			this->sendToEveryone(user, RPL_MODEWITHARG(user_id(ircserv.getName(), user->getNickname(), user->getUsername()), this->_name, "-o", user->getNickname()));
 		}
 	}
 }
