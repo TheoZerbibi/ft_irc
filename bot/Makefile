@@ -6,7 +6,7 @@
 #    By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/19 12:13:48 by thzeribi          #+#    #+#              #
-#    Updated: 2023/07/17 05:29:00 by thzeribi         ###   ########.fr        #
+#    Updated: 2023/07/17 05:22:32 by thzeribi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,16 +18,15 @@ ifndef VERBOSE
 	MAKEFLAGS += --no-print-directory --silent
 endif
 
-NAME			:=	ircserv
-PROJECT_NAME	:=	IRC
+NAME			:=	irc_bot
+PROJECT_NAME	:=	IRC_BOT
 
 ################################################################################
 #                                 SOURCES                                      #
 ################################################################################
 SOURCES_FOLDER		:=	./srcs/
 OBJECTS_FOLDER		:=	./objs/
-INCLUDES_FOLDER 	:=	./inc/
-BOT_FOLDER			:=	./bot/
+INCLUDES_FOLDER 	:=	./privates/
 
 SOURCES				:= $(shell find ${SOURCES_FOLDER} -name "*.cpp")
 
@@ -109,26 +108,18 @@ $(OBJECTS_FOLDER)%.o: $(SOURCES_FOLDER)%.cpp .DBG.$(DEBUG)
 	printf "%-50s \r"
 	printf "\t\t\t$(NO_COLOR)Creating $(INFO_COLOR)%-30s $(OK_COLOR)✓$(NO_COLOR)\r" "$@"
 
-bot:
-ifneq (,$(wildcard ./irc_bot))
-	rm irc_bot
-endif
-	make -C $(BOT_FOLDER)
-	ln -s $(BOT_FOLDER)irc_bot .
 clean: header
 	rm -f $(OBJECTS)
-	make -c $(BOT_FOLDER) clean
 
 fclean: clean
 	rm -f $(NAME)
 	rm -rf $(OBJECTS_FOLDER)
 	rm -f .DBG.*
-	make -c $(BOT_FOLDER) fclean
 	printf "\t\t$(INFO_COLOR)$(PROJECT_NAME) $(NO_COLOR)Removed $(INFO_COLOR)$(NAME)$(NO_COLOR).\n"
 
 re: fclean all
 
-.PHONY: all re clean fclean force anclarma bot
+.PHONY: all re clean fclean force anclarma
 
--include ./Templates/header.mk ./Templates/debug.mk ./Templates/asan.mk \
-	./Templates/anclarma.mk ./Templates/coffee.mk
+-include ../Templates/header.mk ../Templates/debug.mk ../Templates/asan.mk \
+	../Templates/anclarma.mk ../Templates/coffee.mk
