@@ -4,7 +4,7 @@
 UserCommand::UserCommand(void) :
 _name("USER")
 {
-	std::cout << "┗⮕ UserCommand." << std::endl;
+	std::cout << "┣⮕ UserCommand." << std::endl;
 }
 
 UserCommand::~UserCommand(void)

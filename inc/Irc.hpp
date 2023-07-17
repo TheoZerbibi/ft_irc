@@ -16,6 +16,7 @@
 #include	"QuitCommand.hpp"
 #include	"TopicCommand.hpp"
 #include	"UserCommand.hpp"
+#include	"WhoCommand.hpp"
 
 class Command;
 class Client;

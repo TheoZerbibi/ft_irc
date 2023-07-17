@@ -5,6 +5,9 @@
 
 
 # define RPL_NAMREPLY(server, client, symbol, channel, memberList) (":" + server + " 353 " + client + " " + symbol + " " + channel + " :" + memberList + "\r\n")
+#define RPL_STARTOFMOTD(server, nickname, message) (":" + server + " 375 " + nickname + " :- " + message + " Message of the day - \r\n")
+#define RPL_MOTD(server, nickname, motdLine) (":" + server + " 372 " + nickname + " :" + motdLine + "\r\n")
+#define RPL_ENDOFMOTD(server, nickname) (":" + server + " 376 " + nickname + " :End of /MOTD command.\r\n")
 
 # define RPL_UMODEIS(server, user, modes) (":" + server + " 221 "+ user + " :+" + modes + "\r\n")
 # define RPL_CHANNELMODIS(server, user, channel, modes, modsarg) (":" + server + " 324 " + user + " " + channel + " " + modes + " " + modsarg + "\r\n")
@@ -16,6 +19,7 @@
 # define RPL_PRIVMSG(userID, target, msg) (userID + " PRIVMSG " + target + " :" + msg + "\r\n")
 # define RPL_KICK(userID, channel, target, reason) (userID + " KICK " + channel + " " + target + " " + reason + "\r\n")
 
+#define ERR_NOMOTD(server, nickname) (":" + server + " 422 " + nickname + " :MOTD File is missing\r\n")
 # define ERR_NOSUCHCHANNEL(server, nickname, channel) (": " + server + " 403 " + nickname + " " + channel + " :No such channel\r\n")
 # define ERR_NOTONCHANNEL(server, nickname, channel) (": " + server + " 442 " + nickname + " " + channel + " :The user is not on this channel.\r\n")
 # define ERR_CANNOTSENDTOCHAN(server, nickname, channel) (":" + server + " 404 " + nickname + " " + channel + " :Cannot send to channel\r\n")

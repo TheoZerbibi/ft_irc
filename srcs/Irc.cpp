@@ -77,6 +77,7 @@ void	Irc::initCommand() {
 	this->commandList.insert(std::pair<std::string, Command*>("QUIT", new QuitCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("TOPIC", new TopicCommand()));
 	this->commandList.insert(std::pair<std::string, Command*>("USER", new UserCommand()));
+	this->commandList.insert(std::pair<std::string, Command*>("WHO", new WhoCommand()));
 }
 
 void	Irc::_removeAllCommands() {
@@ -161,20 +162,36 @@ void	Irc::removeClient(int const &sfd, std::string const &msg)
 
 void	Irc::promoteClient(Client *client)
 {
-	std::string nick = client->getNickname();
-	std::string user = client->getUsername();
-	std::string host = client->getHost();
-	std::string real = client->getRealname();
-	int	    fd = client->getSockfd();
-	bool	    isAuth = client->isAuth();
+	std::string 	nickname = client->getNickname();
+	std::string 	username = client->getUsername();
+	std::string 	host = client->getHost();
+	std::string 	real = client->getRealname();
+	int				fd = client->getSockfd();
+	bool			isAuth = client->isAuth();
+	std::ifstream	motd;
+	char			motdPath[20] = "ressources/MOTD.txt";
 
-	if (nick != "*" && !user.empty()
+	if (nickname != "*" && !username.empty()
 			&& !host.empty() && !real.empty() && isAuth) {
-		Irc	&ircserv = Irc::getInstance();
 
-		ircserv.addReply(Reply(fd, RPL_WELCOME(ircserv.getName(), nick, user_ids(host, nick, user))));
-		ircserv.addReply(Reply(fd, RPL_YOURHOST(ircserv.getName(), nick)));
-		ircserv.addReply(Reply(fd, RPL_INFO(ircserv.getName(), nick)));
+		this->addReply(Reply(fd, RPL_WELCOME(this->getName(), nickname, user_ids(host, nickname, username))));
+		this->addReply(Reply(fd, RPL_YOURHOST(this->getName(), nickname)));
+		this->addReply(Reply(fd, RPL_INFO(this->getName(), nickname)));
+
+		motd.open(motdPath);
+		if (!motd)
+			this->addReply(Reply(fd, ERR_NOMOTD(this->getName(), nickname)));
+		else {
+			std::string line;
+			std::string buf;
+
+			buf = RPL_STARTOFMOTD(this->getName(), nickname, "42 FT_IRC");
+			while (getline(motd, line))
+				buf += RPL_MOTD(this->getName(), nickname, line);
+			buf += RPL_ENDOFMOTD(this->getName(), nickname);
+			this->addReply(Reply(fd, buf));
+			motd.close();
+		}
 
 		std::map<int, Client *>::iterator client_it = _clients.find(client->getSockfd());
 
