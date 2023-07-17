@@ -4,6 +4,7 @@ Irc::Irc(std::string port, std::string passwd, std::string name):
 command(),
 _channels(),
 _clients(),
+_clientsWantLeave(),
 commandList(),
 _net(),
 _name(name),
@@ -252,29 +253,6 @@ void	Irc::mergeReplies()
 	}
 	_replies = newRpls;
 }
-//	
-//	// erase return next element after the erased one
-//	int	Irc::sendReplies(void)
-//	{
-//		std::vector<Reply>::iterator	beg = _replies.begin();
-//		std::vector<Reply>::iterator	end = _replies.begin();
-//	
-//		if (beg != end)
-//			std::cout << "Fd: " << beg->getClientFd() << " mss:" << beg->getMessage() << std::endl;
-//		while (beg != end)
-//		{
-//			if (FD_ISSET((beg)->getClientFd(), &(this->fds[SEND])))
-//			{
-//				if (((beg)->send()))
-//					beg = _replies.erase(beg);
-//				else
-//					++beg;
-//			}
-//			else 
-//				++beg;
-//		}
-//		return (0);
-//	}
 
 // erase return next element after the erased one
 int	Irc::sendReplies(void)
@@ -349,11 +327,8 @@ Channel	*Irc::getChannel(std::string name)
 void	Irc::removeChannel(Channel *channel)
 {
 
-	//	if (this->channelExists(channel->getName())) 
-	//	{
 	_channels.erase(channel->getName());
 	delete channel;
-	//	}
 }
 
 void	Irc::addUserToChannel(User *user, Channel *chan)
@@ -369,5 +344,33 @@ void Irc::_removeAllChannel() {
 	{
 		delete beg->second;
 		_channels.erase(beg++);
+	}
+}
+
+bool
+	Irc::_isClientWantLeave(Client *client)
+{
+	if (this->_clientsWantLeave.find(client->getSockfd()) != this->_clientsWantLeave.end())
+		return (true);
+	return (false);
+}
+
+void
+	Irc::addLeaveUser(Client *client, std::string const &reason)
+{
+	if (!this->_isClientWantLeave(client))
+		this->_clientsWantLeave.insert(std::make_pair(client->getSockfd(), reason));
+}
+
+void
+	Irc::leaveUsers(void)
+{
+	std::map<int, std::string>::iterator beg = this->_clientsWantLeave.begin();
+	std::map<int, std::string>::iterator end = this->_clientsWantLeave.end();
+
+	while (beg != end)
+	{
+		this->removeClient(beg->first, beg->second);
+		this->_clientsWantLeave.erase(beg++);
 	}
 }

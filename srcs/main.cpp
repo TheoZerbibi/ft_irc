@@ -3,13 +3,11 @@
 /*
 **
 ** TODO:
-**   - Main args
 **   - WHOCommand?
+**   - AwayCommand
+**   - IRC Bot
 ** BUGFIX:
-**   - Message when player join a channel
 **   - ModeCommand fix
-**   - Fix /invite dont send message in chan + segfault
-**   - Rework QuitCommand, add vector for kill client after client_input
 **
 */
 
