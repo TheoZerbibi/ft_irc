@@ -4,7 +4,6 @@
 **
 ** TODO:
 **   - WHOCommand?
-**   - Pretty MOTD
 **   - IRC Bot
 ** BUGFIX:
 **   - ModeCommand fix
