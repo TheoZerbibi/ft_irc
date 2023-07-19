@@ -6,7 +6,7 @@
 #    By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/19 12:13:48 by thzeribi          #+#    #+#              #
-#    Updated: 2023/07/17 05:29:00 by thzeribi         ###   ########.fr        #
+#    Updated: 2023/07/19 15:25:21 by thzeribi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -117,13 +117,13 @@ endif
 	ln -s $(BOT_FOLDER)irc_bot .
 clean: header
 	rm -f $(OBJECTS)
-	make -c $(BOT_FOLDER) clean
+	make -C $(BOT_FOLDER) clean
 
 fclean: clean
 	rm -f $(NAME)
 	rm -rf $(OBJECTS_FOLDER)
 	rm -f .DBG.*
-	make -c $(BOT_FOLDER) fclean
+	make -C $(BOT_FOLDER) fclean
 	printf "\t\t$(INFO_COLOR)$(PROJECT_NAME) $(NO_COLOR)Removed $(INFO_COLOR)$(NAME)$(NO_COLOR).\n"
 
 re: fclean all
