@@ -5,14 +5,10 @@
 #                                                     +:+ +:+         +:+      #
 #    By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/12/19 12:13:48 by thzeribi          #+#    #+#              #
-#    Updated: 2023/07/17 05:22:32 by thzeribi         ###   ########.fr        #
+#    Created: 2023/07/19 13:19:33 by thzeribi          #+#    #+#              #
+#    Updated: 2023/07/19 13:48:47 by thzeribi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-################################################################################
-#                                     CONFIG                                   #
-################################################################################
 
 ifndef VERBOSE
 	MAKEFLAGS += --no-print-directory --silent
@@ -24,30 +20,32 @@ PROJECT_NAME	:=	IRC_BOT
 ################################################################################
 #                                 SOURCES                                      #
 ################################################################################
-SOURCES_FOLDER		:=	./srcs/
-OBJECTS_FOLDER		:=	./objs/
-INCLUDES_FOLDER 	:=	./privates/
 
-SOURCES				:= $(shell find ${SOURCES_FOLDER} -name "*.cpp")
+SOURCES_FOLDER	:= ./srcs/
+OBJECTS_FOLDER	:= ./objs/
+INCLUDES_FOLDER	:= ./privates/
+
+SOURCES			:= $(shell find ${SOURCES_FOLDER} -name "*.cpp")
 
 ################################################################################
 #                                  OBJETS                                      #
 ################################################################################
 
-OBJECTS		:=	$(SOURCES:.cpp=.o)
-OBJECTS		:=	$(subst $(SOURCES_FOLDER),$(OBJECTS_FOLDER), $(OBJECTS))
-DEPS		:=	$(OBJECTS:.o=.d)
-
+OBJECTS	:= $(SOURCES:.cpp=.o)
+OBJECTS	:= $(subst $(SOURCES_FOLDER),$(OBJECTS_FOLDER),$(OBJECTS))
+DEPS	:= $(OBJECTS:.o=.d)
 
 ################################################################################
 #                                  FLAGS                                       #
 ################################################################################
 
-CXXFLAGS		=	-MMD -Wall -Wextra -Werror -Weffc++ -std=c++98
-CXX				?=	c++
-DBG				:=	0
+CXXFLAGS	:= -MMD -Wall -Wextra -Werror
+CXX			?= g++
+DBG			:=	0
 
-INCLUDES		:= $(addprefix -I,$(shell find ${INCLUDES_FOLDER} -type d -print))
+LDFLAGS		:= -L/$(HOME)/.config/curl/lib -lcurl
+INCLUDES	:= $(addprefix -I,$(shell find ${INCLUDES_FOLDER} -type d -print))
+INCLUDES	+= -I/$(HOME)/.config/curl/include
 
 ifneq (,$(wildcard ./.DBG.*))
 	ifeq ($(findstring $(MAKECMDGOALS), re),)
@@ -63,7 +61,7 @@ else ifeq ($(DBG), 2)
 	CXXFLAGS += -g3
 	DEBUG := $(DBG)
 else ifeq ($(DBG), 3)
-	CXXFLAGS := -Werror -Weverything -Wno-padded -Wno-suggest-destructor-override -Wno-suggest-override -std=c++98 -MMD
+	CXXFLAGS := -Werror -Weverything -Wno-padded -Wno-suggest-destructor-override -Wno-suggest-override -MMD
 	DEBUG := $(DBG)
 else
 	DEBUG := 0
@@ -90,19 +88,13 @@ all: header $(NAME)
 $(NAME): $(OBJECTS)
 	printf "\t\t$(NO_COLOR)All objects for $(INFO_COLOR)$(PROJECT_NAME) $(NO_COLOR)where successfully created.\n"
 	printf "\t\t$(INFO_COLOR)$(PROJECT_NAME) $(NO_COLOR)Removed all objects$(NO_COLOR).\n"
-	printf "\n\t\t$(NO_COLOR)-------- $(INFO_COLOR) Start Compilation for ${PROJECT_NAME} $(NO_COLOR)--------\n"	
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(NAME) $(OBJECTS)
+	printf "\n\t\t$(NO_COLOR)-------- $(INFO_COLOR) Start Compilation for ${PROJECT_NAME} $(NO_COLOR)--------\n"
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $@ $^ $(LDFLAGS)
 	printf "%-50s \r"
 	printf "\t\t$(INFO_COLOR)$(NAME)$(NO_COLOR) successfully compiled. $(OK_COLOR)✓$(NO_COLOR)\n"
 
-force: $(OBJECTS)
-	printf "\t\t\t$(NO_COLOR)All objects for $(INFO_COLOR)$(PROJECT_NAME) $(NO_COLOR)where successfully created.\n"
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(NAME) $(OBJECTS)
-	printf "%-50s \r"
-	printf "\t\t\t$(INFO_COLOR)$(NAME)$(NO_COLOR) successfully force compiled. $(OK_COLOR)✓$(NO_COLOR)\n"
-
 -include $(DEPS)
-$(OBJECTS_FOLDER)%.o: $(SOURCES_FOLDER)%.cpp .DBG.$(DEBUG)
+$(OBJECTS_FOLDER)%.o: $(SOURCES_FOLDER)%.cpp
 	mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 	printf "%-50s \r"
@@ -119,7 +111,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all re clean fclean force anclarma
+.PHONY: all re clean fclean
 
 -include ../Templates/header.mk ../Templates/debug.mk ../Templates/asan.mk \
 	../Templates/anclarma.mk ../Templates/coffee.mk
