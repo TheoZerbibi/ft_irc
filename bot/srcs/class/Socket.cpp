@@ -8,6 +8,10 @@ _buffer()
 	std::cout << "Create Socket !" << std::endl;
 }
 
+int Sock::getFd() const {
+	return this->_fd;
+}
+
 int Sock::link(const char *host, int port) {
 	struct sockaddr_in si;
 	struct hostent *hostess_twinkies = gethostbyname(host);

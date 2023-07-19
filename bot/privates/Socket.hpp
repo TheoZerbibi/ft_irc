@@ -16,6 +16,7 @@ private:
 	char	_buffer[512];
 public:
 	Sock();
+	int	getFd() const;
 	int	link(const char* host, int port);
 	int	unlink();
 	int	in(char* buf);
