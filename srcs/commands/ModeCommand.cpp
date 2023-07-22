@@ -125,11 +125,11 @@ void	ModeCommand::applyChannelMode(User *user, Channel *chan, std::string &modst
 			if (needParam)
 			{
 				std::cout << "MODE : Adding Reply" << std::endl;
-				ircserv.addReply(Reply(user->getSockfd(), RPL_MODEWITHARG(user_id(ircserv.getName(), user->getNickname(), user->getUsername()), chan->getName(), (modmode == ADDING ? '+' : '-') + *beg, value)));
+				chan->sendToEveryone(user, RPL_MODEWITHARG(user_id(ircserv.getName(), user->getNickname(), user->getUsername()), chan->getName(), (modmode == ADDING ? '+' : '-') + *beg, value));
 				std::cout << "MODE : Ended Adding Reply" << std::endl;
 			}
 			else
-				ircserv.addReply(Reply(user->getSockfd(), RPL_MODE(user_id(ircserv.getName(), user->getNickname(), user->getUsername()), chan->getName(), (modmode == ADDING ? '+' : '-') + *beg)));
+				chan->sendToEveryone(user, RPL_MODE(user_id(ircserv.getName(), user->getNickname(), user->getUsername()), chan->getName(), (modmode == ADDING ? '+' : '-') + *beg));
 		}
 		++beg;
 	}

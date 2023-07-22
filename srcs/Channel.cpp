@@ -261,7 +261,6 @@ void		Channel::setOper(std::string nick, bool value)
 		{
 			this->_users.erase(nick);
 			addOper(user);
-			this->sendToEveryone(user, RPL_MODEWITHARG(user_id(ircserv.getName(), user->getNickname(), user->getUsername()), this->_name, "+o", user->getNickname()));
 		}
 	}
 	else
