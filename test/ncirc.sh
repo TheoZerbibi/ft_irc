@@ -43,7 +43,7 @@ then
 	make -C ../
 fi
 
-../ircserv &> /dev/null &
+../ircserv "ircd" "123" &> /dev/null &
 PID_SERV=$?
 ./proxy/myproxy 1025 | tee output_pipe | tee output_file &
 PID_CLIENT=$?
@@ -68,7 +68,7 @@ autopong &
 
 echo "nbr of argument $#"
 
-find Input -type f | xargs cat - > input_pipe
+find Input -type f | cat <(echo " -") | xargs cat > input_pipe
 
 #if [ $# -gt 0 ]
 #then

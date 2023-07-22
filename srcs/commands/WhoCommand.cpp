@@ -1,5 +1,9 @@
 #include "WhoCommand.hpp"
 
+# define RPL_WHO(server, user, channel, name, host, ) (":" + server + " 336 " + user + " " + channel + "\r\n")
+<client> <channel> <username> <host> <server> <nick> <flags> :<hopcount> <realname>
+# define RPL_ENDOFWHO(server, client) (":" + server + " 337 " + client + " :End of /INVITE list\r\n")
+
 WhoCommand::WhoCommand(void) :
 _name("WHO")
 {
