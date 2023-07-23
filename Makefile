@@ -6,7 +6,7 @@
 #    By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/19 12:13:48 by thzeribi          #+#    #+#              #
-#    Updated: 2023/07/19 15:25:21 by thzeribi         ###   ########.fr        #
+#    Updated: 2023/07/23 23:38:02 by thzeribi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -120,6 +120,9 @@ clean: header
 	make -C $(BOT_FOLDER) clean
 
 fclean: clean
+ifneq (,$(wildcard ./irc_bot))
+	rm irc_bot
+endif
 	rm -f $(NAME)
 	rm -rf $(OBJECTS_FOLDER)
 	rm -f .DBG.*
