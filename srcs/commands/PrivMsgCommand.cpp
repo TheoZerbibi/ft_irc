@@ -74,7 +74,6 @@ void	PrivMsgCommand::sendAllMsg(User *user, std::vector<std::string> targets, st
 	}
 }
 
-
 void	PrivMsgCommand::removeDuplicate(std::vector<std::string> &entry)
 {
 	std::vector<std::string>::iterator	beg = entry.begin();

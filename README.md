@@ -53,24 +53,22 @@ Things to do are :
 
 ## Requirement
 
-- todo next
- - [+] Join
-	- [x] Multiple Join
-	- [x] Key restriction
-	- [x] Multiple Join w/ multiple key
- - [ ] mode
- - [ ] privmsg
-
-- [ ] change sendReplies to use erase functionnality
-
-
-
-- Server / client socket connection
 
 ---
+
+- Server / client socket connection
  - [x] Accept multiple client and register them under a user id
  - [x] promotion of registered client as user
 
+
+---
+ - [+] JOIN
+	- [x] Multiple Join
+	- [x] Key restriction
+	- [x] Multiple Join w/ multiple key
+ - [x] PRIVMSG
+	- [x] Sending to channels
+	- [x] Sending to users
 ---
 - Command management
 
@@ -102,13 +100,13 @@ Things to do are :
 > These are channel command that can only be used by operator of channel (you first need to be on the channel to do these operation)
  - [+]  [MODE](https://modern.ircdocs.horse/#mode-message) : user('o':operator, 'i':invisible), channel('t':topic requirement, 'k':key, 'l':limits )
 	- [x] o : Change Oper 
-	- [ ] i : invite Only 
-	- [ ] k : Key on channel
-	- [ ] l : Limit User on Channel
+	- [x] i : invite Only 
+	- [x] k : Key on channel
+	- [x] l : Limit User on Channel
 	- [x] t : Restrict topic modification  (! BY DEFAULT IT'S OFF)
  - [x]  [KICK](https://modern.ircdocs.horse/#kick-message)
  - [x]  [INVITE](https://modern.ircdocs.horse/#invite-message)
- - [x]  [TOPIC](https://modern.ircdocs.horse/#topic-message)
+ - [x]  [TOPIC](https://modern.ircdocs.horse/#topic-message) (Buggy because Irssi)
  
 ---
 
