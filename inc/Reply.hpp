@@ -10,7 +10,7 @@
 # define RPL_NOTOPIC(server, user, channel) (":" + server + " 331 " + user + " " + channel + " :No topic is set\r\n")
 # define RPL_TOPIC(serv, nick, chan, topic) (":" + serv + " 332 " + nick + " " + chan + " :" + topic + "\r\n")
 # define RPL_TOPICWHOTIME(serv, user, channel, nick, setat) (":" + serv +  + " 333 " + user + " " + channel + " " + nick + " " + setat + "\r\n")
-# define RPL_ENDOFNAMES(server, user)  (":" + server + " 366 " + user + " :End of /NAMES list" + "\r\n")
+# define RPL_ENDOFNAMES(server, user, chan)  (":" + server + " 366 " + user + " " + chan + " :End of /NAMES list." + "\r\n")
 # define RPL_QUIT(userID, reason) (userID + " QUIT :Quit: " + reason + "\r\n")
 # define RPL_PRIVMSG(userID, target, msg) (userID + " PRIVMSG " + target + " :" + msg + "\r\n")
 # define RPL_KICK(userID, channel, target, reason) (userID + " KICK " + channel + " " + target + " " + reason + "\r\n")
@@ -37,7 +37,7 @@
 
 #define ERR_MODEUNKNOWN(server, user, modechar) (":" + server + " 472 " + modechar + " :is unknown mode char to me.\r\n")
 #define ERR_INVITEONLYCHAN(server, user, channel) ( ":" + server + " 473 " + user + " " + channel + " :Cannot join channel (+i).\r\n")
-#define ERR_CHANOPRIVSNEEDED(server, user, channel) ( ":" + server + " 482 " + user + " " + channel + " :You'not channel operator.\r\n")
+#define ERR_CHANOPRIVSNEEDED(server, user, channel) ( ":" + server + " 482 " + user + " " + channel + " :You're not channel operator.\r\n")
 
 #define ERR_USERSDONTMATCHVIEW(server, user) (":" + server + " 502 " + user + " :Cant view mode for other users\r\n")
 #define ERR_USERSDONTMATCH(server, user) (":" + server + " 502 " + user + " :Cant change mode for other users\r\n")

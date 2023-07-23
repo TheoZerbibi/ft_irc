@@ -32,6 +32,8 @@ void
 	}
 }
 
+
+
 std::map<Channel *, User *>
 	KickCommand::_parseArg(Client *executor, std::vector<std::string> &args)
 {

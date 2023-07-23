@@ -59,17 +59,10 @@ Things to do are :
 	- [x] Key restriction
 	- [x] Multiple Join w/ multiple key
  - [ ] mode
-	- [x] o : Change Oper 
-	- [ ] i : invite Only 
-	- [ ] k : Key on channel
-	- [ ] l : Limit User on Channel
-	- [ ] t : Restrict topic modification
  - [ ] privmsg
 
 - [ ] change sendReplies to use erase functionnality
 
-
-- [ ] mode only manage channel mode (i is for invitationnal only, and o is promote user to a channel operator)
 
 
 - Server / client socket connection
@@ -108,15 +101,16 @@ Things to do are :
 
 > These are channel command that can only be used by operator of channel (you first need to be on the channel to do these operation)
  - [+]  [MODE](https://modern.ircdocs.horse/#mode-message) : user('o':operator, 'i':invisible), channel('t':topic requirement, 'k':key, 'l':limits )
+	- [x] o : Change Oper 
+	- [ ] i : invite Only 
+	- [ ] k : Key on channel
+	- [ ] l : Limit User on Channel
+	- [x] t : Restrict topic modification  (! BY DEFAULT IT'S OFF)
  - [ ]  [KICK](https://modern.ircdocs.horse/#kick-message)
  - [ ]  [INVITE](https://modern.ircdocs.horse/#invite-message)
  - [x]  [TOPIC](https://modern.ircdocs.horse/#topic-message)
  
 ---
-
-- [ ] Implement RPL system
- - [ ] Implement ERR
-
 
 ### Extra
 

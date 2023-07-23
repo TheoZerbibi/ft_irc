@@ -245,18 +245,22 @@ void
 	Channel::kickUser(User *executor, User *target, std::string reason)
 {
 	Irc			&ircserv =	Irc::getInstance();
-	if (!this->getOper(executor->getNickname()))
-	{
-		ircserv.addReply(Reply(executor->getSockfd(), ERR_CHANOPRIVSNEEDED(ircserv.getName(), executor->getNickname(), this->_name)));
-		return ;
-	}
 	if (!target->isOnChannel(this) || !executor->isOnChannel(this))
 	{
 		ircserv.addReply(Reply(executor->getSockfd(), ERR_NOTONCHANNEL(ircserv.getName(), executor->getNickname(), this->_name)));
 		return ;
 	}
-	if (this->getOper(target->getNickname())) return ;
-	this->_users.erase(target->getNickname());
+	if (!this->getOper(executor->getNickname()))
+	{
+		ircserv.addReply(Reply(executor->getSockfd(), ERR_CHANOPRIVSNEEDED(ircserv.getName(), executor->getNickname(), this->_name)));
+		return ;
+	}
+	if (this->getOper(target->getNickname()))
+	{
+		this->_operator.erase(target->getNickname());
+	}
+	else
+		this->_users.erase(target->getNickname());
 	target->removeChannel(this);
 	this->printUserList();
 	this->sendToEveryone(target, RPL_KICK(user_id(ircserv.getName(), executor->getNickname(), executor->getUsername()), this->_name, target->getNickname(), reason));

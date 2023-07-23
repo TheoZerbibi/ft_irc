@@ -167,6 +167,6 @@ void
 	if (!chan->getTopic().empty())
 		ircserv.addReply(Reply(fds, RPL_TOPIC(ircserv.getName(), user->getNickname(), chan->getName(), chan->getTopic())));
 	ircserv.addReply(Reply(fds, RPL_NAMREPLY(ircserv.getName(), user->getNickname(), chan->getType(), chan->getName(), chan->getMemberList())));
-	ircserv.addReply(Reply(fds, RPL_ENDOFNAMES(ircserv.getName(), user->getNickname())));
+	ircserv.addReply(Reply(fds, RPL_ENDOFNAMES(ircserv.getName(), user->getNickname(), chan->getName())));
 }
 
