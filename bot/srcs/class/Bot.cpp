@@ -194,7 +194,7 @@ void
 void
 	Bot::run(void)
 {
-	char	buf[513];
+	char	buf[2048];
 
 	while (this->_socket.in(buf)) {
 		std::string msg(buf);

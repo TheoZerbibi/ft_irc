@@ -4,9 +4,8 @@
 **
 ** TODO:
 **   - WHOCommand?
-**   - IRC Bot
 ** BUGFIX:
-**   - ModeCommand fix
+**
 **
 */
 

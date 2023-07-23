@@ -54,6 +54,9 @@ User::User():
 
 User::~User()
 {
+	std::cout << "chan size : " << _chans.size() << std::endl;
+	// if (this->_chans.size() > 0)
+	// 	this->quitAllChannel("Leaving");
 	std::cout << "||-->" << this->_nickname << " is leaving the server" << std::endl;
 }
 
