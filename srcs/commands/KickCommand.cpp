@@ -20,14 +20,14 @@ void
 	KickCommand::_kickUser(Client *executor, std::map<Channel *, User *> kicks, std::string reason)
 {
 	Irc			&ircserv =	Irc::getInstance();
-	User		*executorUser = ircserv.getUserByNick(executor->getNick());
+	User		*executorUser = ircserv.getUserByNick(executor->getNickname());
 	if (executorUser == NULL)
 		return ;
 	for (std::map<Channel *, User *>::iterator it = kicks.begin(); it != kicks.end(); it++)
 	{
 		Channel	*channel = it->first;
 		User	*target = it->second;
-		std::cout << "Kick " << target->getUser() << " from channel " << channel->getName() << " with reason : " << reason << std::endl;
+		std::cout << "Kick " << target->getUsername() << " from channel " << channel->getName() << " with reason : " << reason << std::endl;
 		channel->kickUser(executorUser, target, reason);
 	}
 }
@@ -44,18 +44,18 @@ std::map<Channel *, User *>
 	args.erase(args.begin());
 	if (args.empty())
 	{
-		ircserv.addReply(Reply(executor->getSockfd(), ERR_NEEDMOREPARAMS(ircserv.getName(), executor->getNick(), this->_name)));
+		ircserv.addReply(Reply(executor->getSockfd(), ERR_NEEDMOREPARAMS(ircserv.getName(), executor->getNickname(), this->_name)));
 		throw (std::exception());
 	}
 	kickUser = splitStr(args.at(0), ',');
 
 	if (kickChannel.empty() || kickUser.empty())
 	{
-		ircserv.addReply(Reply(executor->getSockfd(), ERR_NEEDMOREPARAMS(ircserv.getName(), executor->getNick(), this->_name)));
+		ircserv.addReply(Reply(executor->getSockfd(), ERR_NEEDMOREPARAMS(ircserv.getName(), executor->getNickname(), this->_name)));
 		throw (std::exception());
 	}
 	if (kickChannel.size() > kickUser.size() && kickUser.size() != 1) {
-		ircserv.addReply(Reply(executor->getSockfd(), ERR_NEEDMOREPARAMS(ircserv.getName(), executor->getNick(), this->_name)));
+		ircserv.addReply(Reply(executor->getSockfd(), ERR_NEEDMOREPARAMS(ircserv.getName(), executor->getNickname(), this->_name)));
 		throw (std::exception());
 	}
 
@@ -76,7 +76,7 @@ std::map<Channel *, User *>
 			if (kickUser.size() > 1)
 				kickUser.erase(kickUser.begin());
 		} else {
-			ircserv.addReply(Reply(executor->getSockfd(), ERR_NOSUCHCHANNEL(ircserv.getName(), executor->getNick(), *kickChannel_beg)));
+			ircserv.addReply(Reply(executor->getSockfd(), ERR_NOSUCHCHANNEL(ircserv.getName(), executor->getNickname(), *kickChannel_beg)));
 			throw (std::exception());
 		}
 		kicks.insert(kicksPair);
@@ -98,13 +98,13 @@ void
 	std::string					cmd =	client->getCmds().front();
 	std::vector<std::string>	args = splitArguments(cmd);
 	std::map<Channel *, User *>	kicks;
-	User						*user = ircserv.getUserByNick(client->getNick());
+	User						*user = ircserv.getUserByNick(client->getNickname());
 	std::string					reason;
 
 	if (!user)
 		return ;
 	if (args.empty())
-		return (ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name))));
+		return (ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNickname(), this->_name))));
 	else {
 		std::cout << "ARG : " << args.size() << std::endl;
 		std::cout << "ARG[0] : " << args[0] << std::endl;
@@ -122,5 +122,5 @@ void
 				return ;
 		}
 	}
-	std::cout << "KickCommand::execute(" << fds << ", " << client->getNick() << ")" << std::endl;
+	std::cout << "KickCommand::execute(" << fds << ", " << client->getNickname() << ")" << std::endl;
 }

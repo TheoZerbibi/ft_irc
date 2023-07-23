@@ -78,6 +78,7 @@ int Irc::manageCommand()
 	std::map<int, Client*>::iterator	end = this->getClients().end();
 	std::map<std::string, Command*>		commandList = this->getCommandList();
 	std::map<int, Client*>::iterator	next;
+	Irc									&ircserv = Irc::getInstance();
 
 	while (beg != end)
 	{
@@ -101,10 +102,6 @@ int Irc::manageCommand()
 					continue ;
 				}
 				commandList[cmd]->execute(beg->first, beg->second);
-				if (cmd == "QUIT") {
-					std::cout << "QUITCOMMAND" << std::endl;
-					break;
-				}
 			}
 			else
 				std::cout << "Command " << cmd << " not found" << std::endl;
@@ -113,5 +110,6 @@ int Irc::manageCommand()
 		else
 			beg++;
 	}
+	ircserv.leaveUsers();
 	return (0);
 }

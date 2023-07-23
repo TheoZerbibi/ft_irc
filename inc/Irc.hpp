@@ -16,6 +16,7 @@
 #include	"QuitCommand.hpp"
 #include	"TopicCommand.hpp"
 #include	"UserCommand.hpp"
+#include	"WhoCommand.hpp"
 
 class Command;
 class Client;
@@ -71,7 +72,9 @@ class	Irc {
 
 
 		//Client Manager
-		void			promoteClient(Client *client);
+		void		promoteClient(Client *client);
+		void		addLeaveUser(Client *client, std::string const &reason);
+		void		leaveUsers();
 
 	private:
 		// Const & destr
@@ -86,6 +89,7 @@ class	Irc {
 		// Client, User 
 		std::map<std::string, Channel *>	_channels;
 		std::map<int, Client *>				_clients;
+		std::map<int, std::string>			_clientsWantLeave;
 
 
 		// Client Management
@@ -101,7 +105,7 @@ class	Irc {
 		std::string			_name;
 		std::string			_pass;
 		std::string			_oper_pass;
-		int				_sockfd;
+		int					_sockfd;
 
 		// Receiving data
 		int			accept_client();
@@ -116,7 +120,7 @@ class	Irc {
 		std::vector<Reply>	_replies;
 		void			mergeReplies();
 		Reply			mergeReply();
-		int			sendReplies();
+		int				sendReplies();
 
 		// Setup Server interface
 		void			setupAddrInfo(std::string port);
@@ -129,6 +133,8 @@ class	Irc {
 		void		setupFds();
 		fd_set		fds[4];
 
+		// Utils
+		bool		_isClientWantLeave(Client *client);
 
 		void		_removeAllChannel();
 		void		_removeAllClient();

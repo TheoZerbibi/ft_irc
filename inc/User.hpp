@@ -19,11 +19,11 @@ class Client {
 		virtual ~Client();
 
 		//Getter
-		const std::string	&getNick() const;
+		const std::string	&getNickname() const;
 		const std::string	&getHost() const;
-		const std::string	&getUser() const;
+		const std::string	&getUsername() const;
 		const std::string	&getRealname() const;
-		const int		&getSockfd() const;
+		const int			&getSockfd() const;
 		const std::string	&getBuff() const;
 		
 		//Setter
@@ -32,7 +32,7 @@ class Client {
 		void		setUser(std::string user);
 		void		setRealname(std::string realname);
 
-		bool			recvData();
+		bool		recvData();
 
 		std::deque<std::string>	&getCmds();
 
@@ -47,12 +47,12 @@ class Client {
 		Client();
 
 		// User personnal socket
-		std::string			_buff;
-		std::deque<std::string>		_cmds;
+		std::string				_buff;
+		std::deque<std::string>	_cmds;
 
-		int			_sockFd;
-		bool			_isAuth;
-		bool			_registered;
+		int		_sockFd;
+		bool	_isAuth;
+		bool	_registered;
   
 		// Needed to register users
 		std::string	_nickname;   
@@ -72,12 +72,15 @@ class User : public Client{
 //		User(int &fd);
 		User(Client *client);
 		virtual ~User();
+		
+		void		setAwayMessage(std::string const &awayMessage);
 
 		//getter
-		bool	isOper() const;
-		bool	isInvis() const;
-		bool	isChannelOper(Channel *chan) const;
-		bool	isInvited(Channel *chan);
+		bool				isOper() const;
+		bool				isInvis() const;
+		bool				isChannelOper(Channel *chan) const;
+		bool				isInvited(Channel *chan);
+		const std::string	&getAwayMessage() const;
 
 
 		// Channel management
@@ -91,8 +94,8 @@ class User : public Client{
 		void					removeInvite(Channel *chan);
 
 		//Utils
-		void	printInvited();
-
+		void		printInvited();
+		bool		isAway() const;
 		bool		isOnChannel(Channel *chan);
 
 		void	setInvis(bool status);
@@ -102,9 +105,10 @@ class User : public Client{
 		User();
 		std::vector<Channel *>	_chans;
 		std::vector<Channel *>	_invited;
-		bool			_isOper;
-		bool			_isInvis;
-		bool			_isChannelUser(Channel *chan) const;
+		std::string				_awayMessage;
+		bool					_isOper;
+		bool					_isInvis;
+		bool					_isChannelUser(Channel *chan) const;
 
 		//printer
 		void	printChannels();

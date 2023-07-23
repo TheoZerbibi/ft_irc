@@ -19,7 +19,7 @@ void
 	PartCommand::_leaveChannel(int fds, Client *client, std::vector<std::string> channels, std::string msg)
 {
 	Irc			&ircserv =	Irc::getInstance();
-	User		*user = ircserv.getUserByNick(client->getNick());
+	User		*user = ircserv.getUserByNick(client->getNickname());
 	(void)fds;
 
 	if (user == NULL) return ;
@@ -27,7 +27,7 @@ void
 	{
 		if (!this->_chanIsValid(channels[i]))
 		{
-			ircserv.addReply(Reply(fds, ERR_BADCHANMASK(ircserv.getName(), client->getNick(), channels[i])));
+			ircserv.addReply(Reply(fds, ERR_BADCHANMASK(ircserv.getName(), client->getNickname(), channels[i])));
 			return ;
 		}
 		std::cout << "Leaving " << channels[i] << " with message " << msg << std::endl;
@@ -35,14 +35,14 @@ void
 		{
 			Channel *channel = ircserv.getChannel(channels[i]);
 			if (!user->isOnChannel(channel)) {
-				ircserv.addReply(Reply(fds, ERR_NOTONCHANNEL(ircserv.getName(), client->getNick(), channels[i])));
+				ircserv.addReply(Reply(fds, ERR_NOTONCHANNEL(ircserv.getName(), client->getNickname(), channels[i])));
 				return ;
 			}
 			user->quitChannel(channel, msg);
 		}
 		else
 		{
-			ircserv.addReply(Reply(fds, ERR_NOSUCHCHANNEL(ircserv.getName(), client->getNick(), channels[i])));
+			ircserv.addReply(Reply(fds, ERR_NOSUCHCHANNEL(ircserv.getName(), client->getNickname(), channels[i])));
 		}
 	}
 }
@@ -71,7 +71,7 @@ void PartCommand::execute(int fds, Client *client)
 	std::string					msg;
 
 	if (args.empty())
-		return (ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNick(), this->_name))));
+		return (ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNickname(), this->_name))));
 	else {
 		if (args.size() >= 2)
 			msg = args[1];

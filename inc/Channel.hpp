@@ -17,7 +17,6 @@ class	Channel
 		User		*getOper(std::string nick);
 		User		*getUser(std::string nick);
 
-		std::string const	getUsersNick()			const;
 		std::string	const	&getTopic()				const;
 		std::string	const	&getKey()				const;
 		std::string	const	getMemberList()			const;
