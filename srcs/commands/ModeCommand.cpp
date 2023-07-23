@@ -77,7 +77,10 @@ void	ModeCommand::appChannelMode(char mode, int modmode, Channel *chan, std::str
 		if (modmode == REMOVING)
 			chan->setMaxUser(0);
 		else
-			chan->setMaxUser(std::atoi(arg->c_str()));
+		{
+			if (std::atoi(arg->c_str()) > 0)
+				chan->setMaxUser(std::atoi(arg->c_str()));
+		}
 	}
 }
 

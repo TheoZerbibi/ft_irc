@@ -26,7 +26,7 @@ class	Channel
 		bool		const	&isInvit()				const;
 		bool					isEmpty() const;
 		bool					noOper() const;
-
+		bool			isFull()			const;
 		//setter
 		void		addUser(User *user);
 		void		addOper(User *user);

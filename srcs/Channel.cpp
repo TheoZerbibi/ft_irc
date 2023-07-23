@@ -163,7 +163,20 @@ void		Channel::setKey(std::string key)
 
 void		Channel::setMaxUser(int value)
 {
-	this->_maxUser = value;
+	if (value >= 0)
+		this->_maxUser = value;
+}
+
+bool		Channel::isFull() const
+{
+	int	totalUser = this->_operator.size() + this->_users.size();
+
+	if (_maxUser > 0)
+	{
+		if (totalUser >= _maxUser)
+			return (true);
+	}
+	return (false);
 }
 
 void		Channel::setInvit(bool value)

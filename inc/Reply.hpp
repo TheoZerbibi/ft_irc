@@ -4,20 +4,23 @@
 # include "ft_irc.hpp"
 
 
+
+# define RPL_UMODEIS(server, user, modes) (":" + server + " 221 "+ user + " :+" + modes + "\r\n")
+# define RPL_CHANNELMODIS(server, user, channel, modes, modsarg) (":" + server + " 324 " + user + " " + channel + " " + modes + " " + modsarg + "\r\n")
+# define RPL_NOTOPIC(server, user, channel) (":" + server + " 331 " + user + " " + channel + " :No topic is set\r\n")
+# define RPL_TOPIC(serv, nick, chan, topic) (":" + serv + " 332 " + nick + " " + chan + " :" + topic + "\r\n")
+# define RPL_TOPICWHOTIME(serv, user, channel, nick, setat) (":" + serv +  + " 333 " + user + " " + channel + " " + nick + " " + setat + "\r\n")
+# define RPL_ENDOFNAMES(server, user)  (":" + server + " 366 " + user + " :End of /NAMES list" + "\r\n")
+# define RPL_QUIT(userID, reason) (userID + " QUIT :Quit: " + reason + "\r\n")
+# define RPL_PRIVMSG(userID, target, msg) (userID + " PRIVMSG " + target + " :" + msg + "\r\n")
+# define RPL_KICK(userID, channel, target, reason) (userID + " KICK " + channel + " " + target + " " + reason + "\r\n")
+
+
 # define RPL_NAMREPLY(server, client, symbol, channel, memberList) (":" + server + " 353 " + client + " " + symbol + " " + channel + " :" + memberList + "\r\n")
 #define RPL_STARTOFMOTD(server, nickname, message) (":" + server + " 375 " + nickname + " :- " + message + " Message of the day - \r\n")
 #define RPL_MOTD(server, nickname, motdLine) (":" + server + " 372 " + nickname + " :" + motdLine + "\r\n")
 #define RPL_ENDOFMOTD(server, nickname) (":" + server + " 376 " + nickname + " :End of /MOTD command.\r\n")
 
-# define RPL_UMODEIS(server, user, modes) (":" + server + " 221 "+ user + " :+" + modes + "\r\n")
-# define RPL_CHANNELMODIS(server, user, channel, modes, modsarg) (":" + server + " 324 " + user + " " + channel + " " + modes + " " + modsarg + "\r\n")
-# define RPL_NOTOPIC(server, user, channel) (":" + server + " 331 " + user + " " + channel + " :No topic is set\r\n")
-# define RPL_TOPICWHOTIME(serv, user, channel, nick, setat) (":" + serv +  + " 333 " + user + " " + channel + " " + nick + " " + setat + "\r\n")
-# define RPL_TOPIC(serv, nick, chan, topic) (":" + serv + " 332 " + nick + " " + chan + " :" + topic + "\r\n")
-# define RPL_ENDOFNAMES(server, user)  (":" + server + " 366 " + user + " :End of /NAMES list" + "\r\n")
-# define RPL_QUIT(userID, reason) (userID + " QUIT :Quit: " + reason + "\r\n")
-# define RPL_PRIVMSG(userID, target, msg) (userID + " PRIVMSG " + target + " :" + msg + "\r\n")
-# define RPL_KICK(userID, channel, target, reason) (userID + " KICK " + channel + " " + target + " " + reason + "\r\n")
 
 #define ERR_NOMOTD(server, nickname) (":" + server + " 422 " + nickname + " :MOTD File is missing\r\n")
 # define ERR_NOSUCHCHANNEL(server, nickname, channel) (": " + server + " 403 " + nickname + " " + channel + " :No such channel\r\n")
@@ -29,6 +32,8 @@
 # define ERR_ALREADYREGISTERED(serv, nickname) (":" + serv + " 462 " + nickname + " :You may not reregister.\r\n")
 
 # define ERR_NEEDMOREPARAMS(serv, nickname, command) (":" + serv + " 461 " + nickname + " " + command + " :Not enough parameters.\r\n")
+
+#define ERR_CHANNELISFULL(serv, nick, chan) (":" + serv + " 473 " + nick + " " + chan + " :Cannot join channel (+l)\r\n")
 
 #define ERR_MODEUNKNOWN(server, user, modechar) (":" + server + " 472 " + modechar + " :is unknown mode char to me.\r\n")
 #define ERR_INVITEONLYCHAN(server, user, channel) ( ":" + server + " 473 " + user + " " + channel + " :Cannot join channel (+i).\r\n")

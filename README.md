@@ -55,9 +55,9 @@ Things to do are :
 
 - todo next
  - [+] Join
-	- [ ] Multiple Join
-	- [ ] Key restriction
-	- [ ] Multiple Join w/ multiple key
+	- [x] Multiple Join
+	- [x] Key restriction
+	- [x] Multiple Join w/ multiple key
  - [ ] mode
 	- [x] o : Change Oper 
 	- [ ] i : invite Only 

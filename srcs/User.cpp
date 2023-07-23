@@ -180,6 +180,7 @@ void
 		{
 			std::cout << "JOIN : user is invited" << std::endl;
 			this->_invited.erase(it);
+			std::cout << "JOIN : end of desinviting" << std::endl;
 			return ;
 		}
 		it++;

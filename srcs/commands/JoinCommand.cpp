@@ -28,14 +28,14 @@ void
 		if (ircserv.channelExists(it->first))
 		{
 			Channel *channel = ircserv.getChannel(it->first);
-			std::cout << "Channel" << channel->getName() << " exists" << std::endl;
+			std::cout << "Channel " << channel->getName() << " exists" << std::endl;
 			if (channel->isInvit() && !user->isInvited(channel))
 				return (ircserv.addReply(Reply(fds, ERR_INVITEONLYCHAN(ircserv.getName(), client->getNickname(), channel->getName()))));
 			if (!channel->getKey().empty() && channel->getKey() != it->second)
 				return (ircserv.addReply(Reply(fds, ERR_BADCHANNELKEY(ircserv.getName(), client->getNickname(), channel->getName()))));
-			std::cout << "JOIN :Removing " << user->getNickname() << " From invite list of " << channel->getName() << std::endl;
+			if (channel->isFull())
+				return (ircserv.addReply(Reply(fds, ERR_CHANNELISFULL(ircserv.getName(), client->getNickname(), channel->getName()))));
 			user->removeInvite(channel);
-			std::cout << "JOIN : end of desinviting" << std::endl;
 			user->addChannel(channel);
 			channel->addUser(user);
 			rplJoin(fds, user, channel);
@@ -132,7 +132,6 @@ void JoinCommand::execute(int fds, Client *client)
 	std::cout << "JoinCommand::execute(" << fds << ", " << client->getNickname() << ")" << std::endl;
 }
 
-
 /*
  ** #foo -> Public chan - Anyone can join.
  ** &foo -> Private chan - Only invited users can join.
@@ -166,7 +165,7 @@ void
 
 	chan->sendToEveryone(user, RPL_JOIN(user_id(ircserv.getName(), user->getNickname(), user->getUsername()), chan->getName()));
 	if (!chan->getTopic().empty())
-		ircserv.addReply(Reply(fds, RPL_TOPIC(ircserv.getName(), user->getNickname(), user->getUsername(), chan->getTopic())));
+		ircserv.addReply(Reply(fds, RPL_TOPIC(ircserv.getName(), user->getNickname(), chan->getName(), chan->getTopic())));
 	ircserv.addReply(Reply(fds, RPL_NAMREPLY(ircserv.getName(), user->getNickname(), chan->getType(), chan->getName(), chan->getMemberList())));
 	ircserv.addReply(Reply(fds, RPL_ENDOFNAMES(ircserv.getName(), user->getNickname())));
 }
