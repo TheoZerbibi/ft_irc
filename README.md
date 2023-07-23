@@ -106,8 +106,8 @@ Things to do are :
 	- [ ] k : Key on channel
 	- [ ] l : Limit User on Channel
 	- [x] t : Restrict topic modification  (! BY DEFAULT IT'S OFF)
- - [ ]  [KICK](https://modern.ircdocs.horse/#kick-message)
- - [ ]  [INVITE](https://modern.ircdocs.horse/#invite-message)
+ - [x]  [KICK](https://modern.ircdocs.horse/#kick-message)
+ - [x]  [INVITE](https://modern.ircdocs.horse/#invite-message)
  - [x]  [TOPIC](https://modern.ircdocs.horse/#topic-message)
  
 ---

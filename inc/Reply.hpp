@@ -13,7 +13,7 @@
 # define RPL_ENDOFNAMES(server, user, chan)  (":" + server + " 366 " + user + " " + chan + " :End of /NAMES list." + "\r\n")
 # define RPL_QUIT(userID, reason) (userID + " QUIT :Quit: " + reason + "\r\n")
 # define RPL_PRIVMSG(userID, target, msg) (userID + " PRIVMSG " + target + " :" + msg + "\r\n")
-# define RPL_KICK(userID, channel, target, reason) (userID + " KICK " + channel + " " + target + " " + reason + "\r\n")
+# define RPL_KICK(userID, channel, target, reason) (userID + " KICK " + channel + " " + target + " :" + reason + "\r\n")
 
 
 # define RPL_NAMREPLY(server, client, symbol, channel, memberList) (":" + server + " 353 " + client + " " + symbol + " " + channel + " :" + memberList + "\r\n")

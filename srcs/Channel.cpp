@@ -197,11 +197,14 @@ void		Channel::removeOper(std::string nick, std::string reason)
 
 	if (found != end)
 	{
-		ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUsername()), this->_name, reason)));
-		this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUsername()), this->_name, reason));
+		if (reason != "kicked")
+		{
+			ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUsername()), this->_name, reason)));
+			this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUsername()), this->_name, reason));
+		}
 
 		_operator.erase(found);
-	
+
 		if (this->_operator.empty() && this->_users.empty()) {
 			std::cout << "REMOVING CHANNEL : " << this->_name << std::endl;
 			ircserv.removeChannel(this);
@@ -233,16 +236,22 @@ void		Channel::removeUser(std::string nick, std::string reason)
 	if (found != end)
 	{
 		std::cout << "||-->removing user : " << nick << std::endl;
-
-		ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUsername()), this->_name, reason)));
-		this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUsername()), this->_name, reason));
+		if (reason != "kicked")
+		{
+			ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUsername()), this->_name, reason)));
+			this->sendToChannel(found->second, RPL_PART(user_id(ircserv.getName(), nick, found->second->getUsername()), this->_name, reason));
+		}
 		this->_users.erase(found);
+		if (this->_operator.empty() && this->_users.empty()) {
+			std::cout << "REMOVING CHANNEL : " << this->_name << std::endl;
+			ircserv.removeChannel(this);
+		}
 	} else
 		this->removeOper(nick, reason);
 }
 
-void
-	Channel::kickUser(User *executor, User *target, std::string reason)
+	void
+Channel::kickUser(User *executor, User *target, std::string reason)
 {
 	Irc			&ircserv =	Irc::getInstance();
 	if (!target->isOnChannel(this) || !executor->isOnChannel(this))
@@ -255,12 +264,7 @@ void
 		ircserv.addReply(Reply(executor->getSockfd(), ERR_CHANOPRIVSNEEDED(ircserv.getName(), executor->getNickname(), this->_name)));
 		return ;
 	}
-	if (this->getOper(target->getNickname()))
-	{
-		this->_operator.erase(target->getNickname());
-	}
-	else
-		this->_users.erase(target->getNickname());
+	this->removeUser(target, "kicked");
 	target->removeChannel(this);
 	this->printUserList();
 	this->sendToEveryone(target, RPL_KICK(user_id(ircserv.getName(), executor->getNickname(), executor->getUsername()), this->_name, target->getNickname(), reason));
@@ -309,7 +313,7 @@ void	Channel::sendToEveryone(User *user, std::string msg)
 
 
 void
-	Channel::sendToChannel(User *user, std::string msg) {
+Channel::sendToChannel(User *user, std::string msg) {
 	std::map<std::string, User *>	userList;
 	Irc				&ircserv = Irc::getInstance();
 
@@ -328,8 +332,8 @@ void
 	}
 }
 
-void
-	Channel::printUserList(void)
+	void
+Channel::printUserList(void)
 {
 	std::map<std::string, User *>	userList;
 	std::cout << "List all user" << std::endl;

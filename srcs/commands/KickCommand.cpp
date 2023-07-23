@@ -108,10 +108,6 @@ void
 	if (args.empty())
 		return (ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNickname(), this->_name))));
 	else {
-		std::cout << "ARG : " << args.size() << std::endl;
-		std::cout << "ARG[0] : " << args[0] << std::endl;
-		std::cout << "ARG[1] : " << args[1] << std::endl;
-		std::cout << "ARG[2] : " << args[2] << std::endl;
 		if (!args.at(2).empty())
 			reason = args[2];
 		else
