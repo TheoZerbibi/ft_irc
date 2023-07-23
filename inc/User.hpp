@@ -97,6 +97,7 @@ class User : public Client{
 		void		printInvited();
 		bool		isAway() const;
 		bool		isOnChannel(Channel *chan);
+		void		clearChannel(void);
 
 		void	setInvis(bool status);
 		void	setOper(bool status);

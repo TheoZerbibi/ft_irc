@@ -305,6 +305,10 @@ void	Irc::_removeAllClient() {
 	while (beg != end)
 	{
 		client = beg->second;
+		if (client->isRegistered()) {
+			User	*user = dynamic_cast<User *>(client);
+			user->clearChannel();
+		}
 		_clients.erase(beg++);
 		delete client;
 	}

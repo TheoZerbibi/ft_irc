@@ -54,10 +54,8 @@ User::User():
 
 User::~User()
 {
-	std::cout << "chan size : " << _chans.size() << std::endl;
-	// if (this->_chans.size() > 0)
-	// 	this->quitAllChannel("Leaving");
 	std::cout << "||-->" << this->_nickname << " is leaving the server" << std::endl;
+	this->quitAllChannel("Leaving");
 }
 
 
@@ -281,6 +279,12 @@ void	User::joinChannel(std::string chanName, std::string key)
 void	User::removeChannel(Channel *chan)
 {
 	this->_chans.erase(getChannel(chan));
+}
+
+void
+	User::clearChannel(void)
+{
+	this->_chans.clear();
 }
 
 void	User::quitChannel(Channel *chan, std::string const &msg)
