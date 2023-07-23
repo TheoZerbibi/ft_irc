@@ -24,6 +24,7 @@ class JoinCommand : public Command
 		void								_joinChannel(int fds, Client *client, std::map<std::string , std::string> channels);
 		bool								_chanIsValid(const std::string &name);
 		bool								_passwordIsValid(std::string &password);
+		void								printChannels(std::map<std::string, std::string> &channels);
 
 	public:
 		JoinCommand();

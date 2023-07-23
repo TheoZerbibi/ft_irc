@@ -90,6 +90,18 @@ bool
 	return (client->isRegistered());
 }
 
+void	JoinCommand::printChannels(std::map<std::string, std::string> &channels)
+{
+	std::map<std::string, std::string>::iterator	beg = channels.begin();
+	std::map<std::string, std::string>::iterator	end = channels.end();
+
+	while (beg != end)
+	{
+		std::cout << "JOIN: Trying to join channel " << beg->first << " with key " << beg->second << std::endl;
+		beg++;
+	}
+}
+
 void JoinCommand::execute(int fds, Client *client)
 {
 	Irc									&ircserv =	Irc::getInstance();
@@ -110,6 +122,7 @@ void JoinCommand::execute(int fds, Client *client)
 	{
 		try {
 			channels = _parseArg(args);
+			printChannels(channels);
 			if (!channels.empty())
 				this->_joinChannel(fds, client, channels);
 		} catch (std::exception &e) {
