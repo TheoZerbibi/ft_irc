@@ -2,9 +2,7 @@
 #Execeded maxUser : wrong reply
 #softlock on selfkick
 #invite already on channel: Wrong reply
-
 #mode -o Reply in double
+#After a mode -o you can do a mode +o even when you are not operator
+#mode +o user +i lala : if user don't exist take first arg
 
-mode +o user +i lala : if user don't exist take first arg
-
-After a mode -o you can do a mode +o even when you are not operator

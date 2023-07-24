@@ -37,10 +37,11 @@ class ModeCommand : public Command
 		void	printChannelMode(int fds, User *user, Channel *chan);
 		bool			is_mode(char c);
 		bool			needArg(char mode, bool modmode);
-		int			checkMode(char mode, bool modmode, User *user, Channel *chan, std::vector<std::string> &args);
+		int			checkMode(char mode, bool modmode, User *user, Channel *chan, std::string arg);
 
 		void	printUserMode(int fds, User *user, std::string nickname);
 		void	executeUserMode(int fds, User *user, std::vector<std::string> &args);
+
 	public:
 		ModeCommand();
 		virtual ~ModeCommand();

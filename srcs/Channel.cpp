@@ -305,7 +305,6 @@ void	Channel::sendToEveryone(User *user, std::string msg)
 	Irc				&ircserv = Irc::getInstance();
 
 	sendToChannel(user, msg);
-
 	ircserv.addReply(Reply(user->getSockfd(), msg));
 }
 
