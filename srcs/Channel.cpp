@@ -273,7 +273,6 @@ Channel::kickUser(User *executor, User *target, std::string reason)
 void		Channel::setOper(std::string nick, bool value)
 {
 	User	*user;
-	Irc		&ircserv = Irc::getInstance();
 
 	if (value)
 	{
@@ -289,9 +288,8 @@ void		Channel::setOper(std::string nick, bool value)
 		user = this->getOper(nick);
 		if (user)
 		{
-			this->_operator.erase(nick);
+			this->_operator.erase("@" + nick);
 			addUser(user);
-			this->sendToEveryone(user, RPL_MODEWITHARG(user_id(ircserv.getName(), user->getNickname(), user->getUsername()), this->_name, "-o", user->getNickname()));
 		}
 	}
 }
