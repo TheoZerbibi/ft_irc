@@ -186,8 +186,10 @@ void
 		}
 	}
 	else if (args.at(0) == "INVITE") {
-		this->_socket << "JOIN " << args.at(2) << "\r\n";
-		std::cout << "Joinning channel : " << args.at(2) << std::endl;
+		std::string channel = args.at(2);
+
+		this->_socket << "JOIN " << channel << "\r\n";
+		std::cout << "Joinning channel : " << channel << std::endl;
 	}
 }
 
@@ -202,6 +204,7 @@ void
 			this->_socket << "MODE " << this->_name << " +B\r\n";
 		else if (msg.find("norminet!Norminet@") == std::string::npos)
 			this->parseMessage(msg);
+		bzero(buf, 2048);
 	}
 }
 
