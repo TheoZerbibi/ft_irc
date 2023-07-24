@@ -264,10 +264,10 @@ Channel::kickUser(User *executor, User *target, std::string reason)
 		ircserv.addReply(Reply(executor->getSockfd(), ERR_CHANOPRIVSNEEDED(ircserv.getName(), executor->getNickname(), this->_name)));
 		return ;
 	}
-	this->removeUser(target, "kicked");
-	target->removeChannel(this);
-	this->printUserList();
 	this->sendToEveryone(target, RPL_KICK(user_id(ircserv.getName(), executor->getNickname(), executor->getUsername()), this->_name, target->getNickname(), reason));
+	target->removeChannel(this);
+	this->removeUser(target, "kicked");
+//	this->printUserList();
 }
 
 void		Channel::setOper(std::string nick, bool value)

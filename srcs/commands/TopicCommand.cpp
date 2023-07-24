@@ -41,4 +41,5 @@ void TopicCommand::execute(int fds, Client *client)
 		return (ircserv.addReply(Reply(fds, RPL_TOPIC(ircserv.getName(), client->getNickname(), chan->getName(), chan->getTopic()))));
 	}
 	chan->setTopic(args.front());
+	chan->sendToEveryone(user, RPL_TOPICSET(user_id(ircserv.getName(), user->getNickname(), user->getUsername()), chan->getName(), args.front()));
 }

@@ -12,6 +12,8 @@
 # define RPL_TOPICWHOTIME(serv, user, channel, nick, setat) (":" + serv +  + " 333 " + user + " " + channel + " " + nick + " " + setat + "\r\n")
 # define RPL_ENDOFNAMES(server, user, chan)  (":" + server + " 366 " + user + " " + chan + " :End of /NAMES list." + "\r\n")
 # define RPL_QUIT(userID, reason) (userID + " QUIT :Quit: " + reason + "\r\n")
+
+# define RPL_TOPICSET(userID, chan, msg) (userID + " TOPIC " + chan + " :" + msg + "\r\n")
 # define RPL_PRIVMSG(userID, target, msg) (userID + " PRIVMSG " + target + " :" + msg + "\r\n")
 # define RPL_KICK(userID, channel, target, reason) (userID + " KICK " + channel + " " + target + " :" + reason + "\r\n")
 
@@ -26,14 +28,14 @@
 # define ERR_NOSUCHCHANNEL(server, nickname, channel) (": " + server + " 403 " + nickname + " " + channel + " :No such channel\r\n")
 # define ERR_NOTONCHANNEL(server, nickname, channel) (": " + server + " 442 " + nickname + " " + channel + " :The user is not on this channel.\r\n")
 # define ERR_CANNOTSENDTOCHAN(server, nickname, channel) (":" + server + " 404 " + nickname + " " + channel + " :Cannot send to channel\r\n")
-# define ERR_USERONCHANNEL(server, user, channel) (":" + server + " 443 " + user + " " + channel + " :is already on channel.\r\n")
+# define ERR_USERONCHANNEL(server, user, target, channel) (":" + server + " 443 " + user + " " + target + " " + channel + " :is already on channel.\r\n")
 
 # define ERR_NOSUCHNICK(server, user) (":" + server + " 401 " + user + " :No such user\r\n")
 # define ERR_ALREADYREGISTERED(serv, nickname) (":" + serv + " 462 " + nickname + " :You may not reregister.\r\n")
 
 # define ERR_NEEDMOREPARAMS(serv, nickname, command) (":" + serv + " 461 " + nickname + " " + command + " :Not enough parameters.\r\n")
 
-#define ERR_CHANNELISFULL(serv, nick, chan) (":" + serv + " 473 " + nick + " " + chan + " :Cannot join channel (+l)\r\n")
+#define ERR_CHANNELISFULL(serv, nick, chan) (":" + serv + " 471 " + nick + " " + chan + " :Cannot join channel (+l)\r\n")
 
 #define ERR_MODEUNKNOWN(server, user, modechar) (":" + server + " 472 " + modechar + " :is unknown mode char to me.\r\n")
 #define ERR_INVITEONLYCHAN(server, user, channel) ( ":" + server + " 473 " + user + " " + channel + " :Cannot join channel (+i).\r\n")

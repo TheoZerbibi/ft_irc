@@ -36,7 +36,7 @@ void InviteCommand::execute(int fds, Client *client)
 	if (chan->isInvit() && !user->isChannelOper(chan))
 		return (ircserv.addReply(Reply(fds, ERR_CHANOPRIVSNEEDED(ircserv.getName(), user->getNickname(), args.at(1)))));
 	if (target->isOnChannel(chan))
-		return (ircserv.addReply(Reply(fds, ERR_USERONCHANNEL(ircserv.getName(), user->getNickname(), args.at(1)))));
+		return (ircserv.addReply(Reply(fds, ERR_USERONCHANNEL(ircserv.getName(), user->getNickname(), target->getNickname(), args.at(1)))));
 		
 	target->inviteOnChannel(chan);
 	ircserv.addReply(Reply(fds, RPL_INVITING(ircserv.getName(), user->getNickname(), args.at(0), args.at(1))));
