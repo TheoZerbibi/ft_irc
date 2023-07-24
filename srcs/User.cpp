@@ -276,7 +276,8 @@ void	User::joinChannel(std::string chanName, std::string key)
 	chan->addUser(this);
 }
 
-void	User::removeChannel(Channel *chan)
+void
+	User::removeChannel(Channel *chan)
 {
 	this->_chans.erase(getChannel(chan));
 }
@@ -287,7 +288,8 @@ void
 	this->_chans.clear();
 }
 
-void	User::quitChannel(Channel *chan, std::string const &msg)
+void
+	User::quitChannel(Channel *chan, std::string const &msg)
 {
 	std::cout << "||-->" << this->_nickname << " Quiting channel : " << chan->getName() << "with msg : " << msg << std::endl;
 	chan->removeUser(this->_nickname, msg);
