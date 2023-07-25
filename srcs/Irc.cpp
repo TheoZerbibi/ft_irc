@@ -150,10 +150,10 @@ void	Irc::removeClient(int const &sfd, std::string const &msg)
 
 	if (it != end)
 	{
-		if (it->second->isRegistered()) {
-			User	*user = dynamic_cast<User *>(it->second);
-			user->quitAllChannel(msg);
-		}
+//		if (it->second->isRegistered()) {
+//			User	*user = dynamic_cast<User *>(it->second);
+//			user->quitAllChannel(msg);
+//		}
 		this->addReply(Reply(sfd, RPL_QUIT(user_id(this->getName(), it->second->getNickname(), it->second->getUsername()), msg)));
 		delete it->second;
 		_clients.erase(it);

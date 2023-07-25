@@ -300,10 +300,13 @@ void	User::quitAllChannel(std::string const &msg)
 {
 	std::vector<Channel *>::iterator	beg = _chans.begin();
 	std::vector<Channel *>::iterator	end = _chans.end();
+	Channel					*chan;
 
 	while (beg != end)
 	{
-		this->quitChannel(*beg, msg);
+//		this->quitChannel(*beg, msg);
+		chan = *beg;
+		chan->removeUser(this->_nickname, msg);
 		beg++;
 	}
 }
