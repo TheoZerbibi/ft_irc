@@ -320,7 +320,6 @@ Channel::sendToChannel(User *user, std::string msg) {
 	std::map<std::string, User *>::iterator beg = userList.begin();
 	std::map<std::string, User *>::iterator end = userList.end();
 
-	this->printUserList();
 	while (beg != end)
 	{
 		if (beg->second != user)
