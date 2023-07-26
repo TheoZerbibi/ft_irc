@@ -25,7 +25,6 @@ int	Irc::receive_client_data(Client *user)
 		fd = user->getSockfd();
 		if (FD_ISSET(fd, &fds[READ]))
 		{
-			std::cout << "--- > New message from fd : " << fd <<  std::endl;
 			if (user->recvData() <= 0)
 			{
 				FD_CLR(fd, &fds[MASTER]);
@@ -73,7 +72,6 @@ static std::string getCommand(std::string cmd)
 
 int Irc::manageCommand()
 {
-	// std::cout << "---- Manage Command ---" << std::endl;
 	std::map<int, Client*>::iterator	beg = this->getClients().begin();
 	std::map<int, Client*>::iterator	end = this->getClients().end();
 	std::map<std::string, Command*>		commandList = this->getCommandList();
@@ -86,7 +84,6 @@ int Irc::manageCommand()
 		{
 			std::string cmd = beg->second->getCmds().front();
 			cmd = getCommand(cmd);
-			std::cout << "Command : " << cmd << std::endl;
 			if (cmd.empty()) {
 				beg->second->getCmds().pop_front();
 				continue ;

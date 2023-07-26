@@ -1,14 +1,5 @@
 #include "ft_irc.hpp"
 
-/*
-**
-** TODO:
-**   - WHOCommand?
-** BUGFIX:
-**
-**
-*/
-
 int	Irc::setup_fds()
 {
 	for (int i = 1; i < 4; i++)

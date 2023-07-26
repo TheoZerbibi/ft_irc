@@ -179,9 +179,7 @@ void
 	{
 		if (*it == chan)
 		{
-			std::cout << "JOIN : user is invited" << std::endl;
 			this->_invited.erase(it);
-			std::cout << "JOIN : end of desinviting" << std::endl;
 			return ;
 		}
 		it++;
@@ -244,7 +242,6 @@ bool Client::recvData()
 		if (nbyte < 0)
 		{
 			std::cerr << "Error with recv" << std::endl;
-			//Error from recv, maybe print something
 		}
 		close(this->_sockFd);
 		return (0);
@@ -253,7 +250,6 @@ bool Client::recvData()
 	this->extractCmds();
 	std::cout << "=== Cmd list ==" << std::endl;
 	this->printCmds();
-//	std::cout << "Buffer = \'" << this->_buff << "\'" << std::endl;
 	return (SUCCESS);
 }
 
@@ -291,7 +287,6 @@ void
 void
 	User::quitChannel(Channel *chan, std::string const &msg)
 {
-	std::cout << "||-->" << this->_nickname << " Quiting channel : " << chan->getName() << "with msg : " << msg << std::endl;
 	chan->removeUser(this->_nickname, msg);
 	this->_chans.erase(getChannel(chan));
 }
@@ -304,7 +299,6 @@ void	User::quitAllChannel(std::string const &msg)
 
 	while (beg != end)
 	{
-//		this->quitChannel(*beg, msg);
 		chan = *beg;
 		chan->removeUser(this->_nickname, msg);
 		beg++;

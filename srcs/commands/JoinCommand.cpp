@@ -19,7 +19,6 @@ void
 		return ;
 	for (std::map<std::string , std::string>::iterator it = channels.begin(); it != channels.end(); it++)
 	{
-		std::cout << "Joining " << it->first << " with key " << it->second << std::endl;
 		if (!this->_chanIsValid(it->first))
 		{
 			ircserv.addReply(Reply(fds, ERR_BADCHANMASK(ircserv.getName(), client->getNickname(), it->first)));
@@ -45,6 +44,10 @@ void
 			std::cout << "JOIN : Creating channel " << it->first << std::endl;
 			Channel *channel = ircserv.addChannel(it->first);
 			if (channel == NULL) {
+				ircserv.addReply(Reply(fds, ERR_BADCHANMASK(ircserv.getName(), client->getNickname(), it->first)));
+				return ;
+			}
+			if (!this->_passwordIsValid(it->second)) {
 				ircserv.addReply(Reply(fds, ERR_BADCHANMASK(ircserv.getName(), client->getNickname(), it->first)));
 				return ;
 			}
@@ -96,10 +99,7 @@ void	JoinCommand::printChannels(std::map<std::string, std::string> &channels)
 	std::map<std::string, std::string>::iterator	end = channels.end();
 
 	while (beg != end)
-	{
-		std::cout << "JOIN: Trying to join channel " << beg->first << " with key " << beg->second << std::endl;
 		beg++;
-	}
 }
 
 void JoinCommand::execute(int fds, Client *client)
