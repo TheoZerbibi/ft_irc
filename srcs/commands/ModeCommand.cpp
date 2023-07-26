@@ -52,14 +52,10 @@ void	ModeCommand::printChannelMode(int fds, User *user, Channel *chan)
 
 void	ModeCommand::appChannelMode(char mode, int modmode, Channel *chan, std::string *arg)
 {
-	std::cout << "MODE : Applying mode" << std::endl;
 	if (mode == 'i')
 		chan->setInvit(modmode);
 	else if (mode == 'o')
-	{
-		std::cout << "doing o mode --> user: " << *arg << " mode = " << modmode << std::endl;
 		chan->setOper(*arg, modmode);
-	}
 	else if (mode == 't')
 		chan->setTopicMode(modmode);
 	else if (mode == 'k')
@@ -67,10 +63,7 @@ void	ModeCommand::appChannelMode(char mode, int modmode, Channel *chan, std::str
 		if (modmode == REMOVING)
 			chan->setKey("");
 		else
-		{
-			std::cout << "MODE +k : setting key to '" << *arg << "'" << std::endl;
 			chan->setKey(*arg);
-		}
 	}
 	else if (mode == 'l')
 	{
@@ -123,14 +116,11 @@ void	ModeCommand::applyChannelMode(User *user, Channel *chan, std::string &modst
 		{
 			if (needParam)
 			{
-				std::cout << "MODE : this mode need argument :" << value << std::endl;
 				this->appChannelMode(*beg, modmode, chan, &value);
 				chan->sendToEveryone(user, RPL_MODEWITHARG(user_id(ircserv.getName(), user->getNickname(), user->getUsername()), chan->getName(), (modmode == ADDING ? '+' : '-') + *beg, value));
-				std::cout << "MODE : Ended Adding Reply" << std::endl;
 			}
 			else
 			{
-				std::cout << "MODE : this mode don't need argument" << std::endl;
 				this->appChannelMode(*beg, modmode, chan, NULL);
 				chan->sendToEveryone(user, RPL_MODE(user_id(ircserv.getName(), user->getNickname(), user->getUsername()), chan->getName(), (modmode == ADDING ? '+' : '-') + *beg));
 			}
@@ -138,10 +128,6 @@ void	ModeCommand::applyChannelMode(User *user, Channel *chan, std::string &modst
 		++beg;
 	}
 }
-
-//	if (!user->isChannelOper(chan))
-//		return (ircserv.addReply(Reply(fds, ERR_CHANOPRIVSNEEDED(ircserv.getName(), user->getNickname(), chan->getName()))));
-//}
 
 void	ModeCommand::executeChannelMode(int fds, User *user, std::vector<std::string> &args)
 {
@@ -151,7 +137,6 @@ void	ModeCommand::executeChannelMode(int fds, User *user, std::vector<std::strin
 
 	if (!chan)
 		return (ircserv.addReply(Reply(fds, ERR_NOSUCHCHANNEL(ircserv.getName(), user->getNickname(), args.at(0)))));
-	std::cout << "MODE : Found the channel" << std::endl;
 	args.erase(args.begin());
 	if (args.size() == 0)
 		return (printChannelMode(fds, user, chan));
@@ -166,20 +151,12 @@ void ModeCommand::execute(int fds, Client *client)
 	std::vector<std::string>	args = splitArguments(cmd);
 	Irc				&ircserv = Irc::getInstance();
 
-	std::cout << "MODE: Starting" << std::endl;
 	if (args.empty())
 		return (ircserv.addReply(Reply(fds, ERR_NEEDMOREPARAMS(ircserv.getName(), client->getNickname(), this->_name))));
-	std::cout << "MODE: Enough param" << std::endl;
 	if (args.at(0)[0] == '#')
-	{
-		std::cout << "MODE: Channel operation" << std::endl;
 		executeChannelMode(fds, dynamic_cast<User *>(client), args);
-	}
-	else	
-	{
-		std::cout << "MODE: User operation (to be implemented soon)" << std::endl;
+	else
 		executeUserMode(fds, dynamic_cast<User *>(client), args);
-	}
 	std::cout << "[" << this->_name << "] : ModeCommand executed !" << std::endl;
 }
 
@@ -246,35 +223,6 @@ void	ModeCommand::printUserMode(int fds, User *user, std::string nickname)
 	ircserv.addReply(Reply(fds, RPL_UMODEIS(ircserv.getName(), nickname, modes)));
 }
 
-//	void	applyUserMode(int fds, User *user, Client *target, std::string &modstr, std::vector<std::string> *modvalue)
-//	{
-//		Irc 	&ircserv= Irc::getInstance();
-//		int	mod_mode = ADDING;
-//		(void)modvalue;
-//	
-//		std::vector<std::string>::iterator  beg = modstr.begin();
-//		std::vector<std::string>::iterator  end = modstr.end();
-//		while (beg != end)
-//		{
-//			if (*beg == '+')
-//				mod_mode = ADDING;
-//			else if (*beg == '-')
-//				mod_mode = REMOVING;
-//			else if (*beg == 'i')
-//					user.setInvis(mod_mode);
-//			else if (*beg == 'o')
-//			{
-//				if	(user->isOper())
-//					target->setInvis(mod_mode);
-//			}
-//			else
-//			{
-//			ircserv.addReply(Reply(fds, ERR_UMODEUNKNOWNFLAG(ircserv.getName(), user->getNickname())));
-//			}
-//			++beg;
-//		}
-//	}
-
 void	ModeCommand::executeUserMode(int fds, User *user, std::vector<std::string> &args)
 {
 	Irc 	&ircserv= Irc::getInstance();
@@ -291,20 +239,6 @@ void	ModeCommand::executeUserMode(int fds, User *user, std::vector<std::string> 
 	}
 	if (target != user)
 		return (ircserv.addReply(Reply(fds, ERR_USERSDONTMATCH(ircserv.getName(), user->getNickname()))));
-	//	args.erase(args.begin());
-	//	modestr = args.at(0);
-	//	std::cout << "modestr = " << modestr << std::endl;
-	//	args.erase(args.begin());
 }
-
-//	void ModeCommand::changeUserMode(int fds, User *user, Client *target, std::vector<std::string> &args)
-//	{
-//		Irc				&ircserv = Irc::getInstance();
-//	
-//		if (target != user)
-//		{
-//			return (ircserv.addReply(Reply(fds, ERR_USERSDONTMATCH(ircserv.getName(), user->getNickname()))));
-//		}
-//	}
 
 

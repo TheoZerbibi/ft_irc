@@ -123,7 +123,6 @@ std::string const
 
 bool		Channel::isEmpty() const
 {
-	std::cout << "CHECKING CHANNEL EMPTYNESS" << std::endl;
 	if (_operator.empty() && _users.empty())
 		return (true);
 	return (false);
@@ -232,10 +231,8 @@ void		Channel::removeUser(std::string nick, std::string reason)
 	std::map<std::string, User *>::iterator	end = _users.end();
 
 
-	std::cout << "||--> deciding user status : " << nick << std::endl;
 	if (found != end)
 	{
-		std::cout << "||-->removing user : " << nick << std::endl;
 		if (reason != "kicked")
 		{
 			ircserv.addReply(Reply(found->second->getSockfd(), RPL_PART(user_id(ircserv.getName(), nick, found->second->getUsername()), this->_name, reason)));
@@ -267,7 +264,6 @@ Channel::kickUser(User *executor, User *target, std::string reason)
 	this->sendToEveryone(target, RPL_KICK(user_id(ircserv.getName(), executor->getNickname(), executor->getUsername()), this->_name, target->getNickname(), reason));
 	target->removeChannel(this);
 	this->removeUser(target, "kicked");
-//	this->printUserList();
 }
 
 void		Channel::setOper(std::string nick, bool value)

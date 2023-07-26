@@ -46,7 +46,6 @@ void	PrivMsgCommand::sendMsg(User *user, std::string target, std::string msg)
 			ircserv.addReply(Reply(user->getSockfd(), ERR_NOSUCHCHANNEL(ircserv.getName(), user->getNickname(), target)));
 			return ;
 		}
-		std::cout << "isOn? " << user->isOnChannel(chan) << std::endl;
 		if (user->isOnChannel(chan))
 			chan->sendToChannel(user, RPL_PRIVMSG(user_id(ircserv.getName(), user->getNickname(), user->getUsername()), target, msg));
 		else
@@ -86,9 +85,7 @@ void	PrivMsgCommand::removeDuplicate(std::vector<std::string> &entry)
 		while (it != end)
 		{
 			if (*beg == *it)
-			{
 				entry.erase(it++);
-			}
 			else
 				it++;
 		}

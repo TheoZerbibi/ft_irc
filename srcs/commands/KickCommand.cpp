@@ -27,7 +27,6 @@ void
 	{
 		Channel	*channel = it->first;
 		User	*target = it->second;
-		std::cout << "Kick " << target->getUsername() << " from channel " << channel->getName() << " with reason : " << reason << std::endl;
 		channel->kickUser(executorUser, target, reason);
 	}
 }

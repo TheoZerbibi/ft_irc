@@ -30,7 +30,6 @@ void
 			ircserv.addReply(Reply(fds, ERR_BADCHANMASK(ircserv.getName(), client->getNickname(), channels[i])));
 			return ;
 		}
-		std::cout << "Leaving " << channels[i] << " with message " << msg << std::endl;
 		if (ircserv.channelExists(channels[i]))
 		{
 			Channel *channel = ircserv.getChannel(channels[i]);
