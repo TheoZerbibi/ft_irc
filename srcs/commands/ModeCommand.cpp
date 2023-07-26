@@ -112,7 +112,7 @@ void	ModeCommand::applyChannelMode(User *user, Channel *chan, std::string &modst
 			modmode = (*beg == '+' ? ADDING : REMOVING);
 			beg++;
 		}
-		if ((needParam = needArg(*beg, modmode)))
+		if (!arg.empty() && (needParam = needArg(*beg, modmode)))
 		{
 			value = *(arg.begin());
 			arg.erase(arg.begin());
