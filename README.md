@@ -1,5 +1,8 @@
 # ft_irc
 
+[![en](https://img.shields.io/badge/lang-en-pink.svg)](README.en.md)
+[![fr](https://img.shields.io/badge/lang-fr-purple.svg)](README.md)
+
 ## Avant-propos
 
 Ce projet a été réaliser avec [Théo Zeribi](https://github.com/TheoZerbibi), entre autre le bot est sa réalisation personnelle
