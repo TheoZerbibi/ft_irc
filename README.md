@@ -5,7 +5,7 @@
 
 ## Avant-propos
 
-Ce projet a été réaliser avec [Théo Zeribi](https://github.com/TheoZerbibi), entre autre le bot est sa réalisation personnelle
+Ce projet a été réaliser avec [Ismael Guidadou](https://github.com/iguidado).
 
 **!** Ce serveur a été implementer avec l'utilisation du client *irssi* pour les tests. Les résultats peuvent différé si vous utilisez un autre client.
 
